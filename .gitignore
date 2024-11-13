@@ -34,7 +34,7 @@ ExportedObj/
 .consulo/
 *.csproj
 *.unityproj
-*.sln
+
 *.suo
 *.tmp
 *.user
@@ -71,15 +71,25 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+
+
+#通用
 obj
 Temp
 *.suo
 *.user
 *.pidb
 *.userprefs
-*.sln
 *.csproj
+*.idea
+*.vs
+# client
 
-client/Library
-client/.idea
-client/Logs
+
+/client/Library
+/client/Logs
+/client/Assets/Samples
+/client/client.sln
+
+# gameplay
+/gameplay/gameplay/bin

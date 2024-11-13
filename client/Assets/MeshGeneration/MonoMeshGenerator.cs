@@ -24,13 +24,8 @@ namespace Game.Client
         [SerializeField, Range(1,10)]
         private int Resolution = 2;
 
-        // private void OnValidate()
-        // {
-        //     if (mMesh != null)
-        //     {
-        //         Generate();
-        //     }
-        // }
+        [SerializeField] private EGeneratorType GeneratorType;
+        
 
         private void Start()
         {
@@ -44,123 +39,29 @@ namespace Game.Client
                 name = "My Procedural Mesh",
             };
             
-            int vertexAttributeCount = 4;
-            int vertexCount = 4;
-            int triangleIndexCount = 6;
-
             var meshDataArray = Mesh.AllocateWritableMeshData(MeshCount);
             Mesh.MeshData meshData = meshDataArray[0];
-            
-            // //如果手动初始化所有流，则不需要初始化内存
-            // var vertexAttributes = new NativeArray<VertexAttributeDescriptor>(
-            //     vertexAttributeCount, Allocator.Temp, NativeArrayOptions.UninitializedMemory
-            // );
-            //
-            // //多流
-            // //一个网格区域最多支持四个流
-            // // vertexAttributes[0] = new VertexAttributeDescriptor(dimension: 3);
-            // //
-            // // vertexAttributes[1] = new VertexAttributeDescriptor(
-            // //     VertexAttribute.Normal, dimension: 3, stream: 1
-            // // );
-            // // //降低切线和法线精度减少内存消耗，需要注意的是单个属性大小必须为4字节的倍数
-            // // //因此像位置和法线无法使用half这种优化，不过可以使用其他数据格式
-            // // vertexAttributes[2] = new VertexAttributeDescriptor(
-            // //     VertexAttribute.Tangent, VertexAttributeFormat.Float16, dimension: 4, stream: 2
-            // // );
-            // // vertexAttributes[3] = new VertexAttributeDescriptor(
-            // //     VertexAttribute.TexCoord0, VertexAttributeFormat.Float16, dimension: 2, stream: 3
-            // // );
-            //
-            // //单流
-            // vertexAttributes[0] = new VertexAttributeDescriptor(dimension: 3, stream: 0);
-            // vertexAttributes[1] = new VertexAttributeDescriptor(
-            //     VertexAttribute.Normal, dimension: 3, stream: 0
-            // );
-            // vertexAttributes[2] = new VertexAttributeDescriptor(
-            //     VertexAttribute.Tangent, VertexAttributeFormat.Float16, dimension: 4, stream: 0
-            // );
-            // vertexAttributes[3] = new VertexAttributeDescriptor(
-            //     VertexAttribute.TexCoord0, VertexAttributeFormat.Float16, dimension: 2, stream:0
-            // );
-            //
-            //
-            // //关联顶点属性和网格数据
-            // meshData.SetVertexBufferParams(vertexCount, vertexAttributes);
-            // vertexAttributes.Dispose();
-            //
-            //
-            // half h0 = half(0f), h1 = half(1f);
-            // //多流
-            // // NativeArray<float3> positions = meshData.GetVertexData<float3>();
-            // // positions[0] = 0f;
-            // // positions[1] = right();
-            // // positions[2] = up();
-            // // positions[3] = float3(1f, 1f, 0f);
-            // //
-            // // NativeArray<float3> normals = meshData.GetVertexData<float3>(1);
-            // // normals[0] = normals[1] = normals[2] = normals[3] = back();
-            // //
-            // // NativeArray<half4> tangents = meshData.GetVertexData<half4>(2);
-            // // tangents[0] = tangents[1] = tangents[2] = tangents[3] = half4(h1, h0, h0, half(-1));
-            // //
-            // // NativeArray<half2> texCoords = meshData.GetVertexData<half2>(3);
-            // // texCoords[0] = half2(h0);
-            // // texCoords[1] = half2(h1, h0);
-            // // texCoords[2] = half2(h0, h1);
-            // // texCoords[3] = half2(h1);
-            //
-            // //单流
-            // NativeArray<Vertex> vertices = meshData.GetVertexData<Vertex>();
-            // var vertex = new Vertex {
-            //     normal = back(),
-            //     tangent = half4(h1, h0, h0, half(-1f))
-            // };
-            //
-            // vertex.position = 0f;
-            // vertex.texCoord0 = h0;
-            // vertices[0] = vertex;
-            //
-            // vertex.position = right();
-            // vertex.texCoord0 = half2(h1, h0);
-            // vertices[1] = vertex;
-            //
-            // vertex.position = up();
-            // vertex.texCoord0 = half2(h0, h1);
-            // vertices[2] = vertex;
-            //
-            // vertex.position = float3(1f, 1f, 0f);
-            // vertex.texCoord0 = h1;
-            // vertices[3] = vertex;
-            //
-            // //设置索引
-            // //uint16最多支持65535，获取数据时对应托管类型ushort
-            // meshData.SetIndexBufferParams(triangleIndexCount, IndexFormat.UInt16);
-            // NativeArray<ushort> triangleIndices = meshData.GetIndexData<ushort>();
-            // triangleIndices[0] = 0;
-            // triangleIndices[1] = 2;
-            // triangleIndices[2] = 1;
-            // triangleIndices[3] = 1;
-            // triangleIndices[4] = 2;
-            // triangleIndices[5] = 3;
-            //
-            // //应用网格数据到网格
-            // meshData.subMeshCount = MeshCount;
-            // var bounds = meshBounds;
-            // //手动传递子网格边界，防止unity可能的不正确计算
-            // meshData.SetSubMesh(0, new SubMeshDescriptor(0, triangleIndexCount)
-            // {
-            //     bounds = bounds,
-            //     vertexCount = vertexCount
-            // }, MeshUpdateFlags.DontRecalculateBounds);
-            
-            MeshJob<SquareGridGenerator, SingleStream>.ScheduleParallel(mMesh , meshData, Resolution, default).Complete();
+            switch (GeneratorType)
+            {
+                case EGeneratorType.SharedSquare:
+                    MeshJob<SharedSquareGridGenerator, SingleStream>.ScheduleParallel(mMesh , meshData, Resolution, default).Complete();
+                    break;
+                case EGeneratorType.Square:
+                    MeshJob<SquareGridGenerator, SingleStream>.ScheduleParallel(mMesh , meshData, Resolution, default).Complete();
+                    break;
+            }
             
             Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mMesh);
             
             GetComponent<MeshFilter>().mesh = mMesh;
         }
 
+    }
+
+    public enum EGeneratorType
+    {
+        Square,
+        SharedSquare
     }
     
     //单流
@@ -179,8 +80,7 @@ namespace Game.Client
     }
     
     
-
-
+    
     public interface IMeshStreams
     {
         void Setup(Mesh.MeshData meshData, Bounds subMeshBounds, int vertexCount, int indexCount);
@@ -227,7 +127,7 @@ namespace Game.Client
             meshData.SetSubMesh(0, new SubMeshDescriptor(0, indexCount)
                 {
                     bounds = subMeshBounds,
-                    vertexCount = vertexCount
+                    vertexCount = vertexCount,
                 }
                 , MeshUpdateFlags.DontRecalculateBounds |
                   MeshUpdateFlags.DontValidateIndices);
@@ -317,52 +217,110 @@ namespace Game.Client
     public interface IMeshGenerator {
 
         void Execute<S> (int i, S streams) where S : struct, IMeshStreams;
-        int VertexCount { get=>4 *ResolutionSquare; }
+        int VertexCount { get; }
 		
-        int IndexCount { get=>6 * ResolutionSquare; }
-        int JobLength { get=>ResolutionSquare; }
+        int IndexCount { get; }
+        int JobLength { get; }
         Bounds Bounds { get; }
         int Resolution { get; set; }
-        int ResolutionSquare => Resolution * Resolution;
+        
     }
-    public struct SquareGridGenerator : IMeshGenerator
+
+    public struct SharedSquareGridGenerator : IMeshGenerator
     {
-        public void Execute<S>(int i, S streams) where S : struct, IMeshStreams
+        public void Execute<S>(int row, S streams) where S : struct, IMeshStreams
         {
-            var vertexIndex = 4 * i;
-            var triangleIndex = 2 * i;
-            
-            var offsetY = i / Resolution;
-            var offsetX = (i % (Resolution));
-            
-            float xBase = offsetX;
-            float yBase = offsetY;
-            
-            float x = xBase + WidthWithMargin;
-            float y = yBase + HeightWithMargin;
-            
+            var vertexIndex = row * (Resolution + 1);
+
             var vertex = new Vertex();
             vertex.normal.z = -1f;
             vertex.tangent.xw = float2(1f, -1f);
-
-            vertex.position = new float3(xBase, yBase,0f);
-            streams.SetVertex(vertexIndex + 0, vertex);
-
-            vertex.position = new float3(x, yBase,0f);
-            vertex.texCoord0 = float2(1f, 0f);
-            streams.SetVertex(vertexIndex + 1, vertex);
-
-            vertex.position = new float3(xBase, y,0f);
-            vertex.texCoord0 = float2(0f, 1f);
-            streams.SetVertex(vertexIndex + 2, vertex);
-
-            vertex.position = new float3(x, y,0f);
-            vertex.texCoord0 = 1f;
-            streams.SetVertex(vertexIndex + 3, vertex);
             
-            streams.SetTriangle(triangleIndex + 0, vertexIndex + int3(0, 2, 1));
-            streams.SetTriangle(triangleIndex + 1, vertexIndex + int3(1, 2, 3));
+            vertex.position.x = 0f;
+            vertex.position.y = (float)row;
+            vertex.texCoord0.y = (float)row / Resolution;
+            streams.SetVertex(vertexIndex, vertex);
+
+            vertexIndex += 1;
+            var triangleIndex = 2 * (row - 1) * Resolution;
+            for (int i = 1; i <= Resolution; ++i, ++vertexIndex, triangleIndex+=2)
+            {
+                vertex.position.x = i;
+                vertex.texCoord0.x = (float)i / Resolution;
+                streams.SetVertex(vertexIndex, vertex);
+
+                if (row > 0)
+                {
+                    streams.SetTriangle(
+                        triangleIndex + 0, vertexIndex + int3(-Resolution - 2, -1, -Resolution - 1)
+                    );
+                    streams.SetTriangle(
+                        triangleIndex + 1, vertexIndex + int3(-Resolution - 1, -1, 0)
+                    );
+                }
+            }
+            
         }
+        int ResolutionSquare=>Resolution * Resolution;
+
+        public int VertexCount { get=> (Resolution +1) * (Resolution + 1); }
+		
+        public int IndexCount { get=>6 * ResolutionSquare; }
+        public float Width => 1.0f;
+        public float Height => 1.0f;
+        public int JobLength { get=> Resolution + 1; }
+        public Bounds Bounds { get=> new Bounds(new Vector3(Width/2.0f, Height/2.0f), new Vector3(Width, Height)); }
+        public int Resolution { get=>math.max(1,mResolution); set=>mResolution = value; }
+        private int mResolution;
+    }
+    public struct SquareGridGenerator : IMeshGenerator
+    {
+        public void Execute<S>(int row, S streams) where S : struct, IMeshStreams
+        {
+            var vertexIndex = 4 * row *Resolution;
+            var triangleIndex = 2 * row *Resolution;
+            var offsetY = row;
+            
+            for (int i = 0; i < Resolution; ++i, vertexIndex +=4, triangleIndex +=2)
+            {
+                var offsetX = i;
+            
+                float xBase = offsetX;
+                float yBase = offsetY;
+            
+                float x = xBase + WidthWithMargin;
+                float y = yBase + HeightWithMargin;
+            
+                var vertex = new Vertex();
+                vertex.normal.z = -1f;
+                vertex.tangent.xw = float2(1f, -1f);
+
+                vertex.position = new float3(xBase, yBase,0f);
+                streams.SetVertex(vertexIndex + 0, vertex);
+
+                vertex.position = new float3(x, yBase,0f);
+                vertex.texCoord0 = float2(1f, 0f);
+                streams.SetVertex(vertexIndex + 1, vertex);
+
+                vertex.position = new float3(xBase, y,0f);
+                vertex.texCoord0 = float2(0f, 1f);
+                streams.SetVertex(vertexIndex + 2, vertex);
+
+                vertex.position = new float3(x, y,0f);
+                vertex.texCoord0 = 1f;
+                streams.SetVertex(vertexIndex + 3, vertex);
+            
+                streams.SetTriangle(triangleIndex + 0, vertexIndex + int3(0, 2, 1));
+                streams.SetTriangle(triangleIndex + 1, vertexIndex + int3(1, 2, 3));
+            }
+            
+        }
+
+        int ResolutionSquare=>Resolution * Resolution;
+
+        public int VertexCount { get=>4 *ResolutionSquare; }
+		
+        public int IndexCount { get=>6 * ResolutionSquare; }
 
         public float Width => 1.0f;
         public float Height => 1.0f;
@@ -371,6 +329,7 @@ namespace Game.Client
         public Bounds Bounds { get=> new Bounds(new Vector3(Width/2.0f, Height/2.0f), new Vector3(Width, Height)); }
         public int Resolution { get=>math.max(1,mResolution); set=>mResolution = value; }
         private int mResolution;
+        public int JobLength { get=>Resolution/*ResolutionSquare*/; }
     }
     
     [BurstCompile(FloatPrecision.Standard, FloatMode.Fast, CompileSynchronously = true)]

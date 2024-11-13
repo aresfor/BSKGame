@@ -1,0 +1,9 @@
+{
+  "name": "com.game.framework.bsk.uiframework",
+  "version": "1.0.0",
+  "displayName": "BSK UIFramework",
+  "description": "UIFramework,some animation feature dependence on Dotween library",
+  "author": {
+    "name": "Berserker"
+  }
+}
