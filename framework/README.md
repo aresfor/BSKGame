@@ -1,1 +1,1 @@
-- 目前Framework直接在Game client中开发，之后可以考虑移出到这个文件夹作为一个通用文件夹，用packages json文件引用这里
+基于Unity的框架内容，被gameplay和unity项目引用

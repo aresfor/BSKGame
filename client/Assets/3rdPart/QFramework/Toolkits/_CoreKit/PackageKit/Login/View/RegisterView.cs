@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  ****************************************************************************/
 
-using Game.Gameplay;
+using Game.Core;
 
 #if UNITY_EDITOR
 namespace QFramework

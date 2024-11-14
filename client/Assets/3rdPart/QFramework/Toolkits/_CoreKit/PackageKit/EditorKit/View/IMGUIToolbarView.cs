@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Gameplay;
+using Game.Core;
 using UnityEngine;
 
 namespace QFramework

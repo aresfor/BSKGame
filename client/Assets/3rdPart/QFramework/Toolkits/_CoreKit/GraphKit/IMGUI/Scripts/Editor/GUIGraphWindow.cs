@@ -11,7 +11,7 @@ using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using System;
-using Game.Gameplay;
+using Game.Core;
 using Object = UnityEngine.Object;
 
 namespace QFramework

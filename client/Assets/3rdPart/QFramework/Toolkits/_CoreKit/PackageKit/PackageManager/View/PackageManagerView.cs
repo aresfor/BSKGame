@@ -29,7 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Game.Gameplay;
+using Game.Core;
 using UnityEditor;
 using UnityEngine;
 

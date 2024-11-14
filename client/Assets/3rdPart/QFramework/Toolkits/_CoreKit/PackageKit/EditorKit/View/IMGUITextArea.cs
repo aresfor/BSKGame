@@ -8,7 +8,7 @@
 
 #if UNITY_EDITOR
 using System.Xml;
-using Game.Gameplay;
+using Game.Core;
 using UnityEngine;
 
 namespace QFramework

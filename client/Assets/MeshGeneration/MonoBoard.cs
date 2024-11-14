@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Core;
+using UnityEngine;
 
 namespace Game.Client
 {
@@ -7,7 +8,7 @@ namespace Game.Client
         public MonoLattice Lattice;
         public bool IsValid => Lattice != null && Lattice.gameObject.activeSelf;
     }
-    public class MonoBoard: CacheMonoBehaviour
+    public class MonoBoard: BaseMonoBehaviour
     {
         public GameObject Prefab;
 
@@ -61,9 +62,9 @@ namespace Game.Client
             }
             else
             {
-                for (int i = CacheTransform.childCount-1; i >= 0; --i)
+                for (int i = CachedTransform.childCount-1; i >= 0; --i)
                 {
-                    var t =CacheTransform.GetChild(i);
+                    var t =CachedTransform.GetChild(i);
 #if UNITY_EDITOR
                     DestroyImmediate(t.gameObject);
 #else
@@ -89,8 +90,8 @@ namespace Game.Client
                 {
                     float positionX = j * perWidth + rowPositionX;
                     var lattice = GetLattice();
-                    lattice.Initialize(new Vector3(positionX, CacheTransform.position.y, positionZ)
-                        , CacheTransform.rotation, CacheTransform.localScale, CacheTransform);
+                    lattice.Initialize(new Vector3(positionX, CachedTransform.position.y, positionZ)
+                        , CachedTransform.rotation, CachedTransform.localScale, CachedTransform);
                     
                     mBoard[i, j] = new FLattice()
                     {

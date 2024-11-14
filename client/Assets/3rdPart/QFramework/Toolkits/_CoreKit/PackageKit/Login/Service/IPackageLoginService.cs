@@ -1,5 +1,5 @@
 using System;
-using Game.Gameplay;
+using Game.Core;
 
 namespace QFramework
 {

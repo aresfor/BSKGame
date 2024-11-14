@@ -8,7 +8,7 @@
 
 #if UNITY_EDITOR
 using System.IO;
-using Game.Gameplay;
+using Game.Core;
 using UnityEditor;
 using UnityEngine;
 

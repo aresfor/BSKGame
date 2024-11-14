@@ -7,7 +7,7 @@
  ****************************************************************************/
 
 using System;
-using Game.Gameplay;
+using Game.Core;
 using UnityEditor;
 
 #if UNITY_EDITOR

@@ -28,7 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Game.Gameplay;
+using Game.Core;
 using UnityEditor;
 
 namespace QFramework

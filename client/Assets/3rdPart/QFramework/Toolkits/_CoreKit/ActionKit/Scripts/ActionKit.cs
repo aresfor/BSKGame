@@ -9,7 +9,7 @@
 using System;
 using System.Collections;
 using System.Threading.Tasks;
-using Game.Gameplay;
+using Game.Core;
 
 namespace QFramework
 {

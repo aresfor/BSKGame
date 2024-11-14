@@ -8,7 +8,7 @@
 
 using System;
 using System.Collections;
-using Game.Gameplay;
+using Game.Core;
 using UnityEngine;
 
 namespace QFramework

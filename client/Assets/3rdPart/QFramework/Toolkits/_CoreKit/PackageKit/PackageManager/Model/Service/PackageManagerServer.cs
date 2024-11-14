@@ -9,7 +9,7 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
-using Game.Gameplay;
+using Game.Core;
 using UnityEngine;
 
 namespace QFramework

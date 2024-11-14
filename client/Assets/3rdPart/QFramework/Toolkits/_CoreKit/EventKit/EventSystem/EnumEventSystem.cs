@@ -7,7 +7,7 @@
  * https://gitee.com/liangxiegame/QFramework
  ****************************************************************************/
 
-using Game.Gameplay;
+using Game.Core;
 
 namespace QFramework
 {

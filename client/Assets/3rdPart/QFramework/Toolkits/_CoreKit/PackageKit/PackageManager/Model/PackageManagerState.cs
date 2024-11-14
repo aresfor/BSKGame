@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 using System.Collections.Generic;
-using Game.Gameplay;
+using Game.Core;
 
 namespace QFramework
 {
