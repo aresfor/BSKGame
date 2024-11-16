@@ -1,7 +1,10 @@
 ﻿namespace Game.Client
 {
-    public class Constant_UIGroup
+    public static partial class Constant
     {
-        
+        public static class UIGroup
+        {
+            public const string Default = "UIGroup.Default";
+        }
     }
 }

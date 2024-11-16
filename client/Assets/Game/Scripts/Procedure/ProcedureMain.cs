@@ -1,4 +1,6 @@
-﻿using GameFramework.Fsm;
+﻿using GameFramework;
+using GameFramework.Entity;
+using GameFramework.Fsm;
 using GameFramework.Procedure;
 
 namespace Game.Client
@@ -8,8 +10,14 @@ namespace Game.Client
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
+
+            var model = ReferencePool.Acquire<PlayerEntityModel>();
+            model.Id = GameEntry.Entity.GenerateSerialId();
+            model.TypeId = 10000;
+            GameEntry.Entity.ShowPlayerEntity(model);
+            IEntity entity = GameEntry.Entity.GetEntity(model.Id);
             
-            //@TODO: 拉起NodeCanvas用作局内阶段切换
+            //@TODO: 拉起NodeCanvas用作局内阶段切换，根据游戏模式拆分拉起NodeCanvas类型
         }
     }
 }

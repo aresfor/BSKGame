@@ -8,7 +8,7 @@
 using System;
 using System.IO;
 
-namespace StarForce.Editor.DataTableTools
+namespace Game.Client.Editor.DataTableTools
 {
     public sealed partial class DataTableProcessor
     {

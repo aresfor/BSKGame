@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
-namespace StarForce.Editor.DataTableTools
+namespace Game.Client.Editor.DataTableTools
 {
     public sealed partial class DataTableProcessor
     {

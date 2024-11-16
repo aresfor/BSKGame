@@ -5,7 +5,7 @@ namespace Game.Client
 {    
     [CustomEditor(typeof(MonoBoard))]
 
-    public class MonoBoardEditor:Editor
+    public class MonoBoardEditor:UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

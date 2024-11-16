@@ -2,11 +2,11 @@
 
 public static class GlobalUtility
 {
-    private static Dictionary<Type, IUtility> mGlobalUtility = new Dictionary<Type, IUtility>();
+    private static Dictionary<Type, IUtility> s_GlobalUtility = new Dictionary<Type, IUtility>();
 
     public static T Get<T>() where T : IUtility
     {
-        if (mGlobalUtility.TryGetValue(typeof(T), out var utility))
+        if (s_GlobalUtility.TryGetValue(typeof(T), out var utility))
         {
             return (T)utility;
         }
@@ -16,11 +16,11 @@ public static class GlobalUtility
 
     public static void Register<T>(T utility) where T : IUtility
     {
-        mGlobalUtility[typeof(T)] = utility;
+        s_GlobalUtility[typeof(T)] = utility;
     }
 
     public static void Clear()
     {
-        mGlobalUtility.Clear();
+        s_GlobalUtility.Clear();
     }
 }

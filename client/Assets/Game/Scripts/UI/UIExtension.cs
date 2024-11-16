@@ -8,11 +8,12 @@
 using GameFramework.DataTable;
 using GameFramework.UI;
 using System.Collections;
+using GameFramework.Procedure;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
 
-namespace StarForce
+namespace Game.Client
 {
     public static class UIExtension
     {
@@ -152,25 +153,25 @@ namespace StarForce
             return uiComponent.OpenUIForm(assetName, drUIForm.UIGroupName, Constant.AssetPriority.UIFormAsset, drUIForm.PauseCoveredUIForm, userData);
         }
 
-        public static void OpenDialog(this UIComponent uiComponent, DialogParams dialogParams)
-        {
-            if (((ProcedureBase)GameEntry.Procedure.CurrentProcedure).UseNativeDialog)
-            {
-                OpenNativeDialog(dialogParams);
-            }
-            else
-            {
-                uiComponent.OpenUIForm(UIFormId.DialogForm, dialogParams);
-            }
-        }
-
-        private static void OpenNativeDialog(DialogParams dialogParams)
-        {
-            // TODO：这里应该弹出原生对话框，先简化实现为直接按确认按钮
-            if (dialogParams.OnClickConfirm != null)
-            {
-                dialogParams.OnClickConfirm(dialogParams.UserData);
-            }
-        }
+        // public static void OpenDialog(this UIComponent uiComponent, DialogParams dialogParams)
+        // {
+        //     if (((ProcedureBase)GameEntry.Procedure.CurrentProcedure).UseNativeDialog)
+        //     {
+        //         OpenNativeDialog(dialogParams);
+        //     }
+        //     else
+        //     {
+        //         uiComponent.OpenUIForm(UIFormId.DialogForm, dialogParams);
+        //     }
+        // }
+        //
+        // private static void OpenNativeDialog(DialogParams dialogParams)
+        // {
+        //     // TODO：这里应该弹出原生对话框，先简化实现为直接按确认按钮
+        //     if (dialogParams.OnClickConfirm != null)
+        //     {
+        //         dialogParams.OnClickConfirm(dialogParams.UserData);
+        //     }
+        // }
     }
 }

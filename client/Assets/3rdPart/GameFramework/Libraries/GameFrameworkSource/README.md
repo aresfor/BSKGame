@@ -1,0 +1,1 @@
+GameFramework源码放到Game.Core程序集中了。如果不使用Game.Core，则将源码放回这个目录即可

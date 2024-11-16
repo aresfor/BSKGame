@@ -1,7 +1,10 @@
 ﻿namespace Game.Client
 {
-    public class GameEntry_Custom
+    public partial class GameEntry
     {
-        
+        private static void InitCustomComponents()
+        {
+            //自定义组件
+        }
     }
 }

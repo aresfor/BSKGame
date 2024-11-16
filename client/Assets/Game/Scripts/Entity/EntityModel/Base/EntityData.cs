@@ -25,6 +25,10 @@ namespace Game.Client
         [SerializeField]
         private Quaternion m_Rotation = Quaternion.identity;
 
+        public EntityData()
+        {
+            
+        }
         public EntityData(int entityId, int typeId)
         {
             m_Id = entityId;
@@ -40,6 +44,7 @@ namespace Game.Client
             {
                 return m_Id;
             }
+            set => m_Id = value;
         }
 
         /// <summary>
@@ -51,6 +56,7 @@ namespace Game.Client
             {
                 return m_TypeId;
             }
+            set => m_TypeId = value;
         }
 
         /// <summary>

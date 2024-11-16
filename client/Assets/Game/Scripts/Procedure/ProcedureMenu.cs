@@ -1,28 +1,17 @@
-﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2021 Jiang Yin. All rights reserved.
-// Homepage: https://gameframework.cn/
-// Feedback: mailto:ellan@gameframework.cn
-//------------------------------------------------------------
-
+﻿using Game.Client;
 using GameFramework.Event;
+using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
+using GameEntry = UnityGameFramework.Runtime.GameEntry;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
-namespace StarForce
+namespace Game.Client
 {
     public class ProcedureMenu : ProcedureBase
     {
         private bool m_StartGame = false;
         private MenuForm m_MenuForm = null;
-
-        public override bool UseNativeDialog
-        {
-            get
-            {
-                return false;
-            }
-        }
+        
 
         public void StartGame()
         {
@@ -58,8 +47,9 @@ namespace StarForce
 
             if (m_StartGame)
             {
-                procedureOwner.SetData<VarInt32>("NextSceneId", GameEntry.Config.GetInt("Scene.Main"));
-                procedureOwner.SetData<VarByte>("GameMode", (byte)GameMode.Survival);
+                var mainSceneIndex = UnityEngine.SceneManagement.SceneUtility.GetBuildIndexByScenePath("GameRes/Scenes/Main");
+                procedureOwner.SetData<VarInt32>("NextSceneId", mainSceneIndex);
+                //procedureOwner.SetData<VarByte>("GameMode", (byte)GameMode.Survival);
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }
         }

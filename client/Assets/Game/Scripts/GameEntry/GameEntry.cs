@@ -1,7 +1,11 @@
-﻿namespace Game.Scripts.GameEntry
+﻿namespace Game.Client
 {
-    public class GameEntry
+    public partial class GameEntry
     {
-        
+        private void Start()
+        {
+            InitBuiltinComponents();
+            InitCustomComponents();
+        }
     }
 }

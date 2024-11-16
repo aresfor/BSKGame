@@ -9,7 +9,7 @@ using GameFramework.DataTable;
 using System;
 using UnityGameFramework.Runtime;
 
-namespace StarForce
+namespace Game.Client
 {
     public static class EntityExtension
     {
@@ -19,7 +19,7 @@ namespace StarForce
         // 负值用于本地生成的临时实体（如特效、FakeObject等）
         private static int s_SerialId = 0;
 
-        public static Entity GetGameEntity(this EntityComponent entityComponent, int entityId)
+        public static GameEntity GetGameEntity(this EntityComponent entityComponent, int entityId)
         {
             UnityGameFramework.Runtime.Entity entity = entityComponent.GetEntity(entityId);
             if (entity == null)
@@ -27,59 +27,24 @@ namespace StarForce
                 return null;
             }
 
-            return (Entity)entity.Logic;
+            return (GameEntity)entity.Logic;
         }
 
-        public static void HideEntity(this EntityComponent entityComponent, Entity entity)
+        public static void HideEntity(this EntityComponent entityComponent, GameEntity gameEntity)
         {
-            entityComponent.HideEntity(entity.Entity);
+            entityComponent.HideEntity(gameEntity.Entity);
         }
 
-        public static void AttachEntity(this EntityComponent entityComponent, Entity entity, int ownerId, string parentTransformPath = null, object userData = null)
+        public static void AttachEntity(this EntityComponent entityComponent, GameEntity gameEntity, int ownerId, string parentTransformPath = null, object userData = null)
         {
-            entityComponent.AttachEntity(entity.Entity, ownerId, parentTransformPath, userData);
+            entityComponent.AttachEntity(gameEntity.Entity, ownerId, parentTransformPath, userData);
         }
 
-        public static void ShowMyAircraft(this EntityComponent entityComponent, MyAircraftData data)
+        public static void ShowPlayerEntity(this EntityComponent entityComponent, PlayerEntityModel model)
         {
-            entityComponent.ShowEntity(typeof(MyAircraft), "Aircraft", Constant.AssetPriority.MyAircraftAsset, data);
+            entityComponent.ShowEntity(typeof(PlayerEntity), nameof(PlayerEntity), Constant.AssetPriority.GameplayAsset, model);
         }
-
-        public static void ShowAircraft(this EntityComponent entityComponent, AircraftData data)
-        {
-            entityComponent.ShowEntity(typeof(Aircraft), "Aircraft", Constant.AssetPriority.AircraftAsset, data);
-        }
-
-        public static void ShowThruster(this EntityComponent entityComponent, ThrusterData data)
-        {
-            entityComponent.ShowEntity(typeof(Thruster), "Thruster", Constant.AssetPriority.ThrusterAsset, data);
-        }
-
-        public static void ShowWeapon(this EntityComponent entityComponent, WeaponData data)
-        {
-            entityComponent.ShowEntity(typeof(Weapon), "Weapon", Constant.AssetPriority.WeaponAsset, data);
-        }
-
-        public static void ShowArmor(this EntityComponent entityComponent, ArmorData data)
-        {
-            entityComponent.ShowEntity(typeof(Armor), "Armor", Constant.AssetPriority.ArmorAsset, data);
-        }
-
-        public static void ShowBullet(this EntityComponent entityCompoennt, BulletData data)
-        {
-            entityCompoennt.ShowEntity(typeof(Bullet), "Bullet", Constant.AssetPriority.BulletAsset, data);
-        }
-
-        public static void ShowAsteroid(this EntityComponent entityCompoennt, AsteroidData data)
-        {
-            entityCompoennt.ShowEntity(typeof(Asteroid), "Asteroid", Constant.AssetPriority.AsteroiAsset, data);
-        }
-
-        public static void ShowEffect(this EntityComponent entityComponent, EffectData data)
-        {
-            entityComponent.ShowEntity(typeof(Effect), "Effect", Constant.AssetPriority.EffectAsset, data);
-        }
-
+        
         private static void ShowEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, int priority, EntityData data)
         {
             if (data == null)

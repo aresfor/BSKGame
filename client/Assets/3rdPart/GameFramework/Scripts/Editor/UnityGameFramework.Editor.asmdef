@@ -3,6 +3,7 @@
     "rootNamespace": "",
     "references": [
         "UnityGameFramework.Runtime",
+        "BSK.Game.Core",
         "GameFramework"
     ],
     "includePlatforms": [

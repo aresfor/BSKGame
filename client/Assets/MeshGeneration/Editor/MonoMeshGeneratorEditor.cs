@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.Client
 {
     [CustomEditor(typeof(MonoMeshGenerator))]
-    public class MonoMeshGeneratorEditor:Editor
+    public class MonoMeshGeneratorEditor:UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

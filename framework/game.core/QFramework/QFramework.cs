@@ -569,6 +569,9 @@ namespace Game.Core
         IUnRegister RegisterWithInitValue(Action<T> action);
         void UnRegister(Action<T> onValueChanged);
         IUnRegister Register(Action<T> onValueChanged);
+
+        IUnRegister Register(Action<T, T> onValueChanged);
+        void UnRegister(Action<T, T> onValueChanged);
     }
 
     public class BindableProperty<T> : IBindableProperty<T>
@@ -584,7 +587,7 @@ namespace Game.Core
             Comparer = comparer;
             return this;
         }
-
+        
         public T Value
         {
             get => GetValue();
@@ -593,8 +596,10 @@ namespace Game.Core
                 if (value == null && mValue == null) return;
                 if (value != null && Comparer(value, mValue)) return;
 
+                var oldValue = GetValue();
                 SetValue(value);
                 mOnValueChanged.Trigger(value);
+                mOnValueChangedWithOld.Trigger(oldValue, value);
             }
         }
 
@@ -605,12 +610,20 @@ namespace Game.Core
         public void SetValueWithoutEvent(T newValue) => mValue = newValue;
 
         private EasyEvent<T> mOnValueChanged = new EasyEvent<T>();
+        private EasyEvent<T, T> mOnValueChangedWithOld = new EasyEvent<T, T>();
 
         public IUnRegister Register(Action<T> onValueChanged)
         {
             return mOnValueChanged.Register(onValueChanged);
         }
 
+        public IUnRegister Register(Action<T, T> onValueChanged)
+        {
+            return mOnValueChangedWithOld.Register(onValueChanged);
+
+        }
+
+        public void UnRegister(Action<T, T> onValueChanged)=> mOnValueChangedWithOld.UnRegister(onValueChanged);
         public IUnRegister RegisterWithInitValue(Action<T> onValueChanged)
         {
             onValueChanged(mValue);

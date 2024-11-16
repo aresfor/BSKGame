@@ -8,8 +8,9 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityGameFramework.Runtime;
 
-namespace StarForce
+namespace Game.Client
 {
     public class CommonButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     {
@@ -29,7 +30,7 @@ namespace StarForce
         {
             m_CanvasGroup = gameObject.GetOrAddComponent<CanvasGroup>();
         }
-
+        
         private void OnDisable()
         {
             m_CanvasGroup.alpha = 1f;

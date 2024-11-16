@@ -1,4 +1,16 @@
-﻿
+﻿//------------------------------------------------------------
+// Game Framework
+// Copyright © 2013-2021 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
+//------------------------------------------------------------
+// 此文件由工具自动生成，请勿直接修改。
+// 生成时间：2024-11-16 22:54:20.050
+//------------------------------------------------------------
+
+using GameFramework;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;

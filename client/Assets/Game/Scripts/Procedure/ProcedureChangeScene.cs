@@ -1,16 +1,11 @@
-﻿//------------------------------------------------------------
-// Game Framework
-// Copyright © 2013-2021 Jiang Yin. All rights reserved.
-// Homepage: https://gameframework.cn/
-// Feedback: mailto:ellan@gameframework.cn
-//------------------------------------------------------------
-
+﻿
 using GameFramework.DataTable;
 using GameFramework.Event;
+using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
-namespace StarForce
+namespace Game.Client
 {
     public class ProcedureChangeScene : ProcedureBase
     {
@@ -18,15 +13,6 @@ namespace StarForce
 
         private bool m_ChangeToMenu = false;
         private bool m_IsChangeSceneComplete = false;
-        private int m_BackgroundMusicId = 0;
-
-        public override bool UseNativeDialog
-        {
-            get
-            {
-                return false;
-            }
-        }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
@@ -59,8 +45,10 @@ namespace StarForce
 
             int sceneId = procedureOwner.GetData<VarInt32>("NextSceneId");
             m_ChangeToMenu = sceneId == MenuSceneId;
+            
             IDataTable<DRScene> dtScene = GameEntry.DataTable.GetDataTable<DRScene>();
             DRScene drScene = dtScene.GetDataRow(sceneId);
+            
             if (drScene == null)
             {
                 Log.Warning("Can not load scene '{0}' from data table.", sceneId.ToString());
@@ -68,7 +56,6 @@ namespace StarForce
             }
 
             GameEntry.Scene.LoadScene(AssetUtility.GetSceneAsset(drScene.AssetName), Constant.AssetPriority.SceneAsset, this);
-            m_BackgroundMusicId = drScene.BackgroundMusicId;
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
@@ -109,11 +96,7 @@ namespace StarForce
             }
 
             Log.Info("Load scene '{0}' OK.", ne.SceneAssetName);
-
-            if (m_BackgroundMusicId > 0)
-            {
-                GameEntry.Sound.PlayMusic(m_BackgroundMusicId);
-            }
+            
 
             m_IsChangeSceneComplete = true;
         }

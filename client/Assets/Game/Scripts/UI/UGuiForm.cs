@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
 
-namespace StarForce
+namespace Game.Client
 {
     public abstract class UGuiForm : UIFormLogic
     {
@@ -58,7 +58,7 @@ namespace StarForce
 
         public void PlayUISound(int uiSoundId)
         {
-            GameEntry.Sound.PlayUISound(uiSoundId);
+            //GameEntry.Sound.PlayUISound(uiSoundId);
         }
 
         public static void SetMainFont(Font mainFont)
@@ -97,7 +97,10 @@ namespace StarForce
             Text[] texts = GetComponentsInChildren<Text>(true);
             for (int i = 0; i < texts.Length; i++)
             {
-                texts[i].font = s_MainFont;
+                //空就使用组件的默认字体
+                if(s_MainFont!=null)
+                    texts[i].font = s_MainFont;
+                
                 if (!string.IsNullOrEmpty(texts[i].text))
                 {
                     texts[i].text = GameEntry.Localization.GetString(texts[i].text);

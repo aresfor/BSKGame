@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-namespace StarForce.Editor.DataTableTools
+namespace Game.Client.Editor.DataTableTools
 {
     public sealed partial class DataTableProcessor
     {

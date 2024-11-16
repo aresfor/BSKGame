@@ -5,19 +5,18 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
-using UnityEngine;
+using Game.Core;
 
 namespace UnityGameFramework.Runtime
 {
     /// <summary>
     /// 界面逻辑基类。
     /// </summary>
-    public abstract class UIFormLogic : MonoBehaviour
+    public abstract class UIFormLogic : BaseMonoBehaviour
     {
         private bool m_Available = false;
         private bool m_Visible = false;
         private UIForm m_UIForm = null;
-        private Transform m_CachedTransform = null;
         private int m_OriginalLayer = 0;
 
         /// <summary>
@@ -85,27 +84,11 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 获取已缓存的 Transform。
-        /// </summary>
-        public Transform CachedTransform
-        {
-            get
-            {
-                return m_CachedTransform;
-            }
-        }
-
-        /// <summary>
         /// 界面初始化。
         /// </summary>
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnInit(object userData)
         {
-            if (m_CachedTransform == null)
-            {
-                m_CachedTransform = transform;
-            }
-
             m_UIForm = GetComponent<UIForm>();
             m_OriginalLayer = gameObject.layer;
         }

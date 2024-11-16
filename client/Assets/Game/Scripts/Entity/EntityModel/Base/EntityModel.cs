@@ -1,9 +1,14 @@
 ﻿using Game.Core;
+using GameFramework;
 
 namespace Game.Client
 {
-    public abstract class EntityModel:EntityData, IModel
+    public abstract class EntityModel:EntityData, IModel, IReference
     {
+        public EntityModel()
+        {
+            
+        }
         protected EntityModel(int entityId, int typeId) : base(entityId, typeId)
         {
         }
@@ -27,5 +32,9 @@ namespace Game.Client
         protected abstract void OnInit();
 
         public bool Initialized { get; set; }
+
+        protected abstract void OnClear();
+
+        public void Clear() => OnClear();
     }
 }

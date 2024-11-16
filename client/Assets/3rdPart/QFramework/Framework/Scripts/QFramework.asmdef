@@ -1,3 +1,16 @@
-﻿{
-	"name": "QFramework"
+{
+    "name": "QFramework",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a87f1a48844795c4e977cb66bea27be0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -8,7 +8,7 @@
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
-namespace StarForce
+namespace Game.Client
 {
     public class MenuForm : UGuiForm
     {
@@ -16,7 +16,7 @@ namespace StarForce
         private GameObject m_QuitButton = null;
 
         private ProcedureMenu m_ProcedureMenu = null;
-
+        
         public void OnStartButtonClick()
         {
             m_ProcedureMenu.StartGame();
@@ -34,13 +34,13 @@ namespace StarForce
 
         public void OnQuitButtonClick()
         {
-            GameEntry.UI.OpenDialog(new DialogParams()
-            {
-                Mode = 2,
-                Title = GameEntry.Localization.GetString("AskQuitGame.Title"),
-                Message = GameEntry.Localization.GetString("AskQuitGame.Message"),
-                OnClickConfirm = delegate (object userData) { UnityGameFramework.Runtime.GameEntry.Shutdown(ShutdownType.Quit); },
-            });
+            // GameEntry.UI.OpenDialog(new DialogParams()
+            // {
+            //     Mode = 2,
+            //     Title = GameEntry.Localization.GetString("AskQuitGame.Title"),
+            //     Message = GameEntry.Localization.GetString("AskQuitGame.Message"),
+            //     OnClickConfirm = delegate (object userData) { UnityGameFramework.Runtime.GameEntry.Shutdown(ShutdownType.Quit); },
+            // });
         }
 
 #if UNITY_2017_3_OR_NEWER
