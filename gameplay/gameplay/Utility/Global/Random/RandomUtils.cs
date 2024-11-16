@@ -1,6 +1,6 @@
 ﻿namespace Game.Core;
 
-public static class RandomUtil
+public static class RandomUtils
 {
     static Math.Random localRand = new Math.Random(1851936439);
     
