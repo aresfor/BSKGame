@@ -1,14 +1,15 @@
-﻿using Game.Core;
+﻿using System.Text;
+using Game.Core;
+using GameFramework;
 
+using Log = GameFramework.GameFrameworkLog;
 namespace Game.Gameplay;
-
 public class GameplayTest
 {
     public int GetNumber()
     {
-        test aa = new test();
-        aa.Core();
         
+
         return 11;
     }
 }

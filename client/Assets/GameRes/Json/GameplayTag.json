@@ -1,0 +1,11 @@
+﻿{
+  "m_TagDic": {
+    "Entity": {
+      "Effect": {
+        "Frozen": {},
+        "Stun": {},
+        "Burn": {}
+      }
+    }
+  }
+}

@@ -10,5 +10,6 @@ public interface IPropertyArr
     public static int Length => DRProperty.Length;
     public float GetProperty(EPropertyDefine propertyDefine);
     public void SetProperty(EPropertyDefine propertyDefine, float value, bool triggerEvent = true);
+    public void Reset();
 
 }

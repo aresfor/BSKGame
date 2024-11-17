@@ -49,6 +49,7 @@ namespace Game.Client
 #endif
         {
             base.OnRecycle();
+            m_EntityData?.Clear();
         }
 
 #if UNITY_2017_3_OR_NEWER

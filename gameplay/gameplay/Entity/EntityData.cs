@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.Gameplay;
 using Game.Math;
+using GameFramework;
 
 namespace Game.Core
 {
@@ -8,7 +9,7 @@ namespace Game.Core
     /// 与Entity绑定的数据，子类需要在特定时机调用InitProperties
     /// </summary>
     [Serializable]
-    public abstract class EntityData
+    public abstract class EntityData: IReference
     {
         private int m_Id = 0;
         
@@ -19,6 +20,12 @@ namespace Game.Core
         private quaternion m_Rotation = quaternion.identity;
 
         private IPropertyArr m_Properties = new PropertyArr();
+
+        public FGameplayTagContainer GameplayTagContainer
+        {
+            get; 
+            private set;
+        } = new FGameplayTagContainer();
         
         public EntityData()
         {
@@ -30,23 +37,43 @@ namespace Game.Core
             m_TypeId = typeId;
             OnInitialize();
         }
+        
         protected virtual void OnInitialize()
         {
         }
+        
         protected void InitProperties(int propertyId)
         {
             m_Properties.Initialize(propertyId);
         }
+        
+        protected abstract void OnClear();
 
+        public void Clear()
+        {
+            OnClear();
+            m_Properties.Reset();
+            GameplayTagContainer.Clear();
+        }
+        
+        /// <summary>
+        /// 获取属性值
+        /// </summary>
         public float GetProperty(EPropertyDefine propertyDefine)
         {
             return m_Properties.GetProperty(propertyDefine);
         }
 
+        /// <summary>
+        /// 设置属性值
+        /// </summary>
         public void SetProperty(EPropertyDefine propertyDefine, float value, bool triggerEvent = true)
         {
             m_Properties.SetProperty(propertyDefine, value, triggerEvent);
         }
+        /// <summary>
+        /// 获取可绑定属性
+        /// </summary>
         public IReadonlyBindableProperty<float> GetBindableProperty(EPropertyDefine propertyDefine)
         {
             return m_Properties[(int)propertyDefine];
