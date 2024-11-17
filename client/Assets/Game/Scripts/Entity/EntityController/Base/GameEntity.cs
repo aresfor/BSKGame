@@ -6,6 +6,7 @@
 //------------------------------------------------------------
 
 using Game.Core;
+using Game.Gameplay;
 using GameFramework;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -13,11 +14,11 @@ using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
 {
-    public abstract class GameEntity : EntityLogic
+    public abstract class GameEntity : EntityLogic, IGameplayTagOwner
     {
         [SerializeField]
         private EntityData m_EntityData = null;
-
+        
         public int Id
         {
             get
@@ -39,6 +40,13 @@ namespace Game.Client
 #endif
         {
             base.OnInit(userData);
+            m_EntityData = userData as EntityData;
+            if (m_EntityData == null)
+            {
+                    Log.Error("Entity data is invalid.");
+                    return;
+            }
+            
             CachedAnimation = GetComponent<Animation>();
         }
 
@@ -59,14 +67,6 @@ namespace Game.Client
 #endif
         {
             base.OnShow(userData);
-
-            m_EntityData = userData as EntityData;
-            if (m_EntityData == null)
-            {
-                Log.Error("Entity data is invalid.");
-                return;
-            }
-
             
             Name = Utility.Text.Format("[Entity {0}]", Id);
             CachedTransform.localPosition = m_EntityData.Position.ToVector3();
@@ -126,6 +126,26 @@ namespace Game.Client
 #endif
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
+        }
+
+        public void AddTag(string tag)
+        {
+                m_EntityData.AddTag(tag);
+        }
+
+        public void RemoveTag(string tag)
+        {
+                m_EntityData.RemoveTag(tag);
+        }
+
+        public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact)
+        {
+                return m_EntityData.HasTag(tag, checkType);
+        }
+
+        public void ClearAllTag()
+        {
+                m_EntityData.ClearAllTag();
         }
     }
 }

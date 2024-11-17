@@ -1,10 +1,17 @@
-﻿namespace Game.Client
+﻿using GameFramework;
+
+namespace Game.Client
 {
     public partial class GameEntry
     {
+        public static BuiltinDataComponent BuiltinData
+        {
+            get;
+            private set;
+        }
         private static void InitCustomComponents()
         {
-            //自定义组件
+            BuiltinData = UnityGameFramework.Runtime.GameEntry.GetComponent<BuiltinDataComponent>();
         }
     }
 }

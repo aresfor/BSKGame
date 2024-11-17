@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Game.Core;
+using GameFramework;
 using Newtonsoft.Json;
 using Log = GameFramework.GameFrameworkLog;
 namespace Game.Gameplay;
@@ -7,7 +8,7 @@ namespace Game.Gameplay;
 public static class GameplayTagHelper
 {
     private static string s_TagFilePath = string.Empty;
-    private const string DefaultTagFilePath = "Assets/GameRes/Json/GameplayTag.json";
+    private const string DefaultTagFilePath = "Assets/GameRes/Configs/GameplayTag.json";
 
     private static GameplayTagTree m_TagTree;
     public static GameplayTagTree TagTree {
@@ -19,8 +20,8 @@ public static class GameplayTagHelper
             }
 
             return m_TagTree;
-        }
-        private set=> m_TagTree = value; }
+        } 
+        set=> m_TagTree = value; }
     
     public static void SaveTagFile(string relativePathToProject = DefaultTagFilePath)
     {
@@ -44,9 +45,7 @@ public static class GameplayTagHelper
             Log.Info($"文件不存在，创建文件：{fullPath}");
         }
         
-        // 要写入的内容
-
-        string content = JsonConvert.SerializeObject(TagTree, Formatting.Indented);
+        string content = Utility.Json.ToJson(TagTree);
 
         File.WriteAllText(fullPath, content, Encoding.UTF8);
         
@@ -55,7 +54,7 @@ public static class GameplayTagHelper
         s_TagFilePath = fullPath;
     }
 
-    public static string ReadTagFile()
+    internal static string ReadTagFile()
     {
         string tagFilePath = s_TagFilePath;
         if (string.IsNullOrEmpty(tagFilePath))
@@ -71,10 +70,10 @@ public static class GameplayTagHelper
         return File.ReadAllText(tagFilePath);
     }
 
-    public static GameplayTagTree InitializeGameplayTag()
+    internal static GameplayTagTree InitializeGameplayTag()
     {
         string tagContent = ReadTagFile();
-        m_TagTree = JsonConvert.DeserializeObject<GameplayTagTree>(tagContent);
+        m_TagTree = Utility.Json.ToObject<GameplayTagTree>(tagContent);
         if (null == m_TagTree)
         {
             Log.Warning($"{nameof(GameplayTagTree)} 加载失败, 新建GameplayTagTree");
@@ -83,19 +82,5 @@ public static class GameplayTagHelper
 
         return m_TagTree;
     }
-
-    public static void AddTag(this EntityData entityData, string tag)
-    {
-        entityData.GameplayTagContainer.AddTag(tag);
-    }
-
-    public static void RemoveTag(this EntityData entityData, string tag)
-    {
-        entityData.GameplayTagContainer.RemoveTag(tag);
-    }
     
-    public static bool HasTag(this EntityData entityData, string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact)
-    {
-        return entityData.GameplayTagContainer.HasTag(tag, checkType);
-    }
 }

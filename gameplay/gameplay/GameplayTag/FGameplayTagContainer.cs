@@ -6,7 +6,7 @@ public enum EGameplayTagCheckType : byte
     Parent,//tag是子tag也通过，继承检测
 }
 
-public struct FGameplayTagContainer
+public struct FGameplayTagContainer: IGameplayTagOwner
 {
     private HashSet<string> m_Tags = new HashSet<string>();
 
@@ -20,7 +20,7 @@ public struct FGameplayTagContainer
         return m_Tags.Contains(tag) || checkType is EGameplayTagCheckType.Parent && m_Tags.Any(t => GameplayTagHelper.TagTree.IsTagChildOf(tag, t));
     }
 
-    public void Clear()
+    public void ClearAllTag()
     {
         m_Tags.Clear();
     }

@@ -271,7 +271,7 @@ namespace UnityGameFramework.Editor
             {
                 NoneOptionName
             };
-
+            
             jsonHelperTypeNames.AddRange(Type.GetRuntimeTypeNames(typeof(Utility.Json.IJsonHelper)));
             m_JsonHelperTypeNames = jsonHelperTypeNames.ToArray();
             m_JsonHelperTypeNameIndex = 0;

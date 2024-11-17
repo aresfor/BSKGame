@@ -9,7 +9,7 @@ namespace Game.Core
     /// 与Entity绑定的数据，子类需要在特定时机调用InitProperties
     /// </summary>
     [Serializable]
-    public abstract class EntityData: IReference
+    public abstract class EntityData: IReference, IGameplayTagOwner
     {
         private int m_Id = 0;
         
@@ -21,11 +21,8 @@ namespace Game.Core
 
         private IPropertyArr m_Properties = new PropertyArr();
 
-        public FGameplayTagContainer GameplayTagContainer
-        {
-            get; 
-            private set;
-        } = new FGameplayTagContainer();
+        private FGameplayTagContainer m_GameplayTagContainer 
+            = new FGameplayTagContainer();
         
         public EntityData()
         {
@@ -49,11 +46,30 @@ namespace Game.Core
         
         protected abstract void OnClear();
 
+        public void AddTag(string tag)
+        {
+            m_GameplayTagContainer.AddTag(tag);
+        }
+
+        public void RemoveTag(string tag)
+        {
+            m_GameplayTagContainer.RemoveTag(tag);
+        }
+
+        public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact)
+        {
+            return m_GameplayTagContainer.HasTag(tag, checkType);
+        }
         public void Clear()
         {
             OnClear();
             m_Properties.Reset();
-            GameplayTagContainer.Clear();
+            ClearAllTag();
+        }
+        
+        public void ClearAllTag()
+        {
+            m_GameplayTagContainer.ClearAllTag();
         }
         
         /// <summary>
@@ -131,5 +147,7 @@ namespace Game.Core
                 m_Rotation = value;
             }
         }
+
+        
     }
 }
