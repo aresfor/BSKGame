@@ -5,9 +5,11 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using Game.Core;
 using GameFramework;
 using UnityEngine;
 using UnityGameFramework.Runtime;
+using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
 {
@@ -64,9 +66,10 @@ namespace Game.Client
                 return;
             }
 
+            
             Name = Utility.Text.Format("[Entity {0}]", Id);
-            CachedTransform.localPosition = m_EntityData.Position;
-            CachedTransform.localRotation = m_EntityData.Rotation;
+            CachedTransform.localPosition = m_EntityData.Position.ToVector3();
+            CachedTransform.localRotation = m_EntityData.Rotation.ToQuaternion();
             CachedTransform.localScale = Vector3.one;
         }
 

@@ -7,7 +7,9 @@
 
 using GameFramework.DataTable;
 using System;
+using Game.Core;
 using UnityGameFramework.Runtime;
+using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using GameFramework;
 using GameFramework.DataTable;
 using UnityEngine;
 using UnityGameFramework.Runtime;
@@ -8,10 +9,11 @@ namespace Game.Client
     public static partial class DataTableExtension
     {
         private const string DataRowClassPrefixName = "Game.Client.DR";
+        
         public static readonly char[] DataSplitSeparators = {'\t'};
         public static readonly char[] DataTrimSeparators = {'\"'};
 
-        public static void LoadDataTable(this DataTableComponent dataTableComponent, string dataTableName, string dataTableAssetName, object userData)
+        public static void LoadDataTable(this DataTableComponent dataTableComponent,  string dataTableName, string dataTableAssetName, object userData, string prefix = DataRowClassPrefixName)
         {
             if (string.IsNullOrEmpty(dataTableName))
             {
@@ -26,12 +28,16 @@ namespace Game.Client
                 return;
             }
 
-            string dataRowClassName = DataRowClassPrefixName + splitedNames[0];
+            string dataRowClassName = prefix + splitedNames[0];
             Type dataRowType = Type.GetType(dataRowClassName);
             if (dataRowType == null)
             {
-                Log.Error("Can not get data row type with class name '{0}'.", dataRowClassName);
-                return;
+                dataRowType = Utility.Assembly.GetType(dataRowClassName);
+                if (dataRowType == null)
+                {
+                    Log.Error("Can not get data row type with class name '{0}'.", dataRowClassName);
+                    return;
+                }
             }
 
             string name = splitedNames.Length > 1 ? splitedNames[1] : null;

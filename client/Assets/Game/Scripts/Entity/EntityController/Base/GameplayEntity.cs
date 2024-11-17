@@ -2,11 +2,8 @@
 
 namespace Game.Client
 {
-    public abstract class GameplayEntity:GameEntity, IController
+    public abstract class GameplayEntity:GameEntity
     {
-        public IArchitecture GetArchitecture()
-        {
-            return GameplayEntityArchitecture.Interface;
-        }
+
     }
 }

@@ -29,7 +29,13 @@ namespace Game.Client
             //"Weapon",
             "Player",
         };
+        private const string DataRowClassGameplayPrefixName = "Game.Gameplay.DR";
 
+        public readonly string[] DataTableNames_Gameplay = new string[]
+        {
+            "Property",
+        };
+        
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();
         
 
@@ -86,6 +92,12 @@ namespace Game.Client
             //LoadConfig("DefaultConfig");
 
             // Preload data tables
+            
+            foreach (string dataTableName in DataTableNames_Gameplay)
+            {
+                LoadDataTableGameplay(dataTableName);
+            }
+            
             foreach (string dataTableName in DataTableNames)
             {
                 LoadDataTable(dataTableName);
@@ -111,7 +123,13 @@ namespace Game.Client
             m_LoadedFlag.Add(dataTableAssetName, false);
             GameEntry.DataTable.LoadDataTable(dataTableName, dataTableAssetName, this);
         }
-
+        private void LoadDataTableGameplay(string dataTableName)
+        {
+            string dataTableAssetName = AssetUtility.GetDataTableAsset(dataTableName, false);
+            m_LoadedFlag.Add(dataTableAssetName, false);
+            GameEntry.DataTable.LoadDataTable(dataTableName, dataTableAssetName, this, DataRowClassGameplayPrefixName);
+        }
+        
         private void LoadDictionary(string dictionaryName)
         {
             string dictionaryAssetName = AssetUtility.GetDictionaryAsset(dictionaryName, false);

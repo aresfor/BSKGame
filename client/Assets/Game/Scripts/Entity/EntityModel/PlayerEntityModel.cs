@@ -4,32 +4,27 @@ namespace Game.Client
 {
     public class PlayerEntityModel:EntityModel
     {
-        private DRPlayer m_PlayerData;
+        public DRPlayer PlayerData;
 
         public PlayerEntityModel()
         {
             
         }
         
-        public PlayerEntityModel(int entityId, int typeId) : base(entityId, typeId)
-        {
-        }
-
-        protected override void OnInit()
+        protected override void OnInitialize()
         {
             IDataTable<DRPlayer> dtPlayer = GameEntry.DataTable.GetDataTable<DRPlayer>();
-            m_PlayerData = dtPlayer.GetDataRow(TypeId);
-            if (m_PlayerData == null)
+            PlayerData = dtPlayer.GetDataRow(TypeId);
+            if (PlayerData == null)
             {
                 return;
             }
-            
-            
+            InitProperties(PlayerData.PropertyId);
         }
 
         protected override void OnClear()
         {
-            m_PlayerData = null;
+            PlayerData = null;
         }
     }
 }

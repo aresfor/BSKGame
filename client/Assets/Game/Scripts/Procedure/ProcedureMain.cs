@@ -12,8 +12,7 @@ namespace Game.Client
             base.OnEnter(procedureOwner);
 
             var model = ReferencePool.Acquire<PlayerEntityModel>();
-            model.Id = GameEntry.Entity.GenerateSerialId();
-            model.TypeId = 10000;
+            model.Init(GameEntry.Entity.GenerateSerialId(),10000); 
             GameEntry.Entity.ShowPlayerEntity(model);
             IEntity entity = GameEntry.Entity.GetEntity(model.Id);
             

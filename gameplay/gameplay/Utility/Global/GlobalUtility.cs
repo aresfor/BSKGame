@@ -1,4 +1,6 @@
-﻿namespace Game.Core;
+﻿using Game.Core;
+
+namespace Game.Gameplay;
 
 public static class GlobalUtility
 {

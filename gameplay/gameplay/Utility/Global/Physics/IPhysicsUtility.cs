@@ -1,6 +1,7 @@
-﻿using Game.Math;
+﻿using Game.Core;
+using Game.Math;
 
-namespace Game.Core;
+namespace Game.Gameplay;
 
 public interface IPhysicsUtility: IUtility
 {

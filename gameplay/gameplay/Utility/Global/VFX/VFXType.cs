@@ -1,4 +1,4 @@
-namespace Game.Core;
+namespace Game.Gameplay;
 
 public enum VFXType : uint
 {

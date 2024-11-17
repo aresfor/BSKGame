@@ -1,5 +1,5 @@
 // ReSharper disable InconsistentNaming
-namespace Game.Core
+namespace Game.Gameplay
 {
     public struct FSpawnedVFXInfo
     {

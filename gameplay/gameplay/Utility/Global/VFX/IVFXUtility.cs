@@ -1,9 +1,10 @@
-﻿using Game.Math;
+﻿using Game.Core;
+using Game.Math;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace Game.Core;
+namespace Game.Gameplay;
 
 public interface IResetable
 {

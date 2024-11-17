@@ -1,0 +1,17 @@
+{
+    "name": "FlowCanvas",
+    "rootNamespace": "",
+    "references": [
+        "GUID:66c2eb417c67ad849907d0769db96dbf",
+        "GUID:e434122054623a143976351f500a064b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

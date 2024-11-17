@@ -5,6 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using Game.Core;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -12,15 +13,13 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 实体逻辑基类。
     /// </summary>
-    public abstract class EntityLogic : MonoBehaviour
+    public abstract class EntityLogic : BaseMonoBehaviour
     {
         private bool m_Available = false;
         private bool m_Visible = false;
         private Entity m_Entity = null;
-        private Transform m_CachedTransform = null;
         private int m_OriginalLayer = 0;
-        private Transform m_OriginalTransform = null;
-
+        private Transform m_OriginalParentTransform;
         /// <summary>
         /// 获取实体。
         /// </summary>
@@ -86,30 +85,14 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 获取已缓存的 Transform。
-        /// </summary>
-        public Transform CachedTransform
-        {
-            get
-            {
-                return m_CachedTransform;
-            }
-        }
-
-        /// <summary>
         /// 实体初始化。
         /// </summary>
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnInit(object userData)
         {
-            if (m_CachedTransform == null)
-            {
-                m_CachedTransform = transform;
-            }
-
             m_Entity = GetComponent<Entity>();
             m_OriginalLayer = gameObject.layer;
-            m_OriginalTransform = CachedTransform.parent;
+            m_OriginalParentTransform = CachedTransform.parent;
         }
 
         /// <summary>
@@ -178,7 +161,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnDetachFrom(EntityLogic parentEntity, object userData)
         {
-            CachedTransform.SetParent(m_OriginalTransform);
+            CachedTransform.SetParent(m_OriginalParentTransform);
         }
 
         /// <summary>

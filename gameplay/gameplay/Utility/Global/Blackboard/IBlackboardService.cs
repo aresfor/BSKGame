@@ -1,6 +1,6 @@
 using Game.Core;
 
-namespace CustomGamePlay;
+namespace Game.Gameplay;
 
 public interface IBlackboardService: IUtility
 {

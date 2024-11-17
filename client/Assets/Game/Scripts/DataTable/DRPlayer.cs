@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2024-11-16 22:54:20.051
+// 生成时间：2024-11-17 07:08:01.767
 //------------------------------------------------------------
 
 using GameFramework;
@@ -45,6 +45,15 @@ namespace Game.Client
             private set;
         }
 
+        /// <summary>
+        /// 获取属性Id。
+        /// </summary>
+        public int PropertyId
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -58,6 +67,7 @@ namespace Game.Client
             m_Id = int.Parse(columnStrings[index++]);
             index++;
             Name = columnStrings[index++];
+            PropertyId = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -71,6 +81,7 @@ namespace Game.Client
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     Name = binaryReader.ReadString();
+                    PropertyId = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

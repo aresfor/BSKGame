@@ -1,6 +1,6 @@
 ﻿using Game.Core;
 
-namespace Game.Core;
+namespace Game.Gameplay;
 
 public class GameplayTest
 {

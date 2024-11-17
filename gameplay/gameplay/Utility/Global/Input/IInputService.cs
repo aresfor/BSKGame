@@ -3,7 +3,7 @@
 using Game.Core;
 using Game.Math;
 
-namespace CustomGamePlay
+namespace Game.Gameplay
 {
     public enum EKeyCode
     {

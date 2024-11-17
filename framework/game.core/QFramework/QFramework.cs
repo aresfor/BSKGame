@@ -572,6 +572,8 @@ namespace Game.Core
 
         IUnRegister Register(Action<T, T> onValueChanged);
         void UnRegister(Action<T, T> onValueChanged);
+
+        void UnRegisterAll();
     }
 
     public class BindableProperty<T> : IBindableProperty<T>
@@ -624,6 +626,12 @@ namespace Game.Core
         }
 
         public void UnRegister(Action<T, T> onValueChanged)=> mOnValueChangedWithOld.UnRegister(onValueChanged);
+        public void UnRegisterAll()
+        {
+            mOnValueChanged.UnRegisterAll();
+            mOnValueChangedWithOld.UnRegisterAll();
+        }
+
         public IUnRegister RegisterWithInitValue(Action<T> onValueChanged)
         {
             onValueChanged(mValue);
@@ -687,6 +695,11 @@ namespace Game.Core
             return Register(Action);
             void Action(T _) => onEvent();
         }
+
+        public void UnRegisterAll()
+        {
+            mOnEvent = null;
+        }
     }
 
     public class EasyEvent<T, K> : IEasyEvent
@@ -708,6 +721,11 @@ namespace Game.Core
             return Register(Action);
             void Action(T _, K __) => onEvent();
         }
+        
+        public void UnRegisterAll()
+        {
+            mOnEvent = null;
+        }
     }
 
     public class EasyEvent<T, K, S> : IEasyEvent
@@ -728,6 +746,11 @@ namespace Game.Core
         {
             return Register(Action);
             void Action(T _, K __, S ___) => onEvent();
+        }
+        
+        public void UnRegisterAll()
+        {
+            mOnEvent = null;
         }
     }
 
