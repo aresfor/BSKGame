@@ -12,10 +12,10 @@ namespace Game.Gameplay
         public int BoardEntityId { get; private set; } 
         public float Width { get; private set; }
         public float Height { get; private set; }
-        public Lattice Lattice { get; private set; }
-        public Board Board { get; private set; }
-        public LatticeEntityModel(Board board, int boardX, int boardY, float3 position
-            , quaternion rotation, Lattice lattice
+        public LatticeNode LatticeNode { get; private set; }
+        public BoardGraph BoardGraph { get; private set; }
+        public LatticeEntityModel(BoardGraph boardGraph, int boardX, int boardY, float3 position
+            , quaternion rotation, LatticeNode latticeNode
             , int boardEntityId
             , float width, float height)
         {
@@ -26,8 +26,8 @@ namespace Game.Gameplay
             BoardEntityId = boardEntityId;
             Width = width;
             Height = height;
-            Lattice = lattice;
-            Board = board;
+            LatticeNode = latticeNode;
+            BoardGraph = boardGraph;
         }
         
         protected override void OnInitialize()

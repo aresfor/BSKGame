@@ -7,7 +7,7 @@ using GameFramework.Runtime;
 
 namespace Game.Gameplay
 {
-    public class Board : ArrayGraph<LatticeGameplayEntity>
+    public class BoardGraph : ArrayGraph<LatticeGameplayEntity>
     {
         //[Min(1)] public float BoardWidth = 1;
         //[Min(1)] public float BoardHeight = 1;
@@ -15,7 +15,7 @@ namespace Game.Gameplay
         public float LatticeHeight = 1;
         
 
-        public Board(int inRow, int inColumn) : base(inRow, inColumn)
+        public BoardGraph(int inRow, int inColumn) : base(inRow, inColumn)
         {
             
         }
@@ -35,7 +35,7 @@ namespace Game.Gameplay
                 {
                     float positionX = j * perWidth + rowPositionX;
 
-                    var lattice = ReferencePool.Acquire<Lattice>();
+                    var lattice = ReferencePool.Acquire<LatticeNode>();
                     Array[i, j] = lattice;
                     var latticeModel = new LatticeEntityModel(this,i, j
                         , new float3(positionX, boardPosition.y, positionZ)

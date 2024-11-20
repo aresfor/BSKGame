@@ -14,10 +14,14 @@ namespace Game.Client
     
     public class BoardEntityLogic:GameEntityLogic
     {
-        private Board m_Board;
+
+        [SerializeField] [Range(1, 20)]private int Row = 10;
+        [SerializeField] [Range(1, 20)]private int Column = 10;
+        
+        private BoardGraph m_Board;
         private BoardEntityModel m_Model;
 
-        public Board Board => m_Board;
+        public BoardGraph Board => m_Board;
         private Ray m_MouseRay => Camera.main.ScreenPointToRay(Input.mousePosition);
         
         public override void OnInit(object userData)
@@ -25,7 +29,7 @@ namespace Game.Client
             base.OnInit(userData);
 
             m_Model = (BoardEntityModel)userData;
-            m_Board = new Board(10, 10);
+            m_Board = new BoardGraph(Row, Column);
 
             //这里可以根据model配置数据来做一些自定义生成
             //m_MonoBoard.Generate();
@@ -78,9 +82,9 @@ namespace Game.Client
                     var resultNodes = ListPool<IGraphNode<LatticeGameplayEntity>>.Get();
                     
                     //m_Board.BFS(resultNodes, lattice.Lattice, 2);
-                    FArrayGraphNodeHandle handle = (FArrayGraphNodeHandle)lattice.Lattice.Handle;
+                    FArrayGraphNodeHandle handle = (FArrayGraphNodeHandle)lattice.LatticeNode.Handle;
                     var goalHandle = m_Board.CreateHandle(handle.Row + 3, handle.Column + 2);
-                    if (m_Board.BFS(lattice.Lattice, m_Board.FindNode(goalHandle), resultNodes))
+                    if (m_Board.BFS(lattice.LatticeNode, m_Board.FindNode(goalHandle), resultNodes))
                     {
                         Log.Info("找到path");
                         

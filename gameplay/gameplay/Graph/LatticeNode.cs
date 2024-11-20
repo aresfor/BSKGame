@@ -4,16 +4,16 @@ using Game.Gameplay;
 namespace Game.Gameplay
 {
     
-    public class Lattice: GraphNodeBase<LatticeGameplayEntity>
+    public class LatticeNode: GraphNodeBase<LatticeGameplayEntity>
     {
-        private Board m_BoardOwner;
+        private BoardGraph _mBoardGraphOwner;
 
-        public Lattice()
+        public LatticeNode()
         {
             
         }
         
-        public void Initialize(Board owner
+        public void Initialize(BoardGraph owner
             , LatticeGameplayEntity latticeEntity
             , string name = "")
         {
@@ -22,7 +22,7 @@ namespace Game.Gameplay
             Owner = owner;
             Value = latticeEntity;
 
-            m_BoardOwner = owner;
+            _mBoardGraphOwner = owner;
 
             var model = (LatticeEntityModel)latticeEntity.EntityData;
             Handle = new FArrayGraphNodeHandle(model.X, model.Y);
@@ -31,7 +31,7 @@ namespace Game.Gameplay
         public override void Clear()
         {
             base.Clear();
-            m_BoardOwner = null;
+            _mBoardGraphOwner = null;
         }
     }
 }

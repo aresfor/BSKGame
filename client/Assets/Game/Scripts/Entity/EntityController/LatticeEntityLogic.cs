@@ -10,7 +10,7 @@ namespace Game.Client
         private Sprite m_WhiteSprite;
         private BoxCollider m_BoxCollider;
 
-        public Lattice Lattice => m_Model.Lattice;
+        public LatticeNode LatticeNode => m_Model.LatticeNode;
         public int Row => m_Model.X;
         public int Column => m_Model.Y;
         public Sprite WhiteSprite

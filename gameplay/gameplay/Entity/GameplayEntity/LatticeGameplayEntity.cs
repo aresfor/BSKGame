@@ -18,7 +18,7 @@ public class LatticeGameplayEntity:GameplayEntity
     public override void OnShow(EntityData entityData)
     {
         base.OnShow(entityData);
-        m_Model.Lattice.Initialize(m_Model.Board
+        m_Model.LatticeNode.Initialize(m_Model.BoardGraph
             , this
             , Entity.EntityAssetName);
         
