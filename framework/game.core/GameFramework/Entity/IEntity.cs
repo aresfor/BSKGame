@@ -5,6 +5,8 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using UnityGameFramework.Runtime;
+
 namespace GameFramework.Entity
 {
     /// <summary>
@@ -12,6 +14,14 @@ namespace GameFramework.Entity
     /// </summary>
     public interface IEntity
     {
+
+        /// <summary>
+        /// 实体逻辑接口
+        /// </summary>
+        IEntityLogic LogicInterface
+        {
+            get;
+        }
         /// <summary>
         /// 获取实体编号。
         /// </summary>

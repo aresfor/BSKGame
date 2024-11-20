@@ -410,13 +410,61 @@ PrefabInstance:
       propertyPath: m_UIGroups.Array.data[0].m_Name
       value: Default
       objectReference: {fileID: 0}
+    - target: {fileID: 11463816, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_LoadAssetCountPerFrame
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_EntityGroups.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_EntityGroups.Array.data[0].m_Name
-      value: PlayerEntity
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[1].m_Name
+      value: Board
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[2].m_Name
+      value: Lattice
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[0].m_InstancePriority
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[1].m_InstanceCapacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[1].m_InstancePriority
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[2].m_InstanceCapacity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[2].m_InstancePriority
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[0].m_InstanceAutoReleaseInterval
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[1].m_InstanceAutoReleaseInterval
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11494652, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_EntityGroups.Array.data[2].m_InstanceAutoReleaseInterval
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
+      propertyPath: m_FrameRate
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_JsonHelperTypeName

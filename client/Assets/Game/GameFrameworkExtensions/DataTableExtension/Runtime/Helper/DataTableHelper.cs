@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using GameFramework;
 using GameFramework.DataTable;
+using GameFramework.Runtime;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 

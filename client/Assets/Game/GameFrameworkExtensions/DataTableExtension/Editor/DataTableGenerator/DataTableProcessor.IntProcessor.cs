@@ -6,6 +6,7 @@
 //------------------------------------------------------------
 
 using System.IO;
+using GameFramework.Runtime;
 
 namespace DE.Editor.DataTableTools
 {

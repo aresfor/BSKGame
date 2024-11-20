@@ -8,6 +8,7 @@
 using GameFramework;
 using GameFramework.Entity;
 using System;
+using GameFramework.Runtime;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -21,6 +22,22 @@ namespace UnityGameFramework.Runtime
         private string m_EntityAssetName;
         private IEntityGroup m_EntityGroup;
         private EntityLogic m_EntityLogic;
+
+        /// <summary>
+        /// 获取实体逻辑接口。
+        /// </summary>
+        public IEntityLogic LogicInterface
+        {
+            get => m_EntityLogic;
+        }
+        
+        /// <summary>
+        /// 获取实体逻辑。
+        /// </summary>
+        public EntityLogic Logic
+        {
+            get => m_EntityLogic;
+        }
 
         /// <summary>
         /// 获取实体编号。
@@ -65,17 +82,7 @@ namespace UnityGameFramework.Runtime
                 return m_EntityGroup;
             }
         }
-
-        /// <summary>
-        /// 获取实体逻辑。
-        /// </summary>
-        public EntityLogic Logic
-        {
-            get
-            {
-                return m_EntityLogic;
-            }
-        }
+        
 
         /// <summary>
         /// 实体初始化。
@@ -100,35 +107,41 @@ namespace UnityGameFramework.Runtime
             }
 
             ShowEntityInfo showEntityInfo = (ShowEntityInfo)userData;
-            Type entityLogicType = showEntityInfo.EntityLogicType;
-            if (entityLogicType == null)
-            {
-                Log.Error("Entity logic type is invalid.");
-                return;
-            }
+            //@注意：不再通过type来获取和创建了 直接在预制体上手动添加
+            // Type entityLogicType = showEntityInfo.EntityLogicType;
+            // if (entityLogicType == null)
+            // {
+            //     Log.Error("Entity logic type is invalid.");
+            //     return;
+            // }
 
-            if (m_EntityLogic != null)
-            {
-                if (m_EntityLogic.GetType() == entityLogicType)
-                {
-                    m_EntityLogic.enabled = true;
-                    return;
-                }
+            // if (m_EntityLogic != null)
+            // {
+            //     if (m_EntityLogic.GetType() == entityLogicType)
+            //     {
+            //         m_EntityLogic.enabled = true;
+            //         return;
+            //     }
+            //
+            //     Destroy(m_EntityLogic);
+            //     m_EntityLogic = null;
+            // }
 
-                Destroy(m_EntityLogic);
-                m_EntityLogic = null;
-            }
+            m_EntityLogic = (EntityLogic)gameObject.GetComponent(typeof(EntityLogic));
 
-            m_EntityLogic = gameObject.AddComponent(entityLogicType) as EntityLogic;
+
+            //m_EntityLogic = gameObject.AddComponent(entityLogicType) as EntityLogic;
             if (m_EntityLogic == null)
             {
                 Log.Error("Entity '{0}' can not add entity logic.", entityAssetName);
                 return;
             }
 
+            //让unity捕获而不是try catch
+            m_EntityLogic.OnInit(showEntityInfo.UserData);
+            
             try
             {
-                m_EntityLogic.OnInit(showEntityInfo.UserData);
             }
             catch (Exception exception)
             {
@@ -198,7 +211,7 @@ namespace UnityGameFramework.Runtime
             AttachEntityInfo attachEntityInfo = (AttachEntityInfo)userData;
             try
             {
-                m_EntityLogic.OnAttached(((Entity)childEntity).Logic, attachEntityInfo.ParentTransform, attachEntityInfo.UserData);
+                m_EntityLogic.OnAttached(childEntity, attachEntityInfo.ParentTransform, attachEntityInfo.UserData);
             }
             catch (Exception exception)
             {
@@ -215,7 +228,7 @@ namespace UnityGameFramework.Runtime
         {
             try
             {
-                m_EntityLogic.OnDetached(((Entity)childEntity).Logic, userData);
+                m_EntityLogic.OnDetached(childEntity, userData);
             }
             catch (Exception exception)
             {
@@ -233,7 +246,7 @@ namespace UnityGameFramework.Runtime
             AttachEntityInfo attachEntityInfo = (AttachEntityInfo)userData;
             try
             {
-                m_EntityLogic.OnAttachTo(((Entity)parentEntity).Logic, attachEntityInfo.ParentTransform, attachEntityInfo.UserData);
+                m_EntityLogic.OnAttachTo(parentEntity, attachEntityInfo.ParentTransform, attachEntityInfo.UserData);
             }
             catch (Exception exception)
             {
@@ -252,7 +265,7 @@ namespace UnityGameFramework.Runtime
         {
             try
             {
-                m_EntityLogic.OnDetachFrom(((Entity)parentEntity).Logic, userData);
+                m_EntityLogic.OnDetachFrom(parentEntity, userData);
             }
             catch (Exception exception)
             {

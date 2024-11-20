@@ -6,6 +6,8 @@
 //------------------------------------------------------------
 
 using Game.Core;
+using Game.Gameplay;
+using GameFramework.Entity;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -13,7 +15,7 @@ namespace UnityGameFramework.Runtime
     /// <summary>
     /// 实体逻辑基类。
     /// </summary>
-    public abstract class EntityLogic : BaseMonoBehaviour
+    public abstract class EntityLogic : BaseMonoBehaviour, IEntityLogic
     {
         private bool m_Available = false;
         private bool m_Visible = false;
@@ -30,6 +32,8 @@ namespace UnityGameFramework.Runtime
                 return m_Entity;
             }
         }
+
+        public IEntity EntityInterface { get=> m_Entity; }
 
         /// <summary>
         /// 获取或设置实体名称。
@@ -88,7 +92,7 @@ namespace UnityGameFramework.Runtime
         /// 实体初始化。
         /// </summary>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnInit(object userData)
+        public virtual void OnInit(object userData)
         {
             m_Entity = GetComponent<Entity>();
             m_OriginalLayer = gameObject.layer;
@@ -98,7 +102,7 @@ namespace UnityGameFramework.Runtime
         /// <summary>
         /// 实体回收。
         /// </summary>
-        protected internal virtual void OnRecycle()
+        public virtual void OnRecycle()
         {
         }
 
@@ -106,7 +110,7 @@ namespace UnityGameFramework.Runtime
         /// 实体显示。
         /// </summary>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnShow(object userData)
+        public virtual void OnShow(object userData)
         {
             m_Available = true;
             Visible = true;
@@ -117,12 +121,15 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="isShutdown">是否是关闭实体管理器时触发。</param>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnHide(bool isShutdown, object userData)
+        public virtual void OnHide(bool isShutdown, object userData)
         {
             gameObject.SetLayerRecursively(m_OriginalLayer);
             Visible = false;
             m_Available = false;
         }
+
+        
+
 
         /// <summary>
         /// 实体附加子实体。
@@ -130,8 +137,9 @@ namespace UnityGameFramework.Runtime
         /// <param name="childEntity">附加的子实体。</param>
         /// <param name="parentTransform">被附加父实体的位置。</param>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)
+        public virtual void OnAttached(IEntity childEntity, Transform parentTransform, object userData)
         {
+            
         }
 
         /// <summary>
@@ -139,9 +147,11 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="childEntity">解除的子实体。</param>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnDetached(EntityLogic childEntity, object userData)
+        public virtual void OnDetached(IEntity childEntity, object userData)
         {
         }
+
+        
 
         /// <summary>
         /// 实体附加子实体。
@@ -149,17 +159,18 @@ namespace UnityGameFramework.Runtime
         /// <param name="parentEntity">被附加的父实体。</param>
         /// <param name="parentTransform">被附加父实体的位置。</param>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
+        protected internal virtual void OnAttachTo(IEntity parentEntity, Transform parentTransform, object userData)
         {
             CachedTransform.SetParent(parentTransform);
         }
+
 
         /// <summary>
         /// 实体解除子实体。
         /// </summary>
         /// <param name="parentEntity">被解除的父实体。</param>
         /// <param name="userData">用户自定义数据。</param>
-        protected internal virtual void OnDetachFrom(EntityLogic parentEntity, object userData)
+        public virtual void OnDetachFrom(IEntity parentEntity, object userData)
         {
             CachedTransform.SetParent(m_OriginalParentTransform);
         }
@@ -169,7 +180,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="elapseSeconds">逻辑流逝时间，以秒为单位。</param>
         /// <param name="realElapseSeconds">真实流逝时间，以秒为单位。</param>
-        protected internal virtual void OnUpdate(float elapseSeconds, float realElapseSeconds)
+        public virtual void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
         }
 
@@ -177,9 +188,12 @@ namespace UnityGameFramework.Runtime
         /// 设置实体的可见性。
         /// </summary>
         /// <param name="visible">实体的可见性。</param>
-        protected virtual void InternalSetVisible(bool visible)
+        public void InternalSetVisible(bool visible)
         {
             gameObject.SetActive(visible);
         }
-    }
+        
+
+        }
+    
 }

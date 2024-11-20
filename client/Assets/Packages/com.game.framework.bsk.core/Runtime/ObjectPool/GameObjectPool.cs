@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Game.Core
 {
@@ -206,7 +205,7 @@ namespace Game.Core
             public int TotalCount => ObjectPool.CountInactive + InUsed.Count;
             public Action<GameObject> DoDestroy { get; set; }
             private readonly HashSet<GameObject> InUsed = new HashSet<GameObject>();
-            private IObjectPool<GameObject> ObjectPool;
+            private UnityEngine.Pool.IObjectPool<GameObject> ObjectPool;
 
             public InternalGameObjectPool(
                 string prefabName,
@@ -321,7 +320,7 @@ namespace Game.Core
         private Dictionary<GameObject, string> Item2Prefab = new();
         private List<DelayDeSpawnItem> _delayDeSpawnItems = new();
 
-        private IObjectPool<DelayDeSpawnItem> _delayDeSpawnItemPool = new UnityEngine.Pool.ObjectPool<DelayDeSpawnItem>(
+        private UnityEngine.Pool.IObjectPool<DelayDeSpawnItem> _delayDeSpawnItemPool = new UnityEngine.Pool.ObjectPool<DelayDeSpawnItem>(
             () => new DelayDeSpawnItem(),
             item => { item.Reset(); },
             item => { item.Reset(); });

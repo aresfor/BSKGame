@@ -7,7 +7,9 @@ namespace Game.Core;
 
 public class PropertyArr:IPropertyArr
 {
-    private IBindableProperty<float>[] m_Properties = new IBindableProperty<float>[Length];
+    //private IBindableProperty<float>[] m_Properties = new IBindableProperty<float>[Length];
+    private Dictionary<EPropertyDefine, IBindableProperty<float>> m_Properties
+        = new Dictionary<EPropertyDefine, IBindableProperty<float>>();
 
     private DRProperty m_OriginProperties;
 
@@ -67,48 +69,42 @@ public class PropertyArr:IPropertyArr
     }
     private void InitProperties(bool triggerEvent)
     {
-        bool bHasOriginValue = true;
         if (null == m_OriginProperties)
         {
             Log.Error($"origin properties is null, propertyId:{m_PropertyId}, properties init with 0");
-            bHasOriginValue = false;
         }
-        
-        
-        for (int i = 0;i<Length;++i)
+
+        if (m_Properties.Count <= 0)
         {
-            if (m_Properties[i] == null)
+            for (int i = 0; i < Length; ++i)
             {
-                m_Properties[i] = new BindableProperty<float>();
-            }
-            
-            if (bHasOriginValue)
-            {
-                if (triggerEvent)
-                {
-                    m_Properties[i].Value = m_OriginProperties[i];
-                }
-                else
-                {
-                    m_Properties[i].SetValueWithoutEvent(m_OriginProperties[i]);
-                }
-            }
-            else
-            {
-                if (triggerEvent)
-                {
-                    m_Properties[i].Value = 0;
-                }
-                else
-                {
-                    m_Properties[i].SetValueWithoutEvent(0);
-                }
+                m_Properties[(EPropertyDefine)i] = new BindableProperty<float>();
             }
         }
+        
+        if (triggerEvent)
+        {
+            m_Properties[EPropertyDefine.Health].Value = m_OriginProperties.Health;
+            m_Properties[EPropertyDefine.MaxHealth].Value = m_OriginProperties.MaxHealth;
+            m_Properties[EPropertyDefine.Mana].Value = m_OriginProperties.Mana;
+            m_Properties[EPropertyDefine.MaxMana].Value = m_OriginProperties.MaxMana;
+            m_Properties[EPropertyDefine.Armor].Value = m_OriginProperties.Armor;
+            m_Properties[EPropertyDefine.MaxArmor].Value = m_OriginProperties.MaxArmor;
+        }
+        else
+        {
+            m_Properties[EPropertyDefine.Health].SetValueWithoutEvent(m_OriginProperties.Health);
+            m_Properties[EPropertyDefine.MaxHealth].SetValueWithoutEvent(m_OriginProperties.MaxHealth);
+            m_Properties[EPropertyDefine.Mana].SetValueWithoutEvent(m_OriginProperties.Mana);
+            m_Properties[EPropertyDefine.MaxMana].SetValueWithoutEvent(m_OriginProperties.MaxMana);
+            m_Properties[EPropertyDefine.Armor].SetValueWithoutEvent(m_OriginProperties.Armor);
+            m_Properties[EPropertyDefine.MaxArmor].SetValueWithoutEvent(m_OriginProperties.MaxArmor);
+        }
+
     }
     public float GetProperty( EPropertyDefine propertyDefine)
     {
-        return m_Properties[(int)propertyDefine].Value;
+        return m_Properties[propertyDefine].Value;
     }
 
     public void SetProperty( EPropertyDefine propertyDefine, float value, bool triggerEvent = true)
@@ -122,10 +118,10 @@ public class PropertyArr:IPropertyArr
         }
         
         if(triggerEvent)
-            m_Properties[(int)propertyDefine].Value = value;
+            m_Properties[propertyDefine].Value = value;
         else
         {
-            m_Properties[(int)propertyDefine].SetValueWithoutEvent(value);
+            m_Properties[propertyDefine].SetValueWithoutEvent(value);
         }
     }
     
@@ -137,14 +133,14 @@ public class PropertyArr:IPropertyArr
             {
                 throw new IndexOutOfRangeException($"Index {index} is out of range.");
             }
-            return m_Properties[index];
+            return m_Properties[(EPropertyDefine)index];
         }
     }
 
     public void Reset()
     {
         m_PropertyId = 0;
-        foreach (var bindableProperty in m_Properties)
+        foreach (var bindableProperty in m_Properties.Values)
         {
             bindableProperty.UnRegisterAll();
         }

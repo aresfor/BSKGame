@@ -8,6 +8,7 @@
 using GameFramework.Resource;
 using System.IO;
 using System.Text;
+using GameFramework.Runtime;
 
 namespace UnityGameFramework.Runtime
 {

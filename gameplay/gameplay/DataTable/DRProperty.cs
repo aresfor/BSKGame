@@ -1,70 +1,141 @@
-﻿using Game.Core;
-using GameFramework.DataTable;
+﻿//------------------------------------------------------------
+// Game Framework
+// Copyright © 2013-2021 Jiang Yin. All rights reserved.
+// Homepage: https://gameframework.cn/
+// Feedback: mailto:ellan@gameframework.cn
+//------------------------------------------------------------
+// 此文件由工具自动生成，请勿直接修改。
+// 生成时间：2024-11-20 05:47:19.288
+//------------------------------------------------------------
 
-namespace Game.Gameplay;
+using GameFramework;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Game.Gameplay;
+using GameFramework.Runtime;
 
-public class DRProperty:IDataRow
+namespace Game.Gameplay
 {
-
-    private int m_Id = 0;
-
-    private float[] m_Properties = new float[Length];
-    public int Id { get=>m_Id; }
-    public static int Length => (int)EPropertyDefine.Max;
-    public float this[int index]
+    /// <summary>
+    /// 属性表。
+    /// </summary>
+    public class DRProperty : DataRowBase
     {
-        get
+        private int m_Id = 0;
+
+        /// <summary>
+        /// 获取属性Id。
+        /// </summary>
+        public override int Id
         {
-            if (index < 0 || index >= Length)
+            get
             {
-                throw new IndexOutOfRangeException($"Index {index} is out of range.");
+                return m_Id;
             }
-            return m_Properties[index];
         }
-        set
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public float Health
         {
-            if (index < 0 || index >= Length)
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public float MaxHealth
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public float Mana
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public float MaxMana
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public float Armor
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// 获取。
+        /// </summary>
+        public float MaxArmor
+        {
+            get;
+            private set;
+        }
+
+        public override bool ParseDataRow(string dataRowString, object userData)
+        {
+            string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
+            for (int i = 0; i < columnStrings.Length; i++)
             {
-                throw new IndexOutOfRangeException($"Index {index} is out of range.");
+                columnStrings[i] = columnStrings[i].Trim(DataTableExtension.DataTrimSeparators);
             }
-            m_Properties[index] = value;
-        }
-    }
-    
-    public bool ParseDataRow(string dataRowString, object userData)
-    {
-        string[] columnStrings = dataRowString.Split('\t');
-        int columnLength = columnStrings.Length;
-        for (int i = 0; i < columnLength; i++)
-        {
-            columnStrings[i] = columnStrings[i].Trim('\"');
+
+            int index = 0;
+            index++;
+            m_Id = int.Parse(columnStrings[index++]);
+            index++;
+            Health = float.Parse(columnStrings[index++]);
+            MaxHealth = float.Parse(columnStrings[index++]);
+            Mana = float.Parse(columnStrings[index++]);
+            MaxMana = float.Parse(columnStrings[index++]);
+            Armor = float.Parse(columnStrings[index++]);
+            MaxArmor = float.Parse(columnStrings[index++]);
+
+            GeneratePropertyArray();
+            return true;
         }
 
-        int index = 0;
-        //#列
-        index++;
-        //Id
-        m_Id = int.Parse(columnStrings[index++]);
-        //备注
-        index++;
-        
-        //属性值，@TODO： 之后考虑接luban，不然现在同时要维护属性枚举和表格
-        if ((columnLength-3) != Length)
+        public override bool ParseDataRow(byte[] dataRowBytes, int startIndex, int length, object userData)
         {
-            Log.Error("property datatable column length not equal to property define, check");
-            return false;
-        }
-        
-        for (int i = 0; i < Length; ++i)
-        {
-            float value = float.Parse(columnStrings[index++]);
-            m_Properties[i] = value;
-        }
-        return true;
-    }
+            using (MemoryStream memoryStream = new MemoryStream(dataRowBytes, startIndex, length, false))
+            {
+                using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
+                {
+                    m_Id = binaryReader.Read7BitEncodedInt32();
+                    Health = binaryReader.ReadSingle();
+                    MaxHealth = binaryReader.ReadSingle();
+                    Mana = binaryReader.ReadSingle();
+                    MaxMana = binaryReader.ReadSingle();
+                    Armor = binaryReader.ReadSingle();
+                    MaxArmor = binaryReader.ReadSingle();
+                }
+            }
 
-    public bool ParseDataRow(byte[] dataRowBytes, int startIndex, int length, object userData)
-    {
-        throw new NotImplementedException();
+            GeneratePropertyArray();
+            return true;
+        }
+
+        private void GeneratePropertyArray()
+        {
+
+        }
     }
 }

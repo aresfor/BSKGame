@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Gameplay;
 using GameFramework;
 using GameFramework.DataTable;
 using UnityEngine;
@@ -8,10 +9,9 @@ namespace Game.Client
 {
     public static partial class DataTableExtension
     {
-        private const string DataRowClassPrefixName = "Game.Client.DR";
+        private const string DataRowClassPrefixName = "Game.Gameplay.DR";
         
-        public static readonly char[] DataSplitSeparators = {'\t'};
-        public static readonly char[] DataTrimSeparators = {'\"'};
+        
 
         public static void LoadDataTable(this DataTableComponent dataTableComponent,  string dataTableName, string dataTableAssetName, object userData, string prefix = DataRowClassPrefixName)
         {

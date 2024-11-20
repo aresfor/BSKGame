@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using GameFramework.FileSystem;
+using GameFramework.Runtime;
 
 namespace Game.Client
 {

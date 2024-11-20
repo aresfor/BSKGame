@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using GameFramework.Runtime;
 using UnityEngine;
 
 namespace DE.Editor.DataTableTools

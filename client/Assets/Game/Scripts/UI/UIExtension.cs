@@ -8,6 +8,7 @@
 using GameFramework.DataTable;
 using GameFramework.UI;
 using System.Collections;
+using Game.Gameplay;
 using GameFramework.Procedure;
 using UnityEngine;
 using UnityEngine.UI;

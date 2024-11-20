@@ -13,6 +13,7 @@ using System.Text;
 using GameFramework;
 using GameFramework.FileSystem;
 using Game.Client;
+using GameFramework.Runtime;
 using UnityEngine;
 
 namespace DE.Editor.DataTableTools

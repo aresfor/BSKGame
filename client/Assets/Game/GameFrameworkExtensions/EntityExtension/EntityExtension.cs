@@ -8,20 +8,17 @@
 using GameFramework.DataTable;
 using System;
 using Game.Core;
+using Game.Gameplay;
+using GameFramework.Entity;
 using UnityGameFramework.Runtime;
 using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
 {
-    public static class EntityExtension
+    public  static partial class EntityExtension
     {
-        // 关于 EntityId 的约定：
-        // 0 为无效
-        // 正值用于和服务器通信的实体（如玩家角色、NPC、怪等，服务器只产生正值）
-        // 负值用于本地生成的临时实体（如特效、FakeObject等）
-        private static int s_SerialId = 0;
-
-        public static GameEntity GetGameEntity(this EntityComponent entityComponent, int entityId)
+        
+        public static GameEntityLogic GetGameEntity(this EntityComponent entityComponent, int entityId)
         {
             UnityGameFramework.Runtime.Entity entity = entityComponent.GetEntity(entityId);
             if (entity == null)
@@ -29,25 +26,36 @@ namespace Game.Client
                 return null;
             }
 
-            return (GameEntity)entity.Logic;
+            return (GameEntityLogic)entity.Logic;
         }
 
-        public static void HideEntity(this EntityComponent entityComponent, GameEntity gameEntity)
+        public static void HideEntity(this EntityComponent entityComponent, GameEntityLogic gameEntityLogic)
         {
-            entityComponent.HideEntity(gameEntity.Entity);
+            entityComponent.HideEntity(gameEntityLogic.Entity);
         }
 
-        public static void AttachEntity(this EntityComponent entityComponent, GameEntity gameEntity, int ownerId, string parentTransformPath = null, object userData = null)
+        public static void AttachEntity(this EntityComponent entityComponent, GameEntityLogic gameEntityLogic, int ownerId, string parentTransformPath = null, object userData = null)
         {
-            entityComponent.AttachEntity(gameEntity.Entity, ownerId, parentTransformPath, userData);
+            entityComponent.AttachEntity(gameEntityLogic.Entity, ownerId, parentTransformPath, userData);
         }
 
         public static void ShowPlayerEntity(this EntityComponent entityComponent, PlayerEntityModel model)
         {
-            entityComponent.ShowEntity(typeof(PlayerEntity), nameof(PlayerEntity), Constant.AssetPriority.GameplayAsset, model);
+            entityComponent.ShowGameplayEntity(null, "Player", Constant.AssetPriority.GameplayAsset, model);
+        }
+
+        public static void ShowBoardEntity(this EntityComponent entityComponent, BoardEntityModel model)
+        {
+            entityComponent.ShowGameplayEntity(null, "Board", Constant.AssetPriority.GameplayAsset, model);
+
+        }
+        public static void ShowLatticeEntity(this EntityComponent entityComponent, LatticeEntityModel model)
+        {
+            entityComponent.ShowGameplayEntity(null, "Lattice", Constant.AssetPriority.GameplayAsset, model);
+
         }
         
-        private static void ShowEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, int priority, EntityData data)
+        public static void ShowGameplayEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, int priority, EntityData data)
         {
             if (data == null)
             {
@@ -63,12 +71,10 @@ namespace Game.Client
                 return;
             }
 
+            
+            
             entityComponent.ShowEntity(data.Id, logicType, AssetUtility.GetEntityAsset(drEntity.AssetName), entityGroup, priority, data);
         }
-
-        public static int GenerateSerialId(this EntityComponent entityComponent)
-        {
-            return --s_SerialId;
-        }
+        
     }
 }

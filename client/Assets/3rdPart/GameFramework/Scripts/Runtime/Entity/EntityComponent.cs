@@ -11,6 +11,7 @@ using GameFramework.ObjectPool;
 using GameFramework.Resource;
 using System;
 using System.Collections.Generic;
+using GameFramework.Runtime;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -485,11 +486,12 @@ namespace UnityGameFramework.Runtime
         /// <param name="userData">用户自定义数据。</param>
         public void ShowEntity(int entityId, Type entityLogicType, string entityAssetName, string entityGroupName, int priority, object userData)
         {
-            if (entityLogicType == null)
-            {
-                Log.Error("Entity type is invalid.");
-                return;
-            }
+            //@注意：不再使用这种方式创建而是直接获取预制体上的logic组件，以后有空移除
+            // if (entityLogicType == null)
+            // {
+            //     Log.Error("Entity type is invalid.");
+            //     return;
+            // }
 
             m_EntityManager.ShowEntity(entityId, entityAssetName, entityGroupName, priority, ShowEntityInfo.Create(entityLogicType, userData));
         }

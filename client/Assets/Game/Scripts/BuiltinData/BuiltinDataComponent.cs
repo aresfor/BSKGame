@@ -19,10 +19,23 @@ namespace Game.Client
         protected override void Awake()
         {
             base.Awake();
-
+            RegisterUtilities();
         }
 
         private void Start()
+        {
+            InitializeGameplayTag();
+        }
+        
+        /// <summary>
+        /// 初始化实用类，之后直接全局访问
+        /// </summary>
+        private void RegisterUtilities()
+        {
+            PhysicsUtils.Initialize(new UnityPhysicsUtility());
+        }
+
+        private void InitializeGameplayTag()
         {
             if (m_GameplayTagTextAsset == null)
             {
@@ -31,9 +44,9 @@ namespace Game.Client
             }
             GameplayTagTree gameplayTagTree = GameplayTagExtension.InitializeGameplayTag(m_GameplayTagTextAsset.text);
             //@TEMP:
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             AssetDatabase.Refresh();
-            #endif
+#endif
             if (gameplayTagTree == null)
             {
                 Log.Warning("Parse GameplayTag failure.");

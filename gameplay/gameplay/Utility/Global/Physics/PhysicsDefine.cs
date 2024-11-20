@@ -39,6 +39,7 @@ public enum EHitGroup : byte
 public enum PhysicTraceType
 {
     World = 0,
+    Entity,
     StaticActor,
     StaticActor_ProjectileBreak,
     Pawn,

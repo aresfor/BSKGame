@@ -8,6 +8,7 @@
 using GameFramework;
 using GameFramework.Event;
 using System;
+using GameFramework.Runtime;
 
 namespace UnityGameFramework.Runtime
 {

@@ -25,8 +25,8 @@ public interface IPhysicsUtility: IUtility
     
     #region NoPhysics
     
-    bool SingleLineCheckNoPhysics(uint pawnEntityID, float3 startTrace, float3 direction, float distance, int obstacleFlag, ref ImpactInfo impactInfo);
-    bool SingleLineCheckNoPhysics(uint pawnEntityID, float3 startTrace, float3 direction, float distance, int obstacleFlag, ref ImpactInfo impactInfo,  bool bDrawLine = false, DebugColor color = DebugColor.kColorGray, float duration=5.0f);
+    bool SingleLineCheckNoPhysics(int pawnEntityID, float3 startTrace, float3 direction, float distance, int obstacleFlag, ref ImpactInfo impactInfo);
+    bool SingleLineCheckNoPhysics(int pawnEntityID, float3 startTrace, float3 direction, float distance, int obstacleFlag, ref ImpactInfo impactInfo,  bool bDrawLine = false, DebugColor color = DebugColor.kColorGray, float duration=5.0f);
 
     #endregion
 }
@@ -36,7 +36,7 @@ public interface IPhysicsUtility: IUtility
 
 public class ImpactInfo
 {
-    public uint HitEntityId = 0;//可以为任意注册了的类型
+    public int HitEntityId = 0;//可以为任意注册了的类型
     public float Damage;
     public float3 HitObjPosition;   //击中点 object的位置
     public float3 HitLocation;      //击中点 world position
@@ -77,7 +77,7 @@ public class ImpactInfo
 
     #region Rold
 
-    public uint HitRoleEntityId
+    public int HitRoleEntityId
     {
         get
         {

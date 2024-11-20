@@ -1,6 +1,5 @@
 ﻿
 #if UNITY_EDITOR
-using Game.Client;
 using GameFramework;
 using UnityEditor;
 
