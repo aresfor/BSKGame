@@ -6,6 +6,7 @@ using Game.Gameplay;
 using Game.Math;
 using GameFramework;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
@@ -22,7 +23,7 @@ namespace Game.Client
         private BoardEntityModel m_Model;
 
         public BoardGraph Board => m_Board;
-        private Ray m_MouseRay => Camera.main.ScreenPointToRay(Input.mousePosition);
+        private Ray MouseRay => Camera.main.ScreenPointToRay(Input.mousePosition);
         
         public override void OnInit(object userData)
         {
@@ -60,7 +61,7 @@ namespace Game.Client
         
         public bool GetMouseHoverLattice(out LatticeEntityLogic latticeLogic)
         {
-            var mouseRay = m_MouseRay;
+            var mouseRay = MouseRay;
             latticeLogic = null;
             ImpactInfo impactInfo = ImpactInfo.Alloc();
             bool result = false;

@@ -1,6 +1,6 @@
 ﻿using GameFramework.Entity;
 
-namespace UnityGameFramework.Runtime
+namespace Game.Core
 {
     public interface IEntityLogic
     {

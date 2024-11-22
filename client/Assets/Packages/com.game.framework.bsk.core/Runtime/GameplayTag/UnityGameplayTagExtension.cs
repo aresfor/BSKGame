@@ -5,7 +5,7 @@ using UnityEditor;
 
 namespace Game.Gameplay
 {
-    public static partial class GameplayTagExtension
+    public static partial class UnityGameplayTagExtension
     {
         [MenuItem("GameplayTag/Save")]
         public static void SaveTagFile()

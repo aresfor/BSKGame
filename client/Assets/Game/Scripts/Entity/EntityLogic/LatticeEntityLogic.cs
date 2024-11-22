@@ -1,15 +1,20 @@
 ﻿using Game.Core;
 using Game.Gameplay;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Game.Client
 {
-    public class LatticeEntityLogic:GameEntityLogic
+    public class LatticeEntityLogic:GameEntityLogic, IPointerEnterHandler
     {
         private LatticeEntityModel m_Model;
         private Sprite m_WhiteSprite;
         private BoxCollider m_BoxCollider;
 
+        [SerializeField]
+        private SpriteRenderer m_LatticeSpriteRenderer;
+        [SerializeField]
+        private SpriteRenderer m_HoverSpriteRenderer;
         public LatticeNode LatticeNode => m_Model.LatticeNode;
         public int Row => m_Model.X;
         public int Column => m_Model.Y;
@@ -30,16 +35,16 @@ namespace Game.Client
             }
         }
         
+        
         public override void OnInit(object userData)
         {
             base.OnInit(userData);
 
             m_Model = (LatticeEntityModel)userData;
             m_BoxCollider = gameObject.GetOrAddComponent<BoxCollider>();
-            var spriteRenderer = gameObject.GetOrAddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = WhiteSprite;
+            m_LatticeSpriteRenderer.sprite = WhiteSprite;
             float random = Random.Range(0.6f, 0.8f);
-            spriteRenderer.color = Color.HSVToRGB(0.5f, 0.3f, random);
+            m_LatticeSpriteRenderer.color = Color.HSVToRGB(0.5f, 0.3f, random);
         }
 
         protected override void CreateGameplayEntity()
@@ -62,7 +67,11 @@ namespace Game.Client
             
             GameEntry.Entity.AttachEntity(Id, m_Model.BoardEntityId);
         }
-        
-        
+
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            Log.Error("Enter!!");
+        }
     }
 }

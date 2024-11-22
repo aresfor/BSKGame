@@ -2,8 +2,8 @@
 
 public interface IVFXFactory
 {
-    public IVFX SpawnVFX(VFXBaseSpawnParam vfxSpawnParam);
-    public void DeSpawnVFX(IVFX vfx);
+    public int SpawnVFX(VFXBaseSpawnParam vfxSpawnParam);
+    public void DeSpawnVFX(int vfxSerialId);
 
     public void Update(float deltaime);
     public void ShutDown();
@@ -26,7 +26,7 @@ public interface IVFX
     /// <param name="param">初始化填充这个特效的参数</param>
     //void InitVFXParam(TBVFXBean tbvfxBean,IVFXFactory factory,VFXBaseSpawnParam param);
     
-    void InitVFXParam(IVFXFactory factory,VFXBaseSpawnParam param);
+    void InitVFXParam(DRVFX vfxBean, IVFXFactory factory,VFXBaseSpawnParam param);
 
     /// <summary>
     /// 重播这个特效

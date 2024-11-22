@@ -4,16 +4,20 @@ namespace Game.Gameplay
     public struct FSpawnedVFXInfo
     {
         public IVFX VFX;
-        public IVFXUtility Service;
     }
     public static class VFXUtils
     {
         // @todo 更好的做法? 需要考虑多个world吗?
         //private static Dictionary<World, IVFXService> _vfxServices = new Dictionary<World, IVFXService>();
 
-        private static IVFXUtility mVfxUtility;
-        
-        public static IVFX SpawnVFX(VFXBaseSpawnParam spawnParam)
+        private static IVFXUtility s_VfxUtility;
+
+        public static void Initialize(IVFXUtility vfxUtility)
+        {
+            s_VfxUtility = vfxUtility;
+            s_VfxUtility?.Initialize();
+        }
+        public static int SpawnVFX(VFXBaseSpawnParam spawnParam)
         {
             var vfxUtility = GetVFXUtility();
             
@@ -22,25 +26,15 @@ namespace Game.Gameplay
 
         private static IVFXUtility GetVFXUtility()
         {
-            if (null == mVfxUtility)
-                mVfxUtility = GlobalUtility.Get<IVFXUtility>();
+            if (null == s_VfxUtility)
+                s_VfxUtility = GlobalUtility.Get<IVFXUtility>();
 
-            return mVfxUtility;
+            return s_VfxUtility;
         }
-        public static FSpawnedVFXInfo SpawnVFXWithInfo(VFXBaseSpawnParam spawnParam)
+        
+        public static void DeSpawnVFX(int vfxSerialId)
         {
-            var vfxUtility = GetVFXUtility();
-            return new FSpawnedVFXInfo()
-            {
-                VFX = vfxUtility.SpawnVFX(spawnParam),
-                Service = vfxUtility
-            };
-        }
-
-        public static void DeSpawnVFX(FSpawnedVFXInfo info)
-        {
-            if(info.Service != null)
-                info.Service.DeSpawnVFX(info.VFX);
+            GetVFXUtility().DeSpawnVFX(vfxSerialId);
         }
         
         // public static IVFX SpawnVFXForPreload(World world, TBVFXBean tbVfxBean)

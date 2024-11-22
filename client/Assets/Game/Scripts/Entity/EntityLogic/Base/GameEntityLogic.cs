@@ -5,6 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using System.Collections.Generic;
 using Game.Core;
 using Game.Gameplay;
 using GameFramework;
@@ -17,11 +18,14 @@ namespace Game.Client
 {
     public abstract class GameEntityLogic : EntityLogic, IGameplayTagOwner
     {
-    
         [SerializeField]
-        private EntityData m_EntityData = null;
+        private List<EntityLogicSocketBase> m_LogicSockets = new List<EntityLogicSocketBase>(); 
+            
+        public EntityData EntityData { get; private set; }
 
-        protected GameplayEntity GameplayEntity { get; set; }
+        public GameplayEntity GameplayEntity { get; protected set; }
+
+        
         public int Id
         {
             get
@@ -45,8 +49,8 @@ namespace Game.Client
 #endif
         {
             base.OnInit(userData);
-            m_EntityData = userData as EntityData;
-            if (m_EntityData == null)
+            EntityData = userData as EntityData;
+            if (EntityData == null)
             {
                     Log.Error("Entity data is invalid.");
                     return;
@@ -56,7 +60,11 @@ namespace Game.Client
             if (GameplayEntity == null)
             { //Log.Warning("GameplayEntity is null, check if should create in CreateGameplay function");
             }
-            GameplayEntity?.OnInit(m_EntityData);
+            GameplayEntity?.OnInit(EntityData);
+            foreach (var entityLogicSocketBase in m_LogicSockets)
+            {
+                    entityLogicSocketBase.Init(this);
+            }
             CachedAnimation = GetComponent<Animation>();
         }
 
@@ -67,8 +75,12 @@ namespace Game.Client
 #endif
         {
             base.OnRecycle();
+            foreach (var entityLogicSocketBase in m_LogicSockets)
+            {
+                    entityLogicSocketBase.Recycle();
+            }
             GameplayEntity?.OnRecycle();
-            m_EntityData?.Clear();
+            EntityData?.Clear();
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -78,11 +90,16 @@ namespace Game.Client
 #endif
         {
             base.OnShow(userData);
-            GameplayEntity?.OnShow(m_EntityData);
+            GameplayEntity?.OnShow(EntityData);
             Name = Utility.Text.Format("[Entity {0}]", Id);
-            CachedTransform.localPosition = m_EntityData.Position.ToVector3();
-            CachedTransform.localRotation = m_EntityData.Rotation.ToQuaternion();
+            CachedTransform.localPosition = EntityData.Position.ToVector3();
+            CachedTransform.localRotation = EntityData.Rotation.ToQuaternion();
             CachedTransform.localScale = Vector3.one;
+            
+            foreach (var entityLogicSocketBase in m_LogicSockets)
+            {
+                    entityLogicSocketBase.OnShow();
+            }
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -92,7 +109,11 @@ namespace Game.Client
 #endif
         {
             base.OnHide(isShutdown, userData);
-            GameplayEntity?.OnHide(isShutdown, m_EntityData);
+            foreach (var entityLogicSocketBase in m_LogicSockets)
+            {
+                    entityLogicSocketBase.OnHide(isShutdown);
+            }
+            GameplayEntity?.OnHide(isShutdown, EntityData);
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -103,6 +124,7 @@ namespace Game.Client
         {
             base.OnAttached(childEntity, parentTransform, userData);
                 GameplayEntity?.OnAttached(childEntity, userData);
+
         }
 
 #if UNITY_2017_3_OR_NEWER
@@ -146,26 +168,50 @@ namespace Game.Client
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
             GameplayEntity?.OnUpdate(elapseSeconds, realElapseSeconds);
+            foreach (var entityLogicSocketBase in m_LogicSockets)
+            {
+                    entityLogicSocketBase.OnUpdate(elapseSeconds, realElapseSeconds);
+            }
         }
 
         public void AddTag(string tag)
         {
-                m_EntityData.AddTag(tag);
+                EntityData.AddTag(tag);
         }
 
         public void RemoveTag(string tag)
         {
-                m_EntityData.RemoveTag(tag);
+                EntityData.RemoveTag(tag);
         }
 
         public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact)
         {
-                return m_EntityData.HasTag(tag, checkType);
+                return EntityData.HasTag(tag, checkType);
         }
 
         public void ClearAllTag()
         {
-                m_EntityData.ClearAllTag();
+                EntityData.ClearAllTag();
+        }
+        
+        //logic socket
+        public void RegisterLogicSocket(EntityLogicSocketBase socket)
+        {
+                if(!m_LogicSockets.Contains(socket))
+                        m_LogicSockets.Add(socket);
+        }
+
+        public T FindLogicSocket<T>() where T : EntityLogicSocketBase
+        {
+                foreach (var logicSocket in m_LogicSockets)
+                {
+                        if (typeof(T) == logicSocket.GetType())
+                        {
+                                return (T)logicSocket;
+                        }
+                }
+
+                return null;
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿
 using System;
+using System.Collections.Generic;
+using Game.Core;
 using Game.Gameplay;
 using GameFramework;
 using UnityEngine;
@@ -10,20 +12,25 @@ using UnityEditor;
 #endif
 
 using UnityGameFramework.Runtime;
+using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
 {
     public class BuiltinDataComponent : GameFrameworkComponent
     {
         [SerializeField] private TextAsset m_GameplayTagTextAsset = null;
+
+        private List<IUpdateableUtility> m_UpdateableUtilities = new List<IUpdateableUtility>();
+        private List<IShutdownUtility> m_ShutdownUtilities = new List<IShutdownUtility>();
         protected override void Awake()
         {
             base.Awake();
-            RegisterUtilities();
         }
 
         private void Start()
         {
+            RegisterUtilities();
+
             InitializeGameplayTag();
         }
         
@@ -33,6 +40,10 @@ namespace Game.Client
         private void RegisterUtilities()
         {
             PhysicsUtils.Initialize(new UnityPhysicsUtility());
+            var unityVfxUtility = new UnityVFXUtility();
+            VFXUtils.Initialize(unityVfxUtility);
+            m_UpdateableUtilities.Add(unityVfxUtility);
+            
         }
 
         private void InitializeGameplayTag()
@@ -42,7 +53,7 @@ namespace Game.Client
                 Log.Error("GameplayTag Text Asset is null, check");
                 return;
             }
-            GameplayTagTree gameplayTagTree = GameplayTagExtension.InitializeGameplayTag(m_GameplayTagTextAsset.text);
+            GameplayTagTree gameplayTagTree = UnityGameplayTagExtension.InitializeGameplayTag(m_GameplayTagTextAsset.text);
             //@TEMP:
 #if UNITY_EDITOR
             AssetDatabase.Refresh();
@@ -52,6 +63,26 @@ namespace Game.Client
                 Log.Warning("Parse GameplayTag failure.");
                 return;
             }
+        }
+
+        //@TEMP:
+        private void Update()
+        {
+            foreach (var updateableUtility in m_UpdateableUtilities)
+            {
+                updateableUtility.Update(Time.deltaTime);
+            }
+        }
+
+        //@TEMP:
+        private void OnDestroy()
+        {
+            foreach (var shutdownUtility in m_ShutdownUtilities)
+            {
+                shutdownUtility.Shutdown();
+            }
+            m_UpdateableUtilities.Clear();
+            m_ShutdownUtilities.Clear();
         }
     }
 }

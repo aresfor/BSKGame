@@ -56,5 +56,15 @@ namespace Game.Gameplay
         {
             return Utility.Text.Format("Assets/GameRes/UI/UISounds/{0}.wav", assetName);
         }
+        
+        public static string GetVFXAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameRes/VFX/{0}.prefab", assetName);
+        }
+        
+        public static string GetPrefabAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameRes/Prefab/{0}.prefab", assetName);
+        }
     }
 }

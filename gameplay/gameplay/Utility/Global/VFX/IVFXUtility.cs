@@ -1,5 +1,6 @@
 ﻿using Game.Core;
 using Game.Math;
+using GameFramework;
 
 // ReSharper disable InconsistentNaming
 // ReSharper disable ClassNeverInstantiated.Global
@@ -15,9 +16,9 @@ public class VFXSkillEffectSpawnParam : VFXBaseSpawnParam
 {
     //记录该特效绑定的SkillID
     public int skillID;
-    public override void Reset()
+    public override void Clear()
     {
-        base.Reset();
+        base.Clear();
     }
 }
 
@@ -26,17 +27,17 @@ public class VFXLaserEffectSpawnParam : VFXBaseSpawnParam
     public float3 startPosition;
     public float3 endPosition;
     
-    public override void Reset()
+    public override void Clear()
     {
-        base.Reset();
+        base.Clear();
     }
 }
 
 public class VFXBulletEffectSpawnParam : VFXBaseSpawnParam
 {
-    public override void Reset()
+    public override void Clear()
     {
-        base.Reset();
+        base.Clear();
     }
 }
 
@@ -64,9 +65,9 @@ public class VFXBallisticSpawnParam  : VFXBaseSpawnParam
 public class VFXWeaponDecalSpawnParam : VFXBaseSpawnParam
 {
     // public string DecalAssetName = ""; //@todo 以后考虑不再使用，省内存
-    public override void Reset()
+    public override void Clear()
     {
-        base.Reset();
+        base.Clear();
         // DecalAssetName = "";
     }
 }
@@ -78,9 +79,9 @@ public class VFXWeaponHitEffectSpawnParam : VFXBaseSpawnParam
 {
     // public string HitEffectAssetName = ""; //@todo 以后考虑不再使用，省内存
 
-    public override void Reset()
+    public override void Clear()
     {
-        base.Reset();
+        base.Clear();
         // HitEffectAssetName = "";
     }
 }
@@ -88,7 +89,7 @@ public class VFXWeaponHitEffectSpawnParam : VFXBaseSpawnParam
 /// <summary>
 /// 基础特效参数
 /// </summary>
-public class VFXBaseSpawnParam:IResetable
+public class VFXBaseSpawnParam: IReference
 {
     public uint VFXTypeId;              //特效类型索引
     public int VFXIndexId;              //特效表ID索引
@@ -97,11 +98,11 @@ public class VFXBaseSpawnParam:IResetable
     public quaternion RotationQuat;
     // public float3 Forward;
     public float3 Scale;
-    public uint ReceiverEntityId;        //是否挂载某个entity身上
-    public uint SpawnerEntityId;         //创建者entity id
+    public int ReceiverEntityId;        //是否挂载某个entity身上
+    public int SpawnerEntityId;         //创建者entity id
     //public Transform Parent = null;      //是否挂在某个Transform下面
-    
-    public virtual void Reset()
+
+    public virtual  void Clear()
     {
         Position = float3.zero;
         Rotation = float3.zero;
@@ -109,25 +110,28 @@ public class VFXBaseSpawnParam:IResetable
         RotationQuat = quaternion.identity;
         Scale = new float3(1, 1, 1);
         //Parent = null;
-        VFXTypeId = ReceiverEntityId = SpawnerEntityId = (uint)VFXType.Base;
+        VFXTypeId  = (uint)VFXType.Base;
+        ReceiverEntityId = SpawnerEntityId =0;
     }
 }
-    
+
+
 /// <summary>
 /// 创建特效的接口
 /// </summary>
 public interface IVFXUtility: IUtility
 {
+    public void Initialize();
     /// <summary>
     /// 创建指定类型id的特效,实现接口后，记得回收VFXBaseSpawnParam 到CommonObjectPool中
     /// 注意：建议使用VFXUtils.SpawnVFX()而不是直接用此方法：该方法对service做了缓存，无需每次getService
     /// </summary>
-    IVFX SpawnVFX(VFXBaseSpawnParam vfxSpawnParam);
+    int SpawnVFX(VFXBaseSpawnParam vfxSpawnParam);
     
     /// <summary>
-    /// 销毁指定类型的特效对象
+    /// 销毁指定类型的特效对象，资源加载都走异步，不再推荐使用DeSpawn，而是由特效生命周期字段来自动管理
     /// </summary>
-    void DeSpawnVFX(IVFX vfx);
+    void DeSpawnVFX(int vfxSerialId);
 
     /// <summary>
     /// 根据配置表，在进入游戏时候，提前预先加载和实例化特效

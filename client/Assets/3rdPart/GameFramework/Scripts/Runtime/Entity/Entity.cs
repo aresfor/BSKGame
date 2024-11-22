@@ -8,6 +8,7 @@
 using GameFramework;
 using GameFramework.Entity;
 using System;
+using Game.Core;
 using GameFramework.Runtime;
 using UnityEngine;
 
@@ -48,6 +49,11 @@ namespace UnityGameFramework.Runtime
             {
                 return m_Id;
             }
+        }
+
+        public string Name
+        {
+            get=>gameObject.name;
         }
 
         /// <summary>

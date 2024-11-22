@@ -187,6 +187,7 @@ namespace Game.Client
             get;
             private set;
         }
+        
 
         private static void InitBuiltinComponents()
         {

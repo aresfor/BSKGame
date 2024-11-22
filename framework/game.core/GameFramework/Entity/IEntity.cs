@@ -5,7 +5,8 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
-using UnityGameFramework.Runtime;
+
+using Game.Core;
 
 namespace GameFramework.Entity
 {
@@ -30,6 +31,15 @@ namespace GameFramework.Entity
             get;
         }
 
+        /// <summary>
+        /// 获取实体名称。
+        /// </summary>
+        string Name
+        {
+            get;
+        }
+        
+        
         /// <summary>
         /// 获取实体资源名称。
         /// </summary>
