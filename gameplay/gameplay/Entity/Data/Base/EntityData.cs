@@ -15,6 +15,8 @@ namespace Game.Gameplay
         private int m_Id = 0;
         
         private int m_TypeId = 0;
+
+        private int m_ResourceId = 0;
         
         private float3 m_Position = float3.zero;
         
@@ -28,10 +30,8 @@ namespace Game.Gameplay
         public EntityData()
         {
         }
-        public void Init(int entityId, int typeId)
+        public void Init()
         {
-            m_Id = entityId;
-            m_TypeId = typeId;
             OnInitialize();
         }
         
@@ -116,6 +116,22 @@ namespace Game.Gameplay
                 return m_TypeId;
             }
             set => m_TypeId = value;
+        }
+
+        
+        /// <summary>
+        /// 资源表Id， 可为空
+        /// </summary>
+        public int ResourceId
+        {
+            get
+            {
+                return m_ResourceId;
+            }
+            set
+            {
+                m_ResourceId = value;
+            }
         }
 
         /// <summary>

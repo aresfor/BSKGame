@@ -9,13 +9,13 @@ namespace Game.Client
 {
     public class PlayerEntityLogic:GameEntityLogic
     {
-        private PlayerEntityModel m_Model;
+        private RoleEntityModel m_Model;
          
         public override void OnInit(object userData)
         {
             base.OnInit(userData);
 
-            m_Model = (PlayerEntityModel)userData;
+            m_Model = (RoleEntityModel)userData;
             var healthBindable = m_Model.GetBindableProperty(EPropertyDefine.Health);
             healthBindable.Register((oldValue, newValue) =>
                 Log.Info($"Health Change To: {newValue}, Old:{oldValue}")).UnRegisterWhenDisabled(this);
@@ -41,45 +41,53 @@ namespace Game.Client
 
             VFXUtils.DeSpawnVFX(vfxSerialId);
 
-            
-            
             var meshLoaderSocket = FindLogicSocket<BaseMeshLoaderLogicSocket>();
+
             //model
             meshLoaderSocket.MeshLoadCompleteCallBack += meshloader =>
             {
-                var firePoint = meshloader.FindTransformFromAvatarMesh("FirePoint");
-                VFXBaseSpawnParam nextSpawnParams = ReferencePool.Acquire<VFXBaseSpawnParam>();
-                nextSpawnParams.SpawnerEntityId = Id;
-                nextSpawnParams.ReceiverEntityId = Id;
-                nextSpawnParams.Position = firePoint.position.ToFloat3();
-                nextSpawnParams.RotationQuat = firePoint.rotation.ToQuaternion();
-                nextSpawnParams.Scale = Vector3.one.ToFloat3();
-                nextSpawnParams.VFXIndexId = 1001;
-                nextSpawnParams.VFXTypeId = (int)VFXType.Base;
-
-                VFXUtils.SpawnVFX(nextSpawnParams);
+                TestVFX(meshloader);
             };
+            
             meshLoaderSocket.BeginLoadMesh();
         }
 
-        private void Update()
+        private void TestVFX(BaseMeshLoader meshloader)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                VFXBaseSpawnParam nextSpawnParams = ReferencePool.Acquire<VFXBaseSpawnParam>();
-                nextSpawnParams.SpawnerEntityId = Id;
-                nextSpawnParams.ReceiverEntityId = Id;
-                nextSpawnParams.Position = Vector3.forward.ToFloat3() * 5.0f;
-                nextSpawnParams.Scale = Vector3.one.ToFloat3();
-                nextSpawnParams.VFXIndexId = 1001;
-                VFXUtils.SpawnVFX(nextSpawnParams);
-            }
+
+            var firePoint = meshloader.FindTransformFromAvatarMesh("FirePoint");
+            VFXBaseSpawnParam nextSpawnParams = ReferencePool.Acquire<VFXBaseSpawnParam>();
+            nextSpawnParams.SpawnerEntityId = Id;
+            nextSpawnParams.ReceiverEntityId = Id;
+            nextSpawnParams.Position = firePoint.position.ToFloat3();
+            nextSpawnParams.RotationQuat = firePoint.rotation.ToQuaternion();
+            nextSpawnParams.Scale = Vector3.one.ToFloat3();
+            nextSpawnParams.VFXIndexId = 1001;
+            nextSpawnParams.VFXTypeId = (int)VFXType.Base;
+
+            VFXUtils.SpawnVFX(nextSpawnParams);
+        }
+
+        public override void OnShow(object userData)
+        {
+            base.OnShow(userData);
+            
+
+            GameUtils.PlayerEntityId = Id;
         }
 
         protected override void CreateGameplayEntity()
         {
             base.CreateGameplayEntity();
             GameplayEntity = new PlayerGameplayEntity(Entity);
+        }
+
+        private void Update()
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                TestVFX(FindLogicSocket<BaseMeshLoaderLogicSocket>().AvatarMeshLoader);
+            }
         }
 
         public override void OnRecycle()

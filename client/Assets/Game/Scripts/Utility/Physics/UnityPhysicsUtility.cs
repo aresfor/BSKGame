@@ -66,7 +66,7 @@ namespace Game.Client
                     if (bDrawLine)
                     {
                         DebugTool.DrawLine(startTrace.ToVector3(), hitInfo.point, debugColor, duration);
-                        DebugTool.DrawGizmosSphere(hitInfo.point, 0.1f, Color.red, 5f);
+                        DebugTool.DrawGizmosSphere(hitInfo.point, 0.1f, Color.red, duration);
                     }
 #endif
                     return true;

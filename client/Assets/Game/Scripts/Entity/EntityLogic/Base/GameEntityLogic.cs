@@ -16,7 +16,7 @@ using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
 {
-    public abstract class GameEntityLogic : EntityLogic, IGameplayTagOwner
+    public abstract class GameEntityLogic : EntityLogic, IGameplayTagOwner, IGameEntityLogic
     {
         [SerializeField]
         private List<EntityLogicSocketBase> m_LogicSockets = new List<EntityLogicSocketBase>(); 
@@ -61,6 +61,7 @@ namespace Game.Client
             { //Log.Warning("GameplayEntity is null, check if should create in CreateGameplay function");
             }
             GameplayEntity?.OnInit(EntityData);
+            //OnPreInitLogicSocket(EntityData);
             foreach (var entityLogicSocketBase in m_LogicSockets)
             {
                     entityLogicSocketBase.Init(this);
@@ -75,10 +76,7 @@ namespace Game.Client
 #endif
         {
             base.OnRecycle();
-            foreach (var entityLogicSocketBase in m_LogicSockets)
-            {
-                    entityLogicSocketBase.Recycle();
-            }
+            
             GameplayEntity?.OnRecycle();
             EntityData?.Clear();
         }
@@ -111,7 +109,7 @@ namespace Game.Client
             base.OnHide(isShutdown, userData);
             foreach (var entityLogicSocketBase in m_LogicSockets)
             {
-                    entityLogicSocketBase.OnHide(isShutdown);
+                    entityLogicSocketBase.Hide(isShutdown);
             }
             GameplayEntity?.OnHide(isShutdown, EntityData);
         }

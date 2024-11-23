@@ -13,4 +13,6 @@ public interface IGameEntityLogic:IEntityLogic
     public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact);
 
     public void ClearAllTag();
+    
+    public GameplayEntity GameplayEntity { get; }
 }

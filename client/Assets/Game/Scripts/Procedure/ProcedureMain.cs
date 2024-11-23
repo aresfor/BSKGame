@@ -12,11 +12,14 @@ namespace Game.Client
         protected override void OnEnter(IFsm<IProcedureManager> procedureOwner)
         {
             base.OnEnter(procedureOwner);
-            
-            var model = new PlayerEntityModel();
-            model.Init(EntityId.GenerateSerialId(),10000); 
-            GameEntry.Entity.ShowPlayerEntity(model);
-            GameEntry.Entity.ShowBoardEntity(new BoardEntityModel()
+
+            var model = new RoleEntityModel()
+            {
+                Id = EntityId.GenerateSerialId(),
+                TypeId = 10000
+            };
+            GameEntry.Entity.ShowGameplayEntity("Player", model);
+            GameEntry.Entity.ShowGameplayEntity("Board", new BoardEntityModel()
                 {
                     Id = EntityId.GenerateSerialId(),
                     TypeId = 20000

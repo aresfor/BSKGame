@@ -98,7 +98,7 @@ namespace UnityGameFramework.Runtime
             m_OriginalLayer = gameObject.layer;
             m_OriginalParentTransform = CachedTransform.parent;
         }
-
+        
         /// <summary>
         /// 实体回收。
         /// </summary>
@@ -161,7 +161,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="userData">用户自定义数据。</param>
         protected internal virtual void OnAttachTo(IEntity parentEntity, Transform parentTransform, object userData)
         {
-            CachedTransform.SetParent(parentTransform);
+            //CachedTransform.SetParent(parentTransform);
         }
 
 
@@ -172,7 +172,7 @@ namespace UnityGameFramework.Runtime
         /// <param name="userData">用户自定义数据。</param>
         public virtual void OnDetachFrom(IEntity parentEntity, object userData)
         {
-            CachedTransform.SetParent(m_OriginalParentTransform);
+            //CachedTransform.SetParent(m_OriginalParentTransform);
         }
 
         /// <summary>

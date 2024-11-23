@@ -15,6 +15,7 @@ public interface IGraphNode
 public interface IGraphNode<T>: IReference,IGraphNode
 {
     string Name { get; }
+    public T Value { get; }
     IGraph<T> Owner { get; }
     IGraphNodeHandle Handle { get; }
     void GetNeighbors(List<IGraphNode<T>> resultNodes);

@@ -76,8 +76,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e54cf8f5a1af4764a37e8062be852562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_DefaultMeshSocketTs: {fileID: 5938279301793629458}
-  m_DefaultMeshPrefabName: DefaultPlayerModel
+  DefaultMeshSocketTs: {fileID: 5938279301793629458}
+  m_MeshPrefabName: DefaultPlayer
 --- !u!1 &7219031768871005757
 GameObject:
   m_ObjectHideFlags: 0

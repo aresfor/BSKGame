@@ -26,7 +26,7 @@ namespace Game.Client
             "UIForm",
             //"UISound",
             //"Weapon",
-            "Player",
+            "Role",
             "Property",
             "VFX",
         };

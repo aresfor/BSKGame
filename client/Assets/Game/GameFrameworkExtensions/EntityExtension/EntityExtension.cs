@@ -38,24 +38,8 @@ namespace Game.Client
         {
             entityComponent.AttachEntity(gameEntityLogic.Entity, ownerId, parentTransformPath, userData);
         }
-
-        public static void ShowPlayerEntity(this EntityComponent entityComponent, PlayerEntityModel model)
-        {
-            entityComponent.ShowGameplayEntity(null, "Player", Constant.AssetPriority.GameplayAsset, model);
-        }
-
-        public static void ShowBoardEntity(this EntityComponent entityComponent, BoardEntityModel model)
-        {
-            entityComponent.ShowGameplayEntity(null, "Board", Constant.AssetPriority.GameplayAsset, model);
-
-        }
-        public static void ShowLatticeEntity(this EntityComponent entityComponent, LatticeEntityModel model)
-        {
-            entityComponent.ShowGameplayEntity(null, "Lattice", Constant.AssetPriority.GameplayAsset, model);
-
-        }
         
-        public static void ShowGameplayEntity(this EntityComponent entityComponent, Type logicType, string entityGroup, int priority, EntityData data)
+        public static void ShowGameplayEntity(this EntityComponent entityComponent, string entityGroup, EntityData data)
         {
             if (data == null)
             {
@@ -71,9 +55,10 @@ namespace Game.Client
                 return;
             }
 
-            
-            
-            entityComponent.ShowEntity(data.Id, logicType, AssetUtility.GetEntityAsset(drEntity.AssetName), entityGroup, priority, data);
+            //填入资源表id，后续资源都从对应Entity格子对应的资源表去找
+            data.ResourceId = drEntity.ResourceId;
+            data.Init();
+            entityComponent.ShowEntity(data.Id, null, AssetUtility.GetEntityAsset(drEntity.AssetName), entityGroup, Constant.AssetPriority.GameplayAsset, data);
         }
         
     }

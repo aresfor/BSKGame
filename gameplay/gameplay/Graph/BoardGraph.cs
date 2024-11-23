@@ -13,13 +13,29 @@ namespace Game.Gameplay
         //[Min(1)] public float BoardHeight = 1;
         public float LatticeWidth = 1;
         public float LatticeHeight = 1;
-        
+
+        public Action FinishGenerationCall;
+
+        public void GenerateFinished()
+        {
+            FinishGenerationCall?.Invoke();
+        }
 
         public BoardGraph(int inRow, int inColumn) : base(inRow, inColumn)
         {
             
         }
 
+        public IGraphNode<LatticeGameplayEntity> GetNode(int row, int column)
+        {
+            return FindNode(CreateHandle(row, column));
+        }
+
+        public IGraphNode<LatticeGameplayEntity> GetNode(float3 position)
+        {
+            //@TODO: 
+            return null;
+        }
         public void Generate(float3 boardPosition, quaternion boardRotation, int boardEntityId)
         {
             Clear();
