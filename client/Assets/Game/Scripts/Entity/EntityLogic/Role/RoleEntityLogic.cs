@@ -14,7 +14,7 @@ namespace Game.Client
         {
             base.OnInit(userData);
             InitViewExtend();
-            
+            InitNavigationAgent();
             
             m_RoleEntityModel = EntityData as RoleEntityModel;
             var meshLoaderSocket = FindLogicSocket<BaseMeshLoaderLogicSocket>();
@@ -40,7 +40,13 @@ namespace Game.Client
             
             GameEntry.Entity.AttachEntity(this.Id, m_RoleEntityModel.BelongLatticeId);
         }
-        
+
+
+        public override void OnUpdate(float elapseSeconds, float realElapseSeconds)
+        {
+            base.OnUpdate(elapseSeconds, realElapseSeconds);
+            UpdateNavigation(elapseSeconds, realElapseSeconds);
+        }
 
         public override void OnRecycle()
         {

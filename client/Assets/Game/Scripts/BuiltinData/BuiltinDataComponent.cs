@@ -29,6 +29,7 @@ namespace Game.Client
 
         private void Start()
         {
+            RegisterListener();
             RegisterUtilities();
 
             InitializeGameplayTag();
@@ -39,11 +40,27 @@ namespace Game.Client
         /// </summary>
         private void RegisterUtilities()
         {
+            //@TEMP
+            ResourceExtension.Initialize();
+            
             PhysicsUtils.Initialize(new UnityPhysicsUtility());
             var unityVfxUtility = new UnityVFXUtility();
             VFXUtils.Initialize(unityVfxUtility);
             m_UpdateableUtilities.Add(unityVfxUtility);
             
+        }
+
+        private void RegisterListener()
+        {
+            GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, EntityExtension.OnShowEntitySuccess);
+            GameEntry.Event.Subscribe(ShowEntityFailureEventArgs.EventId, EntityExtension.OnShowEntityFail);
+        }
+
+        private void UnRegisterListener()
+        {
+            //游戏关闭时事件系统自动清理
+            //GameEntry.Event.Unsubscribe(ShowEntitySuccessEventArgs.EventId, EntityExtension.OnShowEntitySuccess);
+            //GameEntry.Event.Unsubscribe(ShowEntityFailureEventArgs.EventId, EntityExtension.OnShowEntityFail);
         }
 
         private void InitializeGameplayTag()
@@ -81,6 +98,7 @@ namespace Game.Client
             {
                 shutdownUtility.Shutdown();
             }
+            UnRegisterListener();
             m_UpdateableUtilities.Clear();
             m_ShutdownUtilities.Clear();
         }

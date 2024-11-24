@@ -1,8 +1,11 @@
-﻿namespace Game.Client
+﻿using Game.Gameplay;
+
+namespace Game.Client
 {
     public class GameUtils
     {
-        public static int BoardEntityId;
+        public static BoardGraph Board;
         public static int PlayerEntityId;
+        public static RoleEntityLogic SelectedRoleEntityLogic;
     }
 }

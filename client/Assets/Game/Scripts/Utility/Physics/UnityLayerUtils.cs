@@ -97,6 +97,14 @@ namespace Game.Client
             {
                 return LayerType.kTypeAutoFire;
             }
+            else if (unitylayer == LayerMask_Entity)
+            {
+                return LayerType.kTypeEntity;
+            }
+            else if (unitylayer == LayerMask_UI)
+            {
+                return LayerType.kTypeUI;
+            }
 
             return LayerType.kDefault;
         }

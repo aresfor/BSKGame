@@ -1,9 +1,9 @@
 ﻿using Game.Gameplay;
-using GameFramework;
-using GameFramework.Entity;
+
 using GameFramework.Fsm;
 using GameFramework.Procedure;
 using GameFramework.Runtime;
+using UnityGameFramework.Runtime;
 
 namespace Game.Client
 {
@@ -24,8 +24,9 @@ namespace Game.Client
                     Id = EntityId.GenerateSerialId(),
                     TypeId = 20000
                 });
-            
 
+
+            GameEntry.UI.OpenUIForm(UIFormId.BattleMainForm, this);
             //@TODO: 拉起NodeCanvas用作局内阶段切换，根据游戏模式拆分拉起NodeCanvas类型
         }
 

@@ -8,6 +8,7 @@ namespace Game.Gameplay
         public DRRole RoleData;
 
         public int BelongLatticeId;
+
         
         //public LatticeGameplayEntity BelongLattice;
         public RoleEntityModel()

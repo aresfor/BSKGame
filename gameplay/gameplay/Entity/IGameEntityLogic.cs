@@ -15,4 +15,6 @@ public interface IGameEntityLogic:IEntityLogic
     public void ClearAllTag();
     
     public GameplayEntity GameplayEntity { get; }
+    EntityData EntityData { get; }
+
 }

@@ -23,35 +23,15 @@ namespace Game.Client
         AvatarModelDestroying,              //销毁模型
     }
 
-    public class MeshInstanceBase : ObjectBase
-    {
-        public static MeshInstanceBase Create(string assetName, GameObject go)
-        {
-            var meshInstanceBase = ReferencePool.Acquire<MeshInstanceBase>();
-            meshInstanceBase.Initialize(assetName, go);
-            return meshInstanceBase;
-
-        }
-        protected override void Release(bool isShutdown)
-        {
-            GameObject go = (GameObject)Target;
-            if (go == null)
-                return;
-            
-            Object.Destroy(go);
-        }
-    }
+    
     public class BaseMeshLoader
     {
         public delegate void MeshLoadCompleteCallback(BaseMeshLoader meshloader);
-        private LoadAssetCallbacks m_LoadAssetCallbacks;
 
         protected Entity m_AttachedEntity;
         protected MeshLoadingState m_CurrentAvatarState = MeshLoadingState.Init;
         protected string m_AvatarAssetName;
 
-        private static IObjectPool<MeshInstanceBase> m_MeshPool;
-        
         //for find some tranform from loaded mesh
         protected SocketFindFactory transformSocketFinder;
 
@@ -79,7 +59,8 @@ namespace Game.Client
         private Renderer m_Renderer;
         private List<Renderer> m_AllRenderer = new List<Renderer>();
         private List<Material> m_AllMaterials = new List<Material>();
-
+        //资源加载对应的Id， 如果没加载出来前取消了，可以用这个id取消加载
+        private uint m_AvatarMeshSerialId;
 
         
         public Renderer MeshRenderer
@@ -160,15 +141,9 @@ namespace Game.Client
             //     return;
             // }
 
-            //初始化
-            if (m_MeshPool == null)
-            {
-                m_MeshPool = GameEntry.ObjectPool.CreateSingleSpawnObjectPool<MeshInstanceBase>("MeshBase"
-                    , 30.0f, 10, 30.0f
-                    , Constant.AssetPriority.GameplayAsset);
-            }
             
-            m_LoadAssetCallbacks = new LoadAssetCallbacks(OnLoadMeshAssetSuccess, OnLoadMeshAssetFail);
+            
+            //m_LoadAssetCallbacks = new LoadAssetCallbacks(OnLoadMeshAssetSuccess, OnLoadMeshAssetFail);
             
             m_AttachedEntity = entity;
             AvatarAssetName = roleAvatarAsset;
@@ -258,7 +233,7 @@ namespace Game.Client
             }
         }
         
-        private void OnLoadMeshAssetSuccess(string assetName, object asset, float duration, object userData)
+        private void OnLoadMeshSuccess(GameObject avatarMesh, object userData)
         {
             if (m_CurrentAvatarState != MeshLoadingState.AvatarModelLoading)
             {
@@ -266,59 +241,29 @@ namespace Game.Client
                 return;
             }
             
-            GameObject avatarMesh = Object.Instantiate((GameObject)asset);
             
-            m_MeshPool.Register(MeshInstanceBase.Create(assetName, avatarMesh),true );
             OnAvatarLoadedComplete(m_AvatarAssetName, avatarMesh);
             TransitionToState(MeshLoadingState.AvatarModelLoaded);
 
         }
-        private void OnLoadMeshAssetFail(string assetName, LoadResourceStatus status, string errorMessage, object userData)
-        {
-            Log.Error($"Load resource fail, assetName; {assetName}, status: {status}, errorMsg: {errorMessage}");
-        }
-        
-        
         private void LoadAvatarModel()
         {
             Log.Debug($"[mesh] LoadAvatarModel,id={m_AttachedEntity.Id}, {m_AvatarAssetName}");
 
-            var poolService = m_MeshPool;
-            if (poolService == null)
-                return;
+
             if (string.IsNullOrEmpty(m_AvatarAssetName))
                 return;
             //根据类型，同步或者异步加载
-            
-            var objectBase = poolService.Spawn(m_AvatarAssetName);
-            if (objectBase != null)
-            {
-                OnAvatarLoadedComplete(m_AvatarAssetName, (GameObject)objectBase.Target);
-                TransitionToState(MeshLoadingState.AvatarModelLoaded);
 
-            }
-            else
-            {
-                GameEntry.Resource.LoadAsset(m_AvatarAssetName, m_LoadAssetCallbacks);
-            }
+            m_AvatarMeshSerialId = ResourceExtension.GenerateGameObjectSerialId();
+            GameEntry.Resource.Instantiate(m_AvatarMeshSerialId,m_AvatarAssetName, OnLoadMeshSuccess, null);
         }
         
 
         private void DestroyModel()
         {
-            var poolService = m_MeshPool;
-            if (poolService == null)
-            {
-                if(m_AvatarMesh != null)
-                    GameObject.Destroy(m_AvatarMesh);
-                return;
-            }
-
-            if (m_AvatarMesh != null)
-            {
-                poolService.Unspawn(m_AvatarMesh);
-                m_AvatarMesh = null;
-            }
+            GameEntry.Resource.UnInstantiate(m_AvatarMeshSerialId);
+            m_AvatarMesh = null;
         }
         
         protected virtual void OnAvatarLoadedComplete(string assetName, GameObject obj)

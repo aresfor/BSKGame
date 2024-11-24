@@ -11,7 +11,7 @@ namespace Game.Client
         {
             m_Entity = entity;
         }
-        public bool PointerEnter()
+        public bool PointerEnter(FPointerEventData eventData)
         {
             bool bChildHasHandle = false;
             List<IEntity> results = ListPool<IEntity>.Get();
@@ -21,7 +21,7 @@ namespace Game.Client
             {
                 if (childEntity.LogicInterface is IPointerHandler pointerHandler)
                 {
-                    bool successHandle = pointerHandler.PointerEnter();
+                    bool successHandle = pointerHandler.PointerEnter(eventData);
                     if (false == successHandle)
                         bChildHasHandle = false;
                 }
@@ -32,7 +32,7 @@ namespace Game.Client
             return bChildHasHandle;
         }
 
-        public bool PointerExit()
+        public bool PointerExit(FPointerEventData eventData)
         {
             List<IEntity> results = ListPool<IEntity>.Get();
             GameEntry.Entity.GetChildEntities(m_Entity.Id, results);
@@ -40,7 +40,7 @@ namespace Game.Client
             {
                 if (childEntity.LogicInterface is IPointerHandler pointerHandler)
                 {
-                    pointerHandler.PointerExit();
+                    pointerHandler.PointerExit(eventData);
                 }
             }
             results.Clear();
@@ -49,7 +49,7 @@ namespace Game.Client
             return true;
         }
 
-        public bool PointerDown()
+        public bool PointerDown(FPointerEventData eventData)
         {
             List<IEntity> results = ListPool<IEntity>.Get();
             GameEntry.Entity.GetChildEntities(m_Entity.Id, results);
@@ -57,7 +57,7 @@ namespace Game.Client
             {
                 if (childEntity.LogicInterface is IPointerHandler pointerHandler)
                 {
-                    pointerHandler.PointerDown();
+                    pointerHandler.PointerDown(eventData);
                 }
             }
             results.Clear();
@@ -65,7 +65,7 @@ namespace Game.Client
             return true;
         }
 
-        public bool PointerUp()
+        public bool PointerUp(FPointerEventData eventData)
         {
             List<IEntity> results = ListPool<IEntity>.Get();
             GameEntry.Entity.GetChildEntities(m_Entity.Id, results);
@@ -73,7 +73,7 @@ namespace Game.Client
             {
                 if (childEntity.LogicInterface is IPointerHandler pointerHandler)
                 {
-                    pointerHandler.PointerUp();
+                    pointerHandler.PointerUp(eventData);
                 }
             }
             results.Clear();

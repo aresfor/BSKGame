@@ -1,4 +1,5 @@
-﻿using GameFramework;
+﻿using Game.Math;
+using GameFramework;
 
 namespace Game.Core;
 
@@ -20,6 +21,8 @@ public interface IGraphNode<T>: IReference,IGraphNode
     IGraphNodeHandle Handle { get; }
     void GetNeighbors(List<IGraphNode<T>> resultNodes);
     bool IsAvailable { get; }
+    float3 GetRelativePosition();
+    float3 WorldPosition { get; }
 }
 
 
@@ -34,11 +37,13 @@ public abstract class GraphNodeBase<T> : IGraphNode<T>
     private T m_Value;
     private IGraph<T> m_Owner;
     private IGraphNodeHandle m_Handle;
-
+    private float3 m_WorldPosition;
     public virtual void GetNeighbors(List<IGraphNode<T>> resultNodes)
     {
         m_Owner.GetNeighbors(resultNodes,this);
     }
+    
+    
 
     public IGraphNodeHandle Handle
     {
@@ -63,6 +68,19 @@ public abstract class GraphNodeBase<T> : IGraphNode<T>
         protected set=> m_IsAvailable = value;
     }
     
+
+    public float3 GetRelativePosition()
+    {
+        return WorldPosition - Owner.GetWorldPosition();
+    }
+
+    public float3 WorldPosition
+    {
+        get=>m_WorldPosition;
+        set => m_WorldPosition = value;
+    }
+    
+
     public string Name { get=>m_Name;
         protected set => m_Name = value;
     }
@@ -84,9 +102,10 @@ public interface IGraphPathNode
 }
 
 
-public class GraphPathNode<T> : GraphNodeBase<T>,IGraphPathNode
+public abstract class GraphPathNode<T> : GraphNodeBase<T>,IGraphPathNode
 {
     public IGraphNode Pre { get; set; }
+
     public override void Clear()
     {
         base.Clear();

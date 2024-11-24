@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Math;
 using UnityGameFramework.Runtime;
 
 namespace Game.Client
@@ -12,21 +13,21 @@ namespace Game.Client
     //     Up
     // }
     //
-    // public struct FPointerEventData
-    // {
-    //     public EPOinterEventType EventType;
-    // }
+    public struct FPointerEventData
+    {
+        public float3 pointerWorldPos;
+    }
 
     public interface IPointerHandler
     {
 
-        public abstract bool PointerEnter();
+        public abstract bool PointerEnter(FPointerEventData eventData);
 
-        public abstract bool PointerExit();
+        public abstract bool PointerExit(FPointerEventData eventData);
 
-        public abstract bool PointerDown();
+        public abstract bool PointerDown(FPointerEventData eventData);
 
-        public abstract bool PointerUp();
+        public abstract bool PointerUp(FPointerEventData eventData);
 
     }
 }

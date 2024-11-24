@@ -13,6 +13,8 @@ public enum LayerType
     kTypeVehicle,
     kTypeAutoFire,
     kTypeAimAssist,
+    kTypeEntity,
+    kTypeUI,
 }
 
 public enum EHitGroup : byte
@@ -51,6 +53,7 @@ public enum PhysicTraceType
     Fire,
     Ragdoll,
     AutoFire,
+    UI,
     Max,
 }
 

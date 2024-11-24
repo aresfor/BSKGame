@@ -7,20 +7,25 @@
 
 using GameFramework.DataTable;
 using System;
+using System.Collections.Generic;
 using Game.Core;
 using Game.Gameplay;
-using GameFramework.Entity;
+using GameFramework.Event;
 using UnityGameFramework.Runtime;
 using Log = UnityGameFramework.Runtime.Log;
+using ShowEntityFailureEventArgs = UnityGameFramework.Runtime.ShowEntityFailureEventArgs;
+using ShowEntitySuccessEventArgs = UnityGameFramework.Runtime.ShowEntitySuccessEventArgs;
 
 namespace Game.Client
 {
-    public  static partial class EntityExtension
+    public static partial class EntityExtension
     {
-        
+        private static Dictionary<int, Action<Entity>> s_LoadCallback = new Dictionary<int, Action<Entity>>();
+        private static Dictionary<int, Entity> s_Id2Entity = new Dictionary<int, Entity>();
+
         public static GameEntityLogic GetGameEntity(this EntityComponent entityComponent, int entityId)
         {
-            UnityGameFramework.Runtime.Entity entity = entityComponent.GetEntity(entityId);
+            Entity entity = entityComponent.GetEntity(entityId);
             if (entity == null)
             {
                 return null;
@@ -28,18 +33,48 @@ namespace Game.Client
 
             return (GameEntityLogic)entity.Logic;
         }
-
-        public static void HideEntity(this EntityComponent entityComponent, GameEntityLogic gameEntityLogic)
+        public static void HideGameplayEntity(this EntityComponent entityComponent, int entityId)
         {
-            entityComponent.HideEntity(gameEntityLogic.Entity);
+            if (false == s_Id2Entity.ContainsKey(entityId))
+            {
+                Log.Error("Entity not load but call hide");
+                return;
+            }
+
+            s_Id2Entity.Remove(entityId);
+            s_LoadCallback.Remove(entityId);
+            
+            entityComponent.HideEntity(entityId);
         }
 
-        public static void AttachEntity(this EntityComponent entityComponent, GameEntityLogic gameEntityLogic, int ownerId, string parentTransformPath = null, object userData = null)
+        public static void HideGameplayEntity(this EntityComponent entityComponent,Entity entity) 
+            => HideGameplayEntity(entityComponent, entity.Id);
+
+
+        public static void HideAllEntity(this EntityComponent entityComponent)
         {
-            entityComponent.AttachEntity(gameEntityLogic.Entity, ownerId, parentTransformPath, userData);
+            //loaded entity
+            List<Entity> entities = ListPool<Entity>.Get();
+            entityComponent.GetAllLoadedEntities(entities);
+            foreach (var entity in entities)
+            {
+                HideGameplayEntity(entityComponent, entity);
+            }
+            entities.Clear();
+            ListPool<Entity>.Release(entities);
+            
+            //loading entity
+            List<int> loadingEntities = ListPool<int>.Get();
+            entityComponent.GetAllLoadingEntityIds(loadingEntities);
+            foreach (var entity in loadingEntities)
+            {
+                HideGameplayEntity(entityComponent, entity);
+            }
+            loadingEntities.Clear();
+            ListPool<int>.Release(loadingEntities);
         }
         
-        public static void ShowGameplayEntity(this EntityComponent entityComponent, string entityGroup, EntityData data)
+        public static void ShowGameplayEntity(this EntityComponent entityComponent, string entityGroup, EntityData data, Action<Entity> showEntitySuccessCallback = null) 
         {
             if (data == null)
             {
@@ -58,8 +93,46 @@ namespace Game.Client
             //填入资源表id，后续资源都从对应Entity格子对应的资源表去找
             data.ResourceId = drEntity.ResourceId;
             data.Init();
+            if(showEntitySuccessCallback != null)
+                s_LoadCallback.Add(data.Id, showEntitySuccessCallback);
+
             entityComponent.ShowEntity(data.Id, null, AssetUtility.GetEntityAsset(drEntity.AssetName), entityGroup, Constant.AssetPriority.GameplayAsset, data);
         }
         
+        
+        public static void OnShowEntitySuccess(object sender, GameEventArgs e)
+        {
+            ShowEntitySuccessEventArgs ne = (ShowEntitySuccessEventArgs)e;
+            if (ne == null)
+            {
+                return;
+            }
+
+            Action<Entity> callback = null;
+            if (!s_LoadCallback.TryGetValue(ne.Entity.Id, out callback))
+            {
+                return;
+            }
+
+            s_Id2Entity.Add(ne.Entity.Id, ne.Entity);
+            callback?.Invoke(ne.Entity);
+            s_LoadCallback.Remove(ne.Entity.Id);
+
+        }
+
+        public static void OnShowEntityFail(object sender, GameEventArgs e)
+        {
+            ShowEntityFailureEventArgs ne = (ShowEntityFailureEventArgs)e;
+            if (ne == null)
+            {
+                return;
+            }
+
+            if (s_LoadCallback.ContainsKey(ne.EntityId))
+            {
+                s_LoadCallback.Remove(ne.EntityId);
+                Log.Error($"Show entity failure with error message '{ne.ErrorMessage}'");
+            }
+        }
     }
 }

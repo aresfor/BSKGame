@@ -11,9 +11,7 @@ namespace Game.Gameplay
     {
         //[Min(1)] public float BoardWidth = 1;
         //[Min(1)] public float BoardHeight = 1;
-        public float LatticeWidth = 1;
-        public float LatticeHeight = 1;
-
+        
         public Action FinishGenerationCall;
 
         public void GenerateFinished()
@@ -21,7 +19,7 @@ namespace Game.Gameplay
             FinishGenerationCall?.Invoke();
         }
 
-        public BoardGraph(int inRow, int inColumn) : base(inRow, inColumn)
+        public BoardGraph(int inRow, int inColumn, float3 graphWorldPosition) : base(inRow, inColumn, graphWorldPosition)
         {
             
         }
@@ -40,25 +38,23 @@ namespace Game.Gameplay
         {
             Clear();
             
-            var perHeight = LatticeHeight * 1.1f;
-            var perWidth = LatticeWidth * 1.1f;
             
-            float rowPositionX = LatticeWidth; 
+            
             for (int i = 0; i < Row; ++i)
             {
-                float positionZ = i * perHeight + LatticeHeight;
+                float positionZ = i * (NodeMarginHeight +NodeHeight);
                 for (int j = 0; j < Column; ++j)
                 {
-                    float positionX = j * perWidth + rowPositionX;
+                    float positionX = j * (NodeMarginWidth + NodeWidth);
 
                     var lattice = ReferencePool.Acquire<LatticeNode>();
                     Array[i, j] = lattice;
                     var latticeModel = new LatticeEntityModel(this,i, j
-                        , new float3(positionX, boardPosition.y, positionZ)
+                        , new float3(positionX, 0, positionZ) + boardPosition
                         , boardRotation
                         , lattice
                         , boardEntityId
-                        , LatticeWidth, LatticeHeight)
+                        , NodeWidth, NodeHeight)
                     {
                         Id = EntityId.GenerateSerialId(),
                         TypeId = 30000
