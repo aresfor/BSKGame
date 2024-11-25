@@ -1,4 +1,5 @@
-﻿using Game.Gameplay;
+﻿using Game.Core;
+using Game.Gameplay;
 using Game.Math;
 
 namespace Game.Client
@@ -10,12 +11,19 @@ namespace Game.Client
         public void InitNavigationAgent()
         {
             var boardGraph = GameUtils.Board;
-            m_AgentImpl = new GridNavigationAgent(this, boardGraph);
+            m_AgentImpl = new GraphNavigationAgent(this);
         }
-        public bool MoveToDestination(float3 destination)
+        
+        //@TODO: 改造非泛型基类
+        public bool MoveToDestination(float3 destination, IGraph graph)
         {
-            return m_AgentImpl.MoveToDestination(destination);
+            return m_AgentImpl.MoveToDestination(destination, graph);
+
         }
+        
+        // public bool MoveToDestination(float3 destination)
+        // {
+        // }
 
         public bool PauseMovement()
         {

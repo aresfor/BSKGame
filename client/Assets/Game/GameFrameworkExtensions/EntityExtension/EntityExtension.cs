@@ -96,6 +96,12 @@ namespace Game.Client
             if(showEntitySuccessCallback != null)
                 s_LoadCallback.Add(data.Id, showEntitySuccessCallback);
 
+            //没有就新建默认对象组
+            if (null == entityComponent.GetEntityGroup(entityGroup))
+            {
+                entityComponent.AddEntityGroup(entityGroup, 0, 0, 0, Constant.AssetPriority.GameplayAsset);
+            }
+            
             entityComponent.ShowEntity(data.Id, null, AssetUtility.GetEntityAsset(drEntity.AssetName), entityGroup, Constant.AssetPriority.GameplayAsset, data);
         }
         

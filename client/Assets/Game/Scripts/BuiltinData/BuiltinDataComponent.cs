@@ -20,8 +20,11 @@ namespace Game.Client
     {
         [SerializeField] private TextAsset m_GameplayTagTextAsset = null;
 
-        private List<IUpdateableUtility> m_UpdateableUtilities = new List<IUpdateableUtility>();
-        private List<IShutdownUtility> m_ShutdownUtilities = new List<IShutdownUtility>();
+        private List<IUpdateable> m_UpdateableUtilities = new List<IUpdateable>();
+        private List<IShutdown> m_ShutdownUtilities = new List<IShutdown>();
+
+        private LinkedList<IUpdateable> m_UpdatableSystems = new LinkedList<IUpdateable>();
+        private LinkedList<ISystem> m_Systems = new LinkedList<ISystem>();
         protected override void Awake()
         {
             base.Awake();
@@ -29,10 +32,11 @@ namespace Game.Client
 
         private void Start()
         {
+            InitializeGameplayTag();
+            
             RegisterListener();
             RegisterUtilities();
-
-            InitializeGameplayTag();
+            
         }
         
         /// <summary>
@@ -42,7 +46,10 @@ namespace Game.Client
         {
             //@TEMP
             ResourceExtension.Initialize();
-            
+            TimeUtils.Initialize(new UnityTimeUtility());
+            var unityInputPC = new UnityInputUtility_PC();
+            m_UpdateableUtilities.Add(unityInputPC);
+            InputUtils.Initialize(unityInputPC);
             PhysicsUtils.Initialize(new UnityPhysicsUtility());
             var unityVfxUtility = new UnityVFXUtility();
             VFXUtils.Initialize(unityVfxUtility);
@@ -50,6 +57,28 @@ namespace Game.Client
             
         }
 
+        public void AddSystem(ISystem system)
+        {
+            if (m_Systems.Contains(system))
+                return;
+            
+            m_Systems.AddLast(system);
+            if (system is IUpdateable updateSystem)
+            {
+                m_UpdatableSystems.AddLast(updateSystem);
+            }
+        }
+
+        public void RemoveSystem(ISystem system)
+        {
+            m_Systems.Remove(system);
+            
+            if (system is IUpdateable updateSystem)
+            {
+                m_UpdatableSystems.Remove(updateSystem);
+            }
+        }
+        
         private void RegisterListener()
         {
             GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId, EntityExtension.OnShowEntitySuccess);
@@ -85,9 +114,16 @@ namespace Game.Client
         //@TEMP:
         private void Update()
         {
+            //更新utility
             foreach (var updateableUtility in m_UpdateableUtilities)
             {
-                updateableUtility.Update(Time.deltaTime);
+                updateableUtility.Update(TimeUtils.DeltaTime());
+            }
+            
+            //更新系统
+            foreach (var updatableSystem in m_UpdatableSystems)
+            {
+                updatableSystem.Update(TimeUtils.DeltaTime());
             }
         }
 
@@ -99,6 +135,8 @@ namespace Game.Client
                 shutdownUtility.Shutdown();
             }
             UnRegisterListener();
+            m_Systems.Clear();
+            m_UpdatableSystems.Clear();
             m_UpdateableUtilities.Clear();
             m_ShutdownUtilities.Clear();
         }

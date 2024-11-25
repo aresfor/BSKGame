@@ -6,12 +6,12 @@
         
         public void Initialize()
         {
-            Log.Initialize(this);
+            Logs.Initialize(this);
         }
 
         public void Shutdown()
         {
-            Log.Shutdown();
+            Logs.Shutdown();
         }
 
         public void Reset()

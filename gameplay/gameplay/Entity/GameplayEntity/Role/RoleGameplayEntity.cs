@@ -19,15 +19,15 @@ public class RoleGameplayEntity: GameplayEntity
     public override void OnAttachTo(IEntity parentEntity, object userData)
     {
         base.OnAttachTo(parentEntity, userData);
-        m_RoleModel.BelongLatticeId = parentEntity.Id;
+        //m_RoleModel.BelongLatticeId = parentEntity.Id;
         //m_RoleModel.BelongLattice = (parentEntity as IGameEntityLogic).GameplayEntity as LatticeGameplayEntity;
     }
 
     public override void OnDetachFrom(IEntity parentEntity, object userData)
     {
         base.OnDetachFrom(parentEntity, userData);
-        if(m_RoleModel.BelongLatticeId == parentEntity.Id)
-            m_RoleModel.BelongLatticeId = 0;
+        //if(m_RoleModel.BelongLatticeId == parentEntity.Id)
+        //    m_RoleModel.BelongLatticeId = 0;
 
     }
 }

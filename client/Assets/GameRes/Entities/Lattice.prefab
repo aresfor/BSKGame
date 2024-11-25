@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 950257286665209744}
-  - component: {fileID: 4681370277198573841}
   - component: {fileID: 2660810292616787528}
   - component: {fileID: 8782277803953179727}
+  - component: {fileID: 947267384702163452}
   m_Layer: 16
   m_Name: Lattice
   m_TagString: Untagged
@@ -35,21 +35,6 @@ Transform:
   - {fileID: 1361005016110358907}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4681370277198573841
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3887931774420975293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6a7a1f4eb7446229f5397d3d4aad281, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_LogicSockets: []
-  m_LatticeSpriteRenderer: {fileID: 2660810292616787528}
-  m_HoverSpriteRenderer: {fileID: 9013548712695184429}
 --- !u!212 &2660810292616787528
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -123,6 +108,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8888889, y: 0.8888889, z: 0.7853221}
   m_Center: {x: 0, y: 0, z: -0.11714676}
+--- !u!114 &947267384702163452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3887931774420975293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a7a1f4eb7446229f5397d3d4aad281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LogicSockets: []
+  m_LatticeSpriteRenderer: {fileID: 2660810292616787528}
+  m_HoverSpriteRenderer: {fileID: 9013548712695184429}
+  DefaultHoverColor: {r: 1, g: 1, b: 1, a: 1}
+  HoverColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &5060746650040126073
 GameObject:
   m_ObjectHideFlags: 0

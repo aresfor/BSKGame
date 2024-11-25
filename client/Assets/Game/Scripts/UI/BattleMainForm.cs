@@ -42,7 +42,7 @@ namespace Game.Client
         {
             bool visible = actionItem != null;
             ActionInfoPanelCanvasGroup.alpha =  visible? 1 : 0;
-
+            ActionInfoPanelCanvasGroup.blocksRaycasts = visible ;
             if (visible)
             {
                 //@TODO:设置信息

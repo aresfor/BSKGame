@@ -31,7 +31,7 @@ namespace GameFramework.Runtime
         /// <returns>是否解析数据表行成功。</returns>
         public virtual bool ParseDataRow(string dataRowString, object userData)
         {
-            Log.Warning("Not implemented ParseDataRow(string dataRowString, object userData).");
+            Logs.Warning("Not implemented ParseDataRow(string dataRowString, object userData).");
             return false;
         }
 
@@ -45,7 +45,7 @@ namespace GameFramework.Runtime
         /// <returns>是否解析数据表行成功。</returns>
         public virtual bool ParseDataRow(byte[] dataRowBytes, int startIndex, int length, object userData)
         {
-            Log.Warning("Not implemented ParseDataRow(byte[] dataRowBytes, int startIndex, int length, object userData).");
+            Logs.Warning("Not implemented ParseDataRow(byte[] dataRowBytes, int startIndex, int length, object userData).");
             return false;
         }
     }

@@ -1,10 +1,19 @@
-﻿using GameFramework.Entity;
+﻿using Game.Gameplay;
+using GameFramework.Entity;
 
 namespace Game.Core
 {
     public interface IEntityLogic
     {
+        public void AddTag(string tag);
+
+        public void RemoveTag(string tag);
+
+        public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact);
+
+        public void ClearAllTag();
         IEntity EntityInterface { get; }
+        
         string Name { get; }
         bool Visible { get; }
         bool Available { get; }

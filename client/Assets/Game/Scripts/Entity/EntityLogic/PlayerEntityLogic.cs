@@ -2,7 +2,9 @@
 using Game.Core;
 using Game.Gameplay;
 using GameFramework;
+using GameFramework.Event;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
@@ -10,7 +12,7 @@ namespace Game.Client
     public class PlayerEntityLogic:GameEntityLogic
     {
         private RoleEntityModel m_Model;
-         
+        private IEntityLogic m_LastHitEntityLogic;
         public override void OnInit(object userData)
         {
             base.OnInit(userData);
@@ -49,9 +51,10 @@ namespace Game.Client
                 TestVFX(meshloader);
             };
             
-            meshLoaderSocket.BeginLoadMesh();
+            //meshLoaderSocket.BeginLoadMesh();
         }
 
+        
         private void TestVFX(BaseMeshLoader meshloader)
         {
 
@@ -72,8 +75,9 @@ namespace Game.Client
         {
             base.OnShow(userData);
             
-
             GameUtils.PlayerEntityId = Id;
+            
+            GameEntry.Event.Subscribe(MouseRayCastEventArgs.EventId, OnMouseRayCast);
         }
 
         protected override void CreateGameplayEntity()
@@ -82,17 +86,94 @@ namespace Game.Client
             GameplayEntity = new PlayerGameplayEntity(Entity);
         }
 
-        private void Update()
+        public override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
-            if (Input.GetMouseButtonDown(0))
+            base.OnUpdate(elapseSeconds, realElapseSeconds);
+            
+            if (InputUtils.GetKeyDown(EKeyCode.Mouse0))
             {
-                TestVFX(FindLogicSocket<BaseMeshLoaderLogicSocket>().AvatarMeshLoader);
+                //TestVFX(FindLogicSocket<BaseMeshLoaderLogicSocket>().AvatarMeshLoader);
             }
         }
+
+        public override void OnHide(bool isShutdown, object userData)
+        {
+            GameEntry.Event.Unsubscribe(MouseRayCastEventArgs.EventId, OnMouseRayCast);
+
+            base.OnHide(isShutdown, userData);
+        }
+
 
         public override void OnRecycle()
         {
             base.OnRecycle();
         }
+
+        private void OnMouseRayCast(object sender, GameEventArgs eventArgs)
+        {
+            MouseRayCastEventArgs args = eventArgs as MouseRayCastEventArgs;
+            var impactInfo = args.ImpactInfo;
+            if (args.bIsHit)
+            {
+                var entity = GameEntry.Entity.GetEntity(impactInfo.HitEntityId);
+                if (null == entity)
+                {
+                    //Log.Info($"MouseHitEntity is null, entityId: {impactInfo.HitEntityId}");
+                }
+                else 
+                {
+                    if (m_LastHitEntityLogic != null && entity.LogicInterface != m_LastHitEntityLogic)
+                    {
+                        if(m_LastHitEntityLogic is IPointerHandler lastHitPointerHandler)
+                            lastHitPointerHandler.PointerExit(new FPointerEventData()
+                            {
+                                pointerWorldPos = impactInfo.HitLocation
+                            });
+                    }
+                    
+                    if (entity.LogicInterface is IPointerHandler pointerHandler)
+                    {
+                        if (m_LastHitEntityLogic != entity.LogicInterface)
+                        {
+                            pointerHandler.PointerEnter(new FPointerEventData()
+                            {
+                                pointerWorldPos = impactInfo.HitLocation
+                            });
+                        }
+
+                        if (InputUtils.GetKeyDown(EKeyCode.Mouse0))
+                        {
+                            pointerHandler.PointerDown(new FPointerEventData()
+                            {
+                                pointerWorldPos = impactInfo.HitLocation
+                            });
+                        }
+                        
+                        if (InputUtils.GetKeyDown(EKeyCode.Mouse1))
+                        {
+                            pointerHandler.PointerUp(new FPointerEventData()
+                            {
+                                pointerWorldPos = impactInfo.HitLocation
+                            });
+                        }
+
+
+                    }
+                    m_LastHitEntityLogic = entity.Logic;
+
+                }
+            }
+            else
+            {
+                if (m_LastHitEntityLogic != null)
+                {
+                    if(m_LastHitEntityLogic is IPointerHandler lastHitPointerHandler)
+                        lastHitPointerHandler.PointerExit(new FPointerEventData());
+
+                    m_LastHitEntityLogic = null;
+                }
+            }
+        }
+        
     }
 }

@@ -348,7 +348,7 @@ namespace Game.Core
                 var spawn = gameObjectCreatorWrapper.Get(async,asyncCallback);
                 if (spawn == null && !async)
                 {
-                    Log.Error($"[MeshLoader]:m_AvatarAssetName:{assetPath} Load Error,Check Mapper Please");
+                    Logs.Error($"[MeshLoader]:m_AvatarAssetName:{assetPath} Load Error,Check Mapper Please");
                 }
                 return spawn;
             }

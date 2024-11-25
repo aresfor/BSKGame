@@ -22,6 +22,31 @@ namespace UnityGameFramework.Runtime
         private Entity m_Entity = null;
         private int m_OriginalLayer = 0;
         private Transform m_OriginalParentTransform;
+        
+        
+        public EntityData EntityData { get; private set; }
+
+        
+        public void AddTag(string tag)
+        {
+            EntityData.AddTag(tag);
+        }
+
+        public void RemoveTag(string tag)
+        {
+            EntityData.RemoveTag(tag);
+        }
+
+        public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact)
+        {
+            return EntityData.HasTag(tag, checkType);
+        }
+
+        public void ClearAllTag()
+        {
+            EntityData.ClearAllTag();
+        }
+        
         /// <summary>
         /// 获取实体。
         /// </summary>
@@ -94,6 +119,12 @@ namespace UnityGameFramework.Runtime
         /// <param name="userData">用户自定义数据。</param>
         public virtual void OnInit(object userData)
         {
+            EntityData = userData as EntityData;
+            if (EntityData == null)
+            {
+                Log.Error("Entity data is invalid.");
+                return;
+            }
             m_Entity = GetComponent<Entity>();
             m_OriginalLayer = gameObject.layer;
             m_OriginalParentTransform = CachedTransform.parent;

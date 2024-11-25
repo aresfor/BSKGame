@@ -13,15 +13,15 @@ namespace Game.Gameplay
         //[Min(1)] public float BoardHeight = 1;
         
         public Action FinishGenerationCall;
-
+        public int BoardEntityId { get; private set; }
         public void GenerateFinished()
         {
             FinishGenerationCall?.Invoke();
         }
 
-        public BoardGraph(int inRow, int inColumn, float3 graphWorldPosition) : base(inRow, inColumn, graphWorldPosition)
+        public BoardGraph(int boardEntityId, int inRow, int inColumn, float3 graphWorldPosition) : base(inRow, inColumn, graphWorldPosition)
         {
-            
+            BoardEntityId = boardEntityId;
         }
 
         public IGraphNode<LatticeGameplayEntity> GetNode(int row, int column)
@@ -49,12 +49,11 @@ namespace Game.Gameplay
 
                     var lattice = ReferencePool.Acquire<LatticeNode>();
                     Array[i, j] = lattice;
-                    var latticeModel = new LatticeEntityModel(this,i, j
+                    lattice.OnInit(this, new FArrayGraphNodeHandle(i,j));
+                    var latticeModel = new LatticeEntityModel(this
                         , new float3(positionX, 0, positionZ) + boardPosition
                         , boardRotation
-                        , lattice
-                        , boardEntityId
-                        , NodeWidth, NodeHeight)
+                        , lattice)
                     {
                         Id = EntityId.GenerateSerialId(),
                         TypeId = 30000
@@ -65,7 +64,7 @@ namespace Game.Gameplay
                     DREntity drEntity = dtEntity.GetDataRow(latticeModel.TypeId);
                     if (drEntity == null)
                     {
-                        Log.Warning("Can not load entity id '{0}' from data table.", latticeModel.TypeId.ToString());
+                        Logs.Warning("Can not load entity id '{0}' from data table.", latticeModel.TypeId.ToString());
                         return;
                     }
                     GameFrameworkEntry.GetModule<IEntityManager>().ShowEntity(latticeModel.Id, AssetUtility.GetEntityAsset(drEntity.AssetName)

@@ -47,7 +47,7 @@ public static class RandomUtils
     {
         if (datas.Count == 0 || weights.Count == 0 || datas.Count != weights.Count)
         {
-            Log.Error($"RandomSelectByWeight datas.Count{datas.Count} or weights.Count:{weights.Count} error!");
+            Logs.Error($"RandomSelectByWeight datas.Count{datas.Count} or weights.Count:{weights.Count} error!");
             return default(T);
         }
 
@@ -63,7 +63,7 @@ public static class RandomUtils
             if (randomRate < rate)
             {
                 index = i;
-                Log.Debug($" RandomSelectByWeight, originRandomRate:{originRandomRate}, randomRate:{randomRate}, selectId:{datas[index]}");
+                Logs.Debug($" RandomSelectByWeight, originRandomRate:{originRandomRate}, randomRate:{randomRate}, selectId:{datas[index]}");
                 break;
             }
             else if (i == weights.Count - 1)

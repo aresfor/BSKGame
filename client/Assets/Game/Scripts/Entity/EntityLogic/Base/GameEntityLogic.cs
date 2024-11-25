@@ -21,7 +21,6 @@ namespace Game.Client
         [SerializeField]
         private List<EntityLogicSocketBase> m_LogicSockets = new List<EntityLogicSocketBase>(); 
             
-        public EntityData EntityData { get; private set; }
 
         public GameplayEntity GameplayEntity { get; protected set; }
 
@@ -49,12 +48,7 @@ namespace Game.Client
 #endif
         {
             base.OnInit(userData);
-            EntityData = userData as EntityData;
-            if (EntityData == null)
-            {
-                    Log.Error("Entity data is invalid.");
-                    return;
-            }
+            
 
             CreateGameplayEntity();
             if (GameplayEntity == null)
@@ -172,25 +166,6 @@ namespace Game.Client
             }
         }
 
-        public void AddTag(string tag)
-        {
-                EntityData.AddTag(tag);
-        }
-
-        public void RemoveTag(string tag)
-        {
-                EntityData.RemoveTag(tag);
-        }
-
-        public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact)
-        {
-                return EntityData.HasTag(tag, checkType);
-        }
-
-        public void ClearAllTag()
-        {
-                EntityData.ClearAllTag();
-        }
         
         //logic socket
         public void RegisterLogicSocket(EntityLogicSocketBase socket)

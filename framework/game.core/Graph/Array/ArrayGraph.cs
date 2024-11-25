@@ -16,9 +16,8 @@ public abstract class ArrayGraph<T>:  GraphBase<T>
     public float NodeMarginWidth => NodeWidth * 0.1f;
     public float NodeMarginHeight => NodeHeight * 0.1f;
     
-    private Queue<IGraphNode<T>> m_OpenQueue = new Queue<IGraphNode<T>>();
-    private IGraphNode<T>[, ] m_CameFromArr { get; }
-
+    
+    
     public float3 WorldPosition { get; set; }
     public int Row
     {
@@ -38,87 +37,16 @@ public abstract class ArrayGraph<T>:  GraphBase<T>
         m_Column = inColumn;
         WorldPosition = graphWorldPosition;
         Array = new IGraphNode<T>[m_Row, m_Column];
-        m_CameFromArr = new IGraphNode<T>[m_Row, m_Column];
+        //m_CameFromArr = new IGraphNode<T>[m_Row, m_Column];
     }
-    
-    
-    
-    public override void BFS(List<IGraphNode<T>> resultNodes,IGraphNode<T> node, int distance)
+
+
+    protected override float Heuristic(IGraphNode<T> a, IGraphNode<T> b)
     {
-        if (resultNodes == null || node == null)
-            return;
-        if (Array == null)
-        {
-            Log.Error("ArrayGraph array is null, check initialize or recycle");
-            return;
-        }
-        
-        resultNodes.Clear();
-        var queue = m_OpenQueue;
-        queue.Clear();
-        
-        var visitedSet = HashSetPool<IGraphNode<T>>.Get();
-        var pendingSet = HashSetPool<IGraphNode<T>>.Get();
-        
-        queue.Enqueue(node);
-        int currentDistance = 0;
-        
-        var neighbors = ListPool<IGraphNode<T>>.Get();
-        while (currentDistance <= distance)
-        {
-            while (queue.Count > 0)
-            {
-                var currentNode = queue.Dequeue();
-                visitedSet.Add(currentNode);
-
-                neighbors.Clear();
-                if (currentDistance < distance)
-                {
-                    currentNode.GetNeighbors(neighbors);
-                    foreach (var neighborNode in neighbors)
-                    {
-                        if (neighborNode.IsAvailable)
-                        {
-                            //还没有访问过
-                            if (false == visitedSet.Contains(neighborNode))
-                            {
-                                pendingSet.Add(neighborNode);
-                                // if (neighborNode is IGraphPathNode pathNode)
-                                // {
-                                //     pathNode.Pre = currentNode;
-                                // }
-                            }
-                        }
-                    }
-                }
-                
-            }
-
-            foreach (var pendingNode in pendingSet)
-            {
-                queue.Enqueue(pendingNode);
-            }
-            
-            pendingSet.Clear();
-            
-            ++currentDistance;
-        }
-        
-        resultNodes.Capacity = visitedSet.Count;
-        foreach (var element in visitedSet)
-        {
-            //排除起始查询node
-            if(element != node)
-                resultNodes.Add(element);
-        }
-        
-        neighbors.Clear();
-        ListPool<IGraphNode<T>>.Release(neighbors);
-        pendingSet.Clear();
-        HashSetPool<IGraphNode<T>>.Release(pendingSet);
-        visitedSet.Clear();
-        HashSetPool<IGraphNode<T>>.Release(visitedSet);
-        
+        // 曼哈顿距离
+        var handleA = (FArrayGraphNodeHandle)a.Handle;
+        var handleB = (FArrayGraphNodeHandle)b.Handle;
+        return math.abs(handleA.Row - handleB.Row) + math.abs(handleA.Column - handleB.Column);
     }
 
     public override void DFS(List<IGraphNode<T>> resultNodes, IGraphNode<T> node, int depth)
@@ -127,89 +55,26 @@ public abstract class ArrayGraph<T>:  GraphBase<T>
         throw new NotImplementedException();
     }
 
-    public override bool BFS(IGraphNode<T> start, IGraphNode<T> goal, List<IGraphNode<T>> path)
-    {
-        if (path == null || start == null || goal == null)
-            return false;
-        
-        var visitedSet = HashSetPool<IGraphNode<T>>.Get();
-        
-        m_OpenQueue.Clear();
-        var queue = m_OpenQueue;
-
-        for (int i = 0; i < Array.GetLength(0); ++i)
-        {
-            for (int j = 0; j < Array.GetLength(1); ++j)
-            {
-                m_CameFromArr[i, j] = null;
-            }
-        }
-
-        bool result = false;
-        queue.Enqueue(start);
-        visitedSet.Add(start);
-
-        var neighbors = ListPool<IGraphNode<T>>.Get();
-        while (queue.Count > 0)
-        {
-            var currentNode = queue.Dequeue();
-
-            if (currentNode == goal)
-            {
-                result = true;
-                ReconstructPath(m_CameFromArr, goal, path);
-                break;
-            }
-
-            GetNeighbors(neighbors, currentNode);
-            for (int i = 0; i < neighbors.Count; ++i)
-            {
-                var neighborNode = FindNode(neighbors[i].Handle);
-                var neighborHandle = (FArrayGraphNodeHandle)neighbors[i].Handle;
-                if (!visitedSet.Contains(neighborNode))
-                {
-                    queue.Enqueue(neighborNode);
-                    visitedSet.Add(neighborNode);
-                    m_CameFromArr[neighborHandle.Row, neighborHandle.Column] = currentNode;
-                }
-            }
-        }
-        
-        neighbors.Clear();
-        ListPool<IGraphNode<T>>.Release(neighbors);
-        visitedSet.Clear();
-        HashSetPool<IGraphNode<T>>.Release(visitedSet);
-        
-        return result;
-    }
-    
-
-    private void ReconstructPath(IGraphNode<T>[, ] cameFromArr,  IGraphNode<T> goal, List<IGraphNode<T>> path)
-    {
-        var current = goal;
-        while (current != null)
-        {
-            var currentHandle = (FArrayGraphNodeHandle)current.Handle;
-            path.Insert(0, current);
-            current = cameFromArr[currentHandle.Row, currentHandle.Column];
-        }
-    }
     
     
-    public override void GetAllNodes(List<IGraphNode<T>> resultNodes)
+    
+    
+    public override bool GetAllNodes(List<IGraphNode<T>> resultNodes)
     {
         if (resultNodes == null)
-            return;
+            return false;
         if (Array == null)
         {
-            Log.Error("ArrayGraph array is null, check initialize or recycle");
-            return;
+            Logs.Error("ArrayGraph array is null, check initialize or recycle");
+            return false;
         }
         resultNodes.Capacity = Array.Length;
         foreach (var graphNode in Array)
         {
             resultNodes.Add(graphNode);
         }
+
+        return resultNodes.Count > 0;
     }
 
     public override void GetNeighbors(List<IGraphNode<T>> resultNodes, IGraphNode<T> node)

@@ -1,5 +1,6 @@
 ﻿
 
+using Game.Core;
 using Game.Math;
 
 namespace Game.Gameplay;
@@ -10,7 +11,9 @@ namespace Game.Gameplay;
 /// </summary>
 public interface INavigation
 {
-    bool MoveToDestination(float3 destination);
+    //bool MoveToDestination(float3 destination);
+    //@TODO: 改造非泛型基类
+    public new bool MoveToDestination(float3 destination, IGraph graph);
     bool PauseMovement();
     bool ResumeMovement();
     bool StopMovement();

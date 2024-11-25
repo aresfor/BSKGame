@@ -26,6 +26,7 @@ namespace Game.Client
         private void OnMeshLoadComplete(BaseMeshLoader meshLoader)
         {
             m_MainMeshRenderer = GetMainMesh().GetComponentInChildren<MeshRenderer>();
+            FindLogicSocket<ColliderBindLogicSocket>()?.CollectAllCollider();
         }
         protected override void CreateGameplayEntity()
         {
@@ -38,7 +39,8 @@ namespace Game.Client
         {
             base.OnShow(userData);
             
-            GameEntry.Entity.AttachEntity(this.Id, m_RoleEntityModel.BelongLatticeId);
+            //@TODO: 不再attach
+            //GameEntry.Entity.AttachEntity(this.Id, m_RoleEntityModel.BelongLatticeId);
         }
 
 

@@ -15,7 +15,6 @@ namespace GameFramework.Entity
     /// </summary>
     public interface IEntity
     {
-
         /// <summary>
         /// 实体逻辑接口
         /// </summary>

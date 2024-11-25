@@ -5,49 +5,34 @@ using Game.Math;
 namespace Game.Gameplay
 {
     
-    public class LatticeNode: GraphNodeBase<LatticeGameplayEntity>
+    public class LatticeNode: GraphNodeBase<LatticeGameplayEntity, BoardGraph>
     {
-        private BoardGraph m_BoardGraphOwner;
+        private float3 m_WorldPosition;
+        public override float3 WorldPosition { get=>m_WorldPosition;  }
 
-        public LatticeNode()
+
+        public override void OnInit(BoardGraph owner, IGraphNodeHandle handle, string name = "")
         {
+            base.OnInit(owner, handle, name);
             
         }
         
-        public void OnEntityShow(BoardGraph owner
-            , LatticeGameplayEntity latticeEntity
-            , string name = "")
+
+        public override void OnShow(LatticeGameplayEntity value, bool isAvailable = true)
         {
-            IsAvailable = true;
-            Name = name;
-            Owner = owner;
-            Value = latticeEntity;
-
-            m_BoardGraphOwner = owner;
-
-            var model = (LatticeEntityModel)latticeEntity.EntityData;
-            WorldPosition = model.Position;
-            Handle = new FArrayGraphNodeHandle(model.X, model.Y);
+            base.OnShow(value, isAvailable);
+            
+            var model = (LatticeEntityModel)value.EntityData;
+            m_WorldPosition = model.Position;
+            Name = value.EntityLogic.Name;
         }
 
-        // public override float3 GetRelativePosition()
-        // {
-        //     float3 relativePosition;
-        //     FArrayGraphNodeHandle handle = (FArrayGraphNodeHandle)Handle;
-        //     
-        //     relativePosition.x =
-        //          (m_BoardGraphOwner.NodeWidth +m_BoardGraphOwner.NodeMarginWidth) * handle.Column;
-        //     relativePosition.y = m_BoardGraphOwner.WorldPosition.y;
-        //     relativePosition.z = 
-        //          (m_BoardGraphOwner.NodeHeight + m_BoardGraphOwner.NodeMarginHeight) * handle.Row;
-        //     return relativePosition;
-        // }
-        
 
         public override void Clear()
         {
             base.Clear();
-            m_BoardGraphOwner = null;
         }
+
+        
     }
 }

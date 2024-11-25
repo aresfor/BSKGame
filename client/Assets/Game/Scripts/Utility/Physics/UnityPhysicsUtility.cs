@@ -5,11 +5,10 @@ using Game.Gameplay;
 using Game.Math;
 using UnityEngine;
 using UnityGameFramework.Runtime;
-using Log = Game.Core.Log;
 
 namespace Game.Client
 {
-    public class UnityPhysicsUtility:IPhysicsUtility
+    public class UnityPhysicsUtility : IPhysicsUtility
     {
         public bool SingleLineCheck(float3 startTrace, float3 endTrace, int traceFlag,
             ref ImpactInfo impactInfo)
@@ -47,19 +46,27 @@ namespace Game.Client
                         var entity = hitInfo.collider.GetComponent<Entity>();
                         if (entity != null)
                         {
-                            //if (entity.OwnerEntityActor != null && entity.OwnerEntityActor.OwnerEntity != null)
-                            //{
-                                impactInfo.HitEntityId = entity.Id;
+                            impactInfo.HitEntityId = entity.Id;
+                        }
+                        else
+                        {
+                            var colliderBinder = hitInfo.collider.GetComponent<EntityColliderBinder>();
+                            if (colliderBinder != null)
+                            {
+                                //if (entity.OwnerEntityActor != null && entity.OwnerEntityActor.OwnerEntity != null)
+                                //{
+                                impactInfo.HitEntityId = colliderBinder.Entity.Id;
 
 #if !SHIPPING_EXTERNAL
                                 // Log.Debug($"[Physics]SingleLineCheck {hitInfo.transform.name} Hit :{impactInfo.HitEntityId}");                  
-#endif 
-                            //}
-                            //else
-                            //{
-                            //    Log.Error(
-                            //        $"[Physics]SingleLineCheck {hitInfo.transform.name},get ColliderActorBinder ,but ownerEntityActor or OwnerEntity is null ,please check!");
-                            //}
+#endif
+                                //}
+                                //else
+                                //{
+                                //    Log.Error(
+                                //        $"[Physics]SingleLineCheck {hitInfo.transform.name},get ColliderActorBinder ,but ownerEntityActor or OwnerEntity is null ,please check!");
+                                //}
+                            }
                         }
                     }
 #if UNITY_EDITOR
@@ -125,15 +132,23 @@ namespace Game.Client
                     var entity = hitInfo.collider.GetComponent<Entity>();
                     if (entity != null)
                     {
-                        //if (entity.OwnerEntityActor != null && entity.OwnerEntityActor.OwnerEntity != null)
-                        //{
                         impactInfo.HitEntityId = entity.Id;
-                        //}
-                        //else
-                        //{
-                        //    Log.Error(
-                        //        $"[Physics]single line check {hitInfo.transform.name},get ColliderActorBinder ,but ownerEntityActor or OwnerEntity is null ,please check!");
-                        //}
+                    }
+                    else
+                    {
+                        var colliderBinder = hitInfo.collider.GetComponent<EntityColliderBinder>();
+                        if (colliderBinder != null)
+                        {
+                            //if (entity.OwnerEntityActor != null && entity.OwnerEntityActor.OwnerEntity != null)
+                            //{
+                            impactInfo.HitEntityId = colliderBinder.Entity.Id;
+                            //}
+                            //else
+                            //{
+                            //    Log.Error(
+                            //        $"[Physics]single line check {hitInfo.transform.name},get ColliderActorBinder ,but ownerEntityActor or OwnerEntity is null ,please check!");
+                            //}
+                        }
                     }
                 }
 
@@ -276,29 +291,39 @@ namespace Game.Client
                 if (impactInfo.ActorLayer != LayerType.kTypeStaticActor)
                 {
                     var entity = curCollider.GetComponent<Entity>();
-                    //if (entity != null)
-                    //{
-                      //  if (entity.OwnerEntityActor != null && entity.OwnerEntityActor.OwnerEntity != null)
-                        //{
+                    if (entity != null)
+                    {
                         impactInfo.HitEntityId = entity.Id;
-                        //}
-                        //else
-                        //{
-                        //   Log.Error(
-                        //        $"[Physics]OverlapSphereNonAlloc {curCollider.transform.name},get ColliderActorBinder ,but ownerEntityActor or OwnerEntity is null ,please check!");
-                        //}
-                    //}
+                    }
+                    else
+                    {
+                        var colliderBinder = curCollider.GetComponent<EntityColliderBinder>();
+                        if (colliderBinder != null)
+                        {
+                            //if (entity.OwnerEntityActor != null && entity.OwnerEntityActor.OwnerEntity != null)
+                            //{
+                            impactInfo.HitEntityId = colliderBinder.Entity.Id;
+                            //}
+                            //else
+                            //{
+                            //   Log.Error(
+                            //        $"[Physics]OverlapSphereNonAlloc {curCollider.transform.name},get ColliderActorBinder ,but ownerEntityActor or OwnerEntity is null ,please check!");
+                            //}
+                            //}
+                        }
+                    }
+                    
+
+                    impactList.Add(impactInfo);
                 }
 
-                impactList.Add(impactInfo);
             }
-
             return size;
         }
 
         public int BoxCastNonAlloc(float3 startPos, float3 halfExtents, float3 direction,
             quaternion orientation, float maxDistance,
-            int traceFlag, ref List<ImpactInfo> impactList, int maxCheckCount,bool bIsIgnoreDetailCheck = false)
+            int traceFlag, ref List<ImpactInfo> impactList, int maxCheckCount, bool bIsIgnoreDetailCheck = false)
         {
             impactList.Clear();
 
@@ -311,7 +336,8 @@ namespace Game.Client
                 orientation.ToQuaternion(),
                 maxDistance, LayerMask);
 
-            Debug.DrawLine(startPos.ToVector3(),startPos.ToVector3() + direction.ToVector3() * maxDistance,Color.yellow,1.0f);
+            Debug.DrawLine(startPos.ToVector3(), startPos.ToVector3() + direction.ToVector3() * maxDistance,
+                Color.yellow, 1.0f);
 
             for (int i = 0; i < size; i++)
             {
@@ -322,7 +348,7 @@ namespace Game.Client
                     //或，因为其他运算中可能会附有其他mask
 
                     ImpactInfo impactInfo = ImpactInfo.Alloc();
-                    
+
                     impactInfo.HitLocation = hitInfo.point.ToFloat3();
                     impactInfo.HitObjPosition = hitInfo.collider.transform.position.ToFloat3();
                     impactInfo.HitNormal = hitInfo.normal.ToFloat3();
@@ -341,31 +367,43 @@ namespace Game.Client
                         var entity = hitInfo.collider.GetComponent<Entity>();
                         if (entity != null)
                         {
-                            //if (entity.OwnerEntityActor != null && entity.OwnerEntityActor.OwnerEntity != null)
-                            //{
-                                impactInfo.HitEntityId = entity.Id;
-                                if (!bIsIgnoreDetailCheck)
-                                {
-                                    //直接进行细节检测 从命中点位开始 但是如果出现一开始就碰撞体里面，则使用StartPosition
-                                    Vector3 detailStart = startPos.ToVector3();
-                                    if (detailStart.magnitude < 0.01f)
-                                    {
-                                        detailStart = startPos.ToVector3() - direction.ToVector3() * 1.0f;
-                                    }
-                                    // detailStart = detailStart - direction.ToVector3() * 2.0f;
-                                    // DrawGizmos.Instance.DrawSphereGizmos(hitInfo.point.ToFloat3(), 0.2f, Color.magenta, 1.0f);
-                                    bIsCheckValid = BoxCheckNoPhysics(impactInfo.HitEntityId,detailStart.ToFloat3(),halfExtents,direction,50.0f,traceFlag,ref impactInfo);
-                                    if (!bIsCheckValid)
-                                    {
-                                        Log.Debug("[PhysicsService]CheckFail:" + hitInfo.collider.name + " Entity:" + impactInfo.HitEntityId);
-                                    }
-                                }
-                            //}
-                            //else
-                            //{
-                            //    Log.Error(
-                            //        $"[Physics]BoxCastNonAlloc {hitInfo.transform.name},get ColliderActorBinder ,but ownerEntityActor or OwnerEntity is null ,please check!");
-                            //}
+                            impactInfo.HitEntityId = entity.Id;
+                        }
+                        else
+                        {
+                            var colliderBinder = hitInfo.collider.GetComponent<EntityColliderBinder>();
+                            if (colliderBinder != null)
+                            {
+                                //if (entity.OwnerEntityActor != null && entity.OwnerEntityActor.OwnerEntity != null)
+                                //{
+                                impactInfo.HitEntityId = colliderBinder.Entity.Id;
+                                //}
+                                //else
+                                //{
+                                //    Log.Error(
+                                //        $"[Physics]BoxCastNonAlloc {hitInfo.transform.name},get ColliderActorBinder ,but ownerEntityActor or OwnerEntity is null ,please check!");
+                                //}
+                            }
+                        }
+                        
+                        if (!bIsIgnoreDetailCheck)
+                        {
+                            //直接进行细节检测 从命中点位开始 但是如果出现一开始就碰撞体里面，则使用StartPosition
+                            Vector3 detailStart = startPos.ToVector3();
+                            if (detailStart.magnitude < 0.01f)
+                            {
+                                detailStart = startPos.ToVector3() - direction.ToVector3() * 1.0f;
+                            }
+
+                            // detailStart = detailStart - direction.ToVector3() * 2.0f;
+                            // DrawGizmos.Instance.DrawSphereGizmos(hitInfo.point.ToFloat3(), 0.2f, Color.magenta, 1.0f);
+                            bIsCheckValid = BoxCheckNoPhysics(impactInfo.HitEntityId, detailStart.ToFloat3(),
+                                halfExtents, direction, 50.0f, traceFlag, ref impactInfo);
+                            if (!bIsCheckValid)
+                            {
+                                Log.Debug("[PhysicsService]CheckFail:" + hitInfo.collider.name + " Entity:" +
+                                          impactInfo.HitEntityId);
+                            }
                         }
                     }
 
@@ -374,7 +412,6 @@ namespace Game.Client
                         impactList.Add(impactInfo);
                     }
                 }
-                
             }
 
             return impactList.Count;
@@ -384,15 +421,18 @@ namespace Game.Client
 
         #region NoPhysics
 
-        static NotPhyHitResult bestResult = new NotPhyHitResult();
-        static NotPhyHitResult tempResult = new NotPhyHitResult();
+        static NotPhyHitResult bestResult =
+            new NotPhyHitResult();
+
+        static NotPhyHitResult tempResult =
+            new NotPhyHitResult();
 
         public bool BoxCheckNoPhysics(int detailEntityId, float3 boxPosition, float3 boxExtend,
             float3 direction, float distance,
             int traceFlag, ref ImpactInfo impactInfo)
         {
             return false;
-            
+
             // Entity detailEntity = GameEntry.Entity.GetEntity(detailEntityId);
             // if (detailEntity != null)
             // {
@@ -457,9 +497,9 @@ namespace Game.Client
             //
             // return false;
         }
-        
+
         /// 获取box朝向Direction上的四个顶点
-        private List<float3> GetDirectionVerticesByBox(float3 boxCenter,float3 boxExtend,float3 direction)
+        private List<float3> GetDirectionVerticesByBox(float3 boxCenter, float3 boxExtend, float3 direction)
         {
             List<float3> AllVertices = Game.Core.ListPool<float3>.Get();
             AllVertices.Add(boxCenter + new float3(-boxExtend.x, -boxExtend.y, -boxExtend.z));
@@ -475,11 +515,12 @@ namespace Game.Client
             List<float3> realPoint = ListPool<float3>.Get();
             for (int i = 0; i < AllVertices.Count; i++)
             {
-                if (math.dot(AllVertices[i] - boxCenter,direction) > 0)
+                if (math.dot(AllVertices[i] - boxCenter, direction) > 0)
                 {
                     realPoint.Add(AllVertices[i]);
                 }
             }
+
             //回收
             AllVertices.Clear();
             Game.Core.ListPool<float3>.Release(AllVertices);
@@ -518,7 +559,8 @@ namespace Game.Client
 
         public bool SingleLineCheckNoPhysics(int pawnEntityID, float3 startTrace, float3 direction,
             float distance,
-            int traceFlag, ref ImpactInfo impactInfo, bool bDrawLine = false, DebugColor color = DebugColor.kColorGray,
+            int traceFlag, ref ImpactInfo impactInfo, bool bDrawLine = false,
+            DebugColor color = DebugColor.kColorGray,
             float duration = 5)
         {
             return SingleLineCheckNoPhysics(pawnEntityID, startTrace, direction, distance, traceFlag,
@@ -537,7 +579,8 @@ namespace Game.Client
             for (int i = 0; i < detailColliders.Count; ++i)
             {
                 var coll = detailColliders[i];
-                if (coll == null|| !coll.gameObject.activeSelf||!coll.enabled || !UnityLayersUtil.IsFireActor(coll.gameObject.layer))
+                if (coll == null || !coll.gameObject.activeSelf || !coll.enabled ||
+                    !UnityLayersUtil.IsFireActor(coll.gameObject.layer))
                 {
                     continue;
                 }
@@ -563,7 +606,7 @@ namespace Game.Client
                     // Log.Debug($"-----[Fire][Details][CheckName2Layer]:{detailEntityID},collider:{coll.gameObject.name} 2 {tmpHitGroup}");
                     //if (!hasHit || tempResult.Distance < bestResult.Distance)//距离优先方案
                     //ignoreDistance
-                    if (!hasHit  || ((tempResult.Distance < bestResult.Distance))) //包围盒子弱点优先
+                    if (!hasHit || ((tempResult.Distance < bestResult.Distance))) //包围盒子弱点优先
                     {
                         //或，因为其他运算中可能会附有其他mask
                         impactInfo.HitTypeMask = 0;
@@ -575,7 +618,6 @@ namespace Game.Client
                         impactInfo.HitGroup = tmpHitGroup;
                         impactInfo.HitEntityId = detailEntityID;
                         impactInfo.materialId = GetColliderPhysicalMaterialID(coll.sharedMaterial);
-                        
                     }
 
                     if (impactInfo.HitGroup != EHitGroup.Default)
@@ -864,15 +906,13 @@ namespace Game.Client
             if ((traceFlag & PhysicsLayerDefine.GetFlag(PhysicTraceType.Entity)) != 0)
             {
                 layerMask |= (1 << UnityLayersUtil.LayerMask_Entity);
-                
             }
-            
+
             if ((traceFlag & PhysicsLayerDefine.GetFlag(PhysicTraceType.UI)) != 0)
             {
                 layerMask |= (1 << UnityLayersUtil.LayerMask_UI);
-                
             }
-            
+
             if ((traceFlag & PhysicsLayerDefine.GetFlag(PhysicTraceType.World)) != 0)
             {
                 layerMask |= (1 << UnityLayersUtil.LayerMask_World);
@@ -922,13 +962,13 @@ namespace Game.Client
             {
                 layerMask |= (1 << UnityLayersUtil.LayerMask_FirstPerson);
             }
-            
+
             if ((traceFlag & PhysicsLayerDefine.GetFlag(PhysicTraceType.AutoFire)) != 0)
             {
                 layerMask |= (1 << UnityLayersUtil.LayerMask_AutoFire);
             }
-            
-            
+
+
             return layerMask;
         }
 

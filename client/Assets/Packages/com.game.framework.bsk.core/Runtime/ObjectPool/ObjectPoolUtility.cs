@@ -5,7 +5,7 @@ using System;
 
 namespace Game.Core
 {
-    public class ObjectPoolUtility : IObjectPoolUtility,IUpdateableUtility
+    public class ObjectPoolUtility : IObjectPoolUtility,IUpdateable
     {
         private bool CleanPoolWhenShutdown = false;
         private Transform Root;

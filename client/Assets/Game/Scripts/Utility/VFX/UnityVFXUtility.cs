@@ -4,7 +4,7 @@ using Game.Gameplay;
 
 namespace Game.Client
 {
-    public class UnityVFXUtility: IVFXUtility, IUpdateableUtility, IShutdownUtility
+    public class UnityVFXUtility: IVFXUtility, IUpdateable, IShutdown
     {
         private Dictionary<uint, IVFXFactory> VFXFactories = new();
         private BaseVFXFactory _VFXBaseFactory ;

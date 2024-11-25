@@ -38,14 +38,14 @@ public class PropertyArr:IPropertyArr
         IDataTable<DRProperty> dtProperty = dataTableManager.GetDataTable<DRProperty>();
         if (null == dtProperty)
         {
-            Log.Error($"get datatable:{nameof(DRProperty)} fail");
+            Logs.Error($"get datatable:{nameof(DRProperty)} fail");
             return;
         }
 
         m_OriginProperties = dtProperty.GetDataRow(propertyId);
         if (null == m_OriginProperties)
         {
-            Log.Error($"get drProperty fail, Id:{propertyId}");
+            Logs.Error($"get drProperty fail, Id:{propertyId}");
         }
 
         InitProperties(triggerEvent);
@@ -71,7 +71,7 @@ public class PropertyArr:IPropertyArr
     {
         if (null == m_OriginProperties)
         {
-            Log.Error($"origin properties is null, propertyId:{m_PropertyId}, properties init with 0");
+            Logs.Error($"origin properties is null, propertyId:{m_PropertyId}, properties init with 0");
         }
 
         if (m_Properties.Count <= 0)
