@@ -8,6 +8,7 @@
 using GameFramework;
 using GameFramework.Entity;
 using System;
+using System.Collections.Generic;
 using Game.Core;
 using GameFramework.Runtime;
 using UnityEngine;
@@ -24,6 +25,55 @@ namespace UnityGameFramework.Runtime
         private IEntityGroup m_EntityGroup;
         private EntityLogic m_EntityLogic;
 
+        public Dictionary<Type, IComponent> Components { get; private set; }
+            = new Dictionary<Type, IComponent>();
+
+        public T GetComponent<T>() where T : class, IComponent
+        {
+            if (Components.ContainsKey(typeof(T)))
+            {
+                return Components[typeof(T)] as T;
+            }
+
+            return null;
+        }
+        
+        public T AddComponent<T>(T component) where T : class, IComponent
+        {
+            Type type = typeof(T);
+            Components[type] = component;
+            return component;
+        }
+
+        public void RemoveComponent<T>() where T : class, IComponent
+        {
+            if (Components.ContainsKey(typeof(T)))
+            {
+                var comp = Components[typeof(T)];
+                Components.Remove(typeof(T));
+                if (comp != null && comp is IReference referenceComp)
+                {
+                    ReferencePool.Release(referenceComp);
+                }
+            }
+
+            return;
+        }
+
+        public void RemoveAllComponent()
+        {
+            foreach (var component in Components.Values)
+            {
+                if (component is IReference referenceComp)
+                {
+                    ReferencePool.Release(referenceComp);
+                }
+            }
+
+            Components.Clear();
+        }
+
+
         /// <summary>
         /// 获取实体逻辑接口。
         /// </summary>
@@ -31,7 +81,7 @@ namespace UnityGameFramework.Runtime
         {
             get => m_EntityLogic;
         }
-        
+
         /// <summary>
         /// 获取实体逻辑。
         /// </summary>
@@ -45,15 +95,12 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public int Id
         {
-            get
-            {
-                return m_Id;
-            }
+            get { return m_Id; }
         }
 
         public string Name
         {
-            get=>gameObject.name;
+            get => gameObject.name;
         }
 
         /// <summary>
@@ -61,10 +108,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public string EntityAssetName
         {
-            get
-            {
-                return m_EntityAssetName;
-            }
+            get { return m_EntityAssetName; }
         }
 
         /// <summary>
@@ -72,10 +116,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public object Handle
         {
-            get
-            {
-                return gameObject;
-            }
+            get { return gameObject; }
         }
 
         /// <summary>
@@ -83,12 +124,9 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         public IEntityGroup EntityGroup
         {
-            get
-            {
-                return m_EntityGroup;
-            }
+            get { return m_EntityGroup; }
         }
-        
+
 
         /// <summary>
         /// 实体初始化。
@@ -98,7 +136,8 @@ namespace UnityGameFramework.Runtime
         /// <param name="entityGroup">实体所属的实体组。</param>
         /// <param name="isNewInstance">是否是新实例。</param>
         /// <param name="userData">用户自定义数据。</param>
-        public void OnInit(int entityId, string entityAssetName, IEntityGroup entityGroup, bool isNewInstance, object userData)
+        public void OnInit(int entityId, string entityAssetName, IEntityGroup entityGroup, bool isNewInstance,
+            object userData)
         {
             m_Id = entityId;
             m_EntityAssetName = entityAssetName;
@@ -145,7 +184,7 @@ namespace UnityGameFramework.Runtime
 
             //让unity捕获而不是try catch
             m_EntityLogic.OnInit(showEntityInfo.UserData);
-            
+
             try
             {
             }
@@ -200,6 +239,7 @@ namespace UnityGameFramework.Runtime
             try
             {
                 m_EntityLogic.OnHide(isShutdown, userData);
+                RemoveAllComponent();
             }
             catch (Exception exception)
             {

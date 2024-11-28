@@ -9,6 +9,7 @@ namespace Game.Client
     {
         public UnityEvent<PointerEventData> OnPointerEnterEvent;
         public UnityEvent<PointerEventData> OnPointerExitEvent;
+        public UnityEvent<PointerEventData> OnPointerClieckEvent;
 
         public override void OnPointerEnter(PointerEventData eventData)
         {
@@ -23,6 +24,13 @@ namespace Game.Client
             base.OnPointerExit(eventData);
 
             OnPointerExitEvent?.Invoke(eventData);
+        }
+
+        public override void OnPointerClick(PointerEventData eventData)
+        {
+            base.OnPointerClick(eventData);
+            
+            OnPointerClieckEvent?.Invoke(eventData);
         }
     }
 }

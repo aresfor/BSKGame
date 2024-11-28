@@ -1,4 +1,5 @@
-﻿using Game.Core;
+﻿using System;
+using Game.Core;
 using Game.Gameplay;
 using Game.Math;
 
@@ -12,7 +13,21 @@ namespace Game.Client
         {
             var boardGraph = GameUtils.Board;
             m_AgentImpl = new GraphNavigationAgent(this);
+            OnMoveFinishedCall += OnMoveFinished;
+            AttachTile();
         }
+
+        private void OnMoveFinished(bool success)
+        {
+            AttachTile();
+        }
+
+        public Action<bool> OnMoveFinishedCall
+        {
+            get => m_AgentImpl.OnMoveFinishedCall;
+            set => m_AgentImpl.OnMoveFinishedCall = value;
+        }
+        
         
         //@TODO: 改造非泛型基类
         public bool MoveToDestination(float3 destination, IGraph graph)

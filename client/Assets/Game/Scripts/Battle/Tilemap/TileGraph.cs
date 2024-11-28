@@ -55,38 +55,38 @@ namespace Game.Client
         }
 
         // 获取指定范围内的 Tile
-        public List<Vector3Int> GetTilesRange(Vector3Int center, int range, List<Vector3Int> results)
+        public bool GetTilesRange(Vector3Int center, int range, List<Vector3Int> results)
         {
             results.Clear();
             for (int x = -range; x <= range; x++)
             {
-                for (int y = -range; y <= range; y++)
+                for (int z = -range; z <= range; z++)
                 {
-                    Vector3Int pos = new Vector3Int(center.x + x, center.y + y, center.z);
+                    Vector3Int pos = new Vector3Int(center.x + x, center.y , center.z + z);
                     if (TileMap.HasTile(pos))
                     {
                         results.Add(pos);
                     }
                 }
             }
-            return results;
+            return results.Count > 0;
         }
 
         // 获取指定矩形区域内的 Tile
-        public List<Vector3Int> GetTilesBlock(Vector3Int bottomLeft, Vector3Int topRight, List<Vector3Int> results)
+        public bool GetTilesBlock(Vector3Int bottomLeft, Vector3Int topRight, List<Vector3Int> results)
         {
             for (int x = bottomLeft.x; x <= topRight.x; x++)
             {
-                for (int y = bottomLeft.y; y <= topRight.y; y++)
+                for (int z = bottomLeft.y; z <= topRight.z; z++)
                 {
-                    Vector3Int pos = new Vector3Int(x, y, bottomLeft.z);
+                    Vector3Int pos = new Vector3Int(x, bottomLeft.y, z);
                     if (TileMap.HasTile(pos))
                     {
                         results.Add(pos);
                     }
                 }
             }
-            return results;
+            return results.Count > 0;
         }
 
         // 获取邻居 Tile
@@ -121,7 +121,7 @@ namespace Game.Client
                 }
             }
         }
-
+        
         public TT GetTile<TT>(TileGraphNodeHandle handle) where TT : TileBase
         {
             return TileMap.GetTile<TT>(handle.CellPos);

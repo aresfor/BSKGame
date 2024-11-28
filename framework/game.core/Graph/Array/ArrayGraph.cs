@@ -164,6 +164,17 @@ public abstract class ArrayGraph<T>:  GraphBase<T>
         return true;
     }
     
+    public override bool WorldToGraph(float3 worldPos, out IGraphNodeHandle handle)
+    {
+        if (WorldToGraph(worldPos, out IGraphNode<T> node))
+        {
+            handle = node.Handle;
+            return true;
+        }
+
+        handle = null;
+        return false;
+    }
     public override bool WorldToGraph(float3 worldPos, out IGraphNode<T> node)
     {
         float3 relativeCoordinate = worldPos - WorldPosition;
@@ -229,6 +240,8 @@ public abstract class ArrayGraph<T>:  GraphBase<T>
 
         return new FArrayGraphNodeHandle(row, column);
     }
+
+    
 }
 
 

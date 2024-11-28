@@ -18,9 +18,9 @@ namespace Game.Gameplay
 
         private int m_ResourceId = 0;
         
-        private float3 m_Position = float3.zero;
+        private float3 m_InitPosition = float3.zero;
         
-        private quaternion m_Rotation = quaternion.identity;
+        private quaternion m_InitRotation = quaternion.identity;
 
         private IPropertyArr m_Properties = new PropertyArr();
 
@@ -30,6 +30,8 @@ namespace Game.Gameplay
         public EntityData()
         {
         }
+        //在client show entity中调用
+        //@TODO：这样调用流程有点乱，后面改
         public void Init()
         {
             OnInitialize();
@@ -137,30 +139,30 @@ namespace Game.Gameplay
         /// <summary>
         /// 实体位置。
         /// </summary>
-        public float3 Position
+        public float3 InitPosition
         {
             get
             {
-                return m_Position;
+                return m_InitPosition;
             }
             set
             {
-                m_Position = value;
+                m_InitPosition = value;
             }
         }
 
         /// <summary>
         /// 实体朝向。
         /// </summary>
-        public quaternion Rotation
+        public quaternion InitRotation
         {
             get
             {
-                return m_Rotation;
+                return m_InitRotation;
             }
             set
             {
-                m_Rotation = value;
+                m_InitRotation = value;
             }
         }
 

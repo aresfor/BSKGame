@@ -40,17 +40,17 @@ namespace Game.Client
                 return;
             
             var mouseRay = GameUtils.MouseRay;
-            ImpactInfo impactInfo = ImpactInfo.Alloc();
+            ImpactInfo impactInfo = null;
 
             bool hit = PhysicsUtils.SingleLineCheck(mouseRay.origin.ToFloat3(), mouseRay.direction.ToFloat3()
-                , 100.0f, PhysicsLayerDefine.GetFlag(PhysicTraceType.Entity)
-                          | PhysicsLayerDefine.GetFlag(PhysicTraceType.Pawn)
+                , 100.0f, InputUtils.MouseRayTraceLayer
                 , ref impactInfo, true, duration: 0.0f);
 
             var eventArgs = ReferencePool.Acquire<MouseRayCastEventArgs>();
             eventArgs.ImpactInfo = impactInfo;
             eventArgs.bIsHit = hit;
-            GameEntry.Event.Fire(this, eventArgs);
+            GameEntry.Event.FireNow(this, eventArgs);
+            ImpactInfo.Recycle(impactInfo);
         }
         
         

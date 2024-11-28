@@ -110,6 +110,7 @@ public class PropertyArr:IPropertyArr
     public void SetProperty( EPropertyDefine propertyDefine, float value, bool triggerEvent = true)
     {
         //@TODO: 最小值限制
+        value = math.max(0, value);
         
         //最大值限制
         if (m_HasMaxValueSet.Contains(propertyDefine))

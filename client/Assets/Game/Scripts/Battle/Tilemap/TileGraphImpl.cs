@@ -8,9 +8,9 @@ using UnityEngine.Tilemaps;
 
 namespace Game.Client
 {
-    public class TileGraph: TileMapGraph<TileNodeGameplayEntity>
+    public class TileMapGraph: TileMapGraph<TileNodeGameplayEntity>
     {
-        public TileGraph(Tilemap tileMap) : base(tileMap)
+        public TileMapGraph(Tilemap tileMap) : base(tileMap)
         {
         }
 
@@ -21,7 +21,7 @@ namespace Game.Client
             foreach (var cell in cellPos)
             {
 
-                var tileNode = ReferencePool.Acquire<TileGraphNode>();
+                var tileNode = ReferencePool.Acquire<TileMapGraphNode>();
                 tileNode.OnInit(this, new TileGraphNodeHandle(cell));
                 GraphToWorld(new TileGraphNodeHandle(cell),out var tileNodeWorldPos);
                 TileNodeEntityModel model = new TileNodeEntityModel()
@@ -29,7 +29,7 @@ namespace Game.Client
                     Id = EntityId.GenerateSerialId(),
                     TypeId = 60000,
                     Node = tileNode,
-                    Position = tileNodeWorldPos,
+                    InitPosition = tileNodeWorldPos,
                     //@TODO:
                     ResourceId = 0
                 };
@@ -51,15 +51,24 @@ namespace Game.Client
             var handleB = (TileGraphNodeHandle)b.Handle;
             return Vector3Int.Distance(handleA.CellPos, handleB.CellPos);
         }
+
+        public override bool WorldToGraph(float3 worldPos, out IGraphNodeHandle handle)
+        {
+            handle = null;
+            bool result = WorldToGraph(worldPos, out IGraphNode<TileNodeGameplayEntity> node);
+            if (result)
+                handle = node.Handle;
+            return result;
+        }
     }
 
-    public class TileGraphNode : TileGraphNode<TileNodeGameplayEntity>
+    public class TileMapGraphNode : TileGraphNode<TileNodeGameplayEntity>
     {
-        private TileGraph m_TileGraph;
+        private TileMapGraph m_TileMapGraph;
         public override void OnInit(TileMapGraph<TileNodeGameplayEntity> owner, IGraphNodeHandle handle, string name = "")
         {
             base.OnInit(owner, handle, name);
-            m_TileGraph = owner as TileGraph;
+            m_TileMapGraph = owner as TileMapGraph;
 
         }
 
@@ -75,26 +84,26 @@ namespace Game.Client
 
         public void SetColor(Color color)
         {
-            var tile = m_TileGraph.GetTile<Tile>(Handle);
+            var tile = m_TileMapGraph.GetTile<Tile>(Handle);
             tile.flags &= ~TileFlags.LockColor; // 解锁颜色
-            m_TileGraph.TileMap.SetColor(Handle.CellPos, color);
+            m_TileMapGraph.TileMap.SetColor(Handle.CellPos, color);
         }
 
         private void RefreshTile()
         {
-            m_TileGraph.TileMap.RefreshTile(Handle.CellPos);            
+            m_TileMapGraph.TileMap.RefreshTile(Handle.CellPos);            
 
         }
 
         private void RefreshAllTile()
         {
-            m_TileGraph.TileMap.RefreshAllTiles();            
+            m_TileMapGraph.TileMap.RefreshAllTiles();            
 
         }
 
         public Color GetColor()
         {
-            return m_TileGraph.TileMap.GetColor(Handle.CellPos);
+            return m_TileMapGraph.TileMap.GetColor(Handle.CellPos);
 
         }
     }

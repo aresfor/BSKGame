@@ -5,16 +5,24 @@ namespace Game.Client
 {
     public class BattleMainModel:AbstractModel
     {
-        public HashSet<BattleActionItem> SelectableActionSet = new HashSet<BattleActionItem>();
+        public readonly HashSet<BattleActionItem> SelectableActionSet = new HashSet<BattleActionItem>();
 
-        public Stack<IBattleAction> ActionStack { get; } = new Stack<IBattleAction>();
+        public readonly Stack<IBattleAction> ActionStack = new Stack<IBattleAction>();
 
-        public BindableProperty<BattleActionItem> CurrentDisplayBattleActionItem;
+        public readonly BindableProperty<BattleActionItem> CurrentDisplayBattleActionItem = new BindableProperty<BattleActionItem>();
 
+        public readonly Stack<IBattleAction> UndoStack = new Stack<IBattleAction>();
+
+        public readonly Queue<IBattleAction> WaitingPushAction = new Queue<IBattleAction>();
+
+        public int SelectedOwnerId;
+        
+        public int SelectedTargetId;
+        
         protected override void OnInit()
         {
-            CurrentDisplayBattleActionItem = new BindableProperty<BattleActionItem>();
         }
+        
 
     }
 }

@@ -127,7 +127,7 @@ namespace Game.Client
                         if(m_LastHitEntityLogic is IPointerHandler lastHitPointerHandler)
                             lastHitPointerHandler.PointerExit(new FPointerEventData()
                             {
-                                pointerWorldPos = impactInfo.HitLocation
+                                ImpactInfo = impactInfo
                             });
                     }
                     
@@ -137,7 +137,8 @@ namespace Game.Client
                         {
                             pointerHandler.PointerEnter(new FPointerEventData()
                             {
-                                pointerWorldPos = impactInfo.HitLocation
+                                ImpactInfo = impactInfo
+
                             });
                         }
 
@@ -145,7 +146,8 @@ namespace Game.Client
                         {
                             pointerHandler.PointerDown(new FPointerEventData()
                             {
-                                pointerWorldPos = impactInfo.HitLocation
+                                ImpactInfo = impactInfo
+
                             });
                         }
                         
@@ -153,7 +155,8 @@ namespace Game.Client
                         {
                             pointerHandler.PointerUp(new FPointerEventData()
                             {
-                                pointerWorldPos = impactInfo.HitLocation
+                                ImpactInfo = impactInfo
+
                             });
                         }
 

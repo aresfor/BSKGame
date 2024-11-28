@@ -56,12 +56,13 @@ namespace Game.Client
         private void OnFinishGeneration()
         {
             var spawnNode = m_Board.GetNode(Row / 2, Column / 2);
+            var spawnNodePosition = spawnNode.Value.Entity.GetComponent<PositionComponent>().Position;
             var latticeData = spawnNode.Value.EntityData;
             var roleModel = new RoleEntityModel()
             {
                 Id = EntityId.GenerateSerialId(),
                 TypeId = 40000,
-                Position = latticeData.Position,
+                InitPosition = spawnNodePosition
                 //BelongLatticeId = spawnNode.Value.Entity.Id
                 //Rotation = latticeData.Rotation
             };
@@ -82,7 +83,7 @@ namespace Game.Client
                 return false;
             
             var mouseRay = GameUtils.MouseRay;
-            ImpactInfo impactInfo = ImpactInfo.Alloc();
+            ImpactInfo impactInfo = null;
             bool result = false;
 
             if(PhysicsUtils.SingleLineCheck(mouseRay.origin.ToFloat3(), mouseRay.direction.ToFloat3()
@@ -99,7 +100,8 @@ namespace Game.Client
                 {
                     lattice.PointerDown(new FPointerEventData()
                     {
-                        pointerWorldPos = impactInfo.HitLocation
+                        ImpactInfo = impactInfo
+
                     });
                     latticeLogic = lattice;
                     //Log.Info($"MouseDown hit LatticeEntity: {latticeLogic.gameObject.name}");
@@ -122,7 +124,7 @@ namespace Game.Client
                 return;
             
             var mouseRay = GameUtils.MouseRay;
-            ImpactInfo impactInfo = ImpactInfo.Alloc();
+            ImpactInfo impactInfo = null;
             
             if (PhysicsUtils.SingleLineCheck(mouseRay.origin.ToFloat3(), mouseRay.direction.ToFloat3()
                     , 100.0f, PhysicsLayerDefine.GetFlag(PhysicTraceType.Entity)
@@ -140,13 +142,15 @@ namespace Game.Client
                     {
                         m_LastEnterLattice.PointerExit(new FPointerEventData()
                         {
-                            pointerWorldPos = impactInfo.HitLocation
+                            ImpactInfo = impactInfo
+
                         });
                     }
                     m_LastEnterLattice = lattice;
                     lattice.PointerEnter(new FPointerEventData()
                     {
-                        pointerWorldPos = impactInfo.HitLocation
+                        ImpactInfo = impactInfo
+
                     });
                 }
             }
@@ -157,6 +161,8 @@ namespace Game.Client
                     m_LastEnterLattice.PointerExit(new FPointerEventData());
                 }
             }
+            ImpactInfo.Recycle(impactInfo);
+
         }
         
         public override void OnUpdate(float elapseSeconds, float realElapseSeconds)

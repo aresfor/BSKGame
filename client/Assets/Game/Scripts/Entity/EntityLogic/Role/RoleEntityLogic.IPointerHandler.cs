@@ -1,5 +1,7 @@
-﻿using Game.Core;
+﻿using System;
+using Game.Core;
 using Game.Math;
+using GameFramework;
 using UnityEngine;
 
 namespace Game.Client
@@ -22,8 +24,18 @@ namespace Game.Client
                 material.color = m_Selected? Color.green : Color.white;
             }
             //@TEMP:
-            if(m_Selected)
-                GameUtils.SelectedRoleEntityLogic = this;
+            if (m_Selected)
+            {
+                if (false == GameUtils.BattleManager.ContainAnyAction())
+                {
+                    var selectEntityAction = ReferencePool.Acquire<SelectEntityAction>();
+                    selectEntityAction.SelectEntityActionType = ESelectEntityActionType.SelectOwner;
+                    selectEntityAction.SelectedEntityId = this.Id;
+                    GameUtils.BattleManager.PushAction(selectEntityAction);
+                    //GameUtils.SelectedEntityId = this.Id;
+                }
+                
+            }
             
             return true;
         }
@@ -39,6 +51,7 @@ namespace Game.Client
             return true;
 
         }
+
 
         
     }

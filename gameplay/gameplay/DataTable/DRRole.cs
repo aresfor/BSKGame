@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2024-11-25 13:13:53.560
+// 生成时间：2024-11-28 06:33:07.719
 //------------------------------------------------------------
 
 using GameFramework;
@@ -19,7 +19,7 @@ using GameFramework.Runtime;
 namespace Game.Gameplay
 {
     /// <summary>
-    /// 战机表。
+    /// 角色表。
     /// </summary>
     public class DRRole : DataRowBase
     {

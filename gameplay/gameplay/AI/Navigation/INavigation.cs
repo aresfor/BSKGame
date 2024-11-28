@@ -24,6 +24,7 @@ public interface INavigation
     bool SetMovementDirection(float3 movementDirection);
     bool HasPath();
     void UpdateNavigation(float elapsedTime, float realElapsedTime);
+    public Action<bool> OnMoveFinishedCall { get; set; }
 
 }
 

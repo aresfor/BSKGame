@@ -18,6 +18,7 @@ namespace Game.Client
 
             Button.OnPointerEnterEvent.AddListener(OnPointerEnter);
             Button.OnPointerExitEvent.AddListener(OnPointerExit);
+            Button.OnPointerClieckEvent.AddListener(OnPointerClick);
 
         }
 
@@ -33,10 +34,17 @@ namespace Game.Client
             m_Model.CurrentDisplayBattleActionItem.Value = null;
         }
         
+        private void OnPointerClick(PointerEventData eventdata)
+        {
+            GameUtils.BattleManager.PushAction(BattleAction.Copy());
+        }
+
+        
         public virtual void OnRecycle()
         {
             Button.OnPointerEnterEvent.RemoveListener(OnPointerEnter);
             Button.OnPointerExitEvent.RemoveListener(OnPointerExit);
+            Button.OnPointerExitEvent.RemoveListener(OnPointerClick);
         }
         
         public IArchitecture GetArchitecture()

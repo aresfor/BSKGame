@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Gameplay;
 using Game.Math;
 using UnityGameFramework.Runtime;
 
@@ -15,7 +16,7 @@ namespace Game.Client
     //
     public struct FPointerEventData
     {
-        public float3 pointerWorldPos;
+        public ImpactInfo ImpactInfo;
     }
 
     public interface IPointerHandler

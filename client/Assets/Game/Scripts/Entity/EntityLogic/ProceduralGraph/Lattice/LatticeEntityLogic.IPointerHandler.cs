@@ -54,25 +54,32 @@ namespace Game.Client
         {
             if (false == LatticeNode.IsAvailable)
                 return false;
-            if (GameUtils.SelectedRoleEntityLogic != null)
+            if (GameUtils.SelectedEntityId != 0)
             {
-                GameUtils.SelectedRoleEntityLogic.MoveToDestination(LatticeNode.WorldPosition
-                    , LatticeNode.Owner);
-                
-                //@TODO: Debug继承到gameplay
-                List<float3> debugPoints = ListPool<float3>.Get();
-                if (LatticeNode.Owner.AStar(GameUtils.SelectedRoleEntityLogic.Position.ToFloat3()
-                        , LatticeNode.WorldPosition, debugPoints))
+                var selectedEntity = GameEntry.Entity.GetEntity(GameUtils.SelectedEntityId);
+                if (selectedEntity != null && selectedEntity.Logic is RoleEntityLogic roleEntityLogic)
                 {
-                    foreach (var point in debugPoints)
-                    {
-                        DrawGizmos.Instance.DrawSphereGizmos(point, 0.3f, Color.green, 5.0f);
-                    }
-                }
-                debugPoints.Clear();
-                ListPool<float3>.Release(debugPoints);
+                    
+                    roleEntityLogic.MoveToDestination(LatticeNode.WorldPosition
+                        , LatticeNode.Owner);
                 
+                    //@TODO: Debug继承到gameplay
+                    List<float3> debugPoints = ListPool<float3>.Get();
+                    if (LatticeNode.Owner.AStar(roleEntityLogic.Position.ToFloat3()
+                            , LatticeNode.WorldPosition, debugPoints))
+                    {
+                        foreach (var point in debugPoints)
+                        {
+                            DrawGizmos.Instance.DrawSphereGizmos(point, 0.3f, Color.green, 5.0f);
+                        }
+                    }
+                    debugPoints.Clear();
+                    ListPool<float3>.Release(debugPoints);
+                }
+                    
+                    
             }
+            
             return  m_EntityPointerHandler.PointerDown(eventData);
         }
 

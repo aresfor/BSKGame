@@ -17,8 +17,7 @@ namespace Game.Gameplay
             LatticeNode = latticeNode;
             BoardGraph = boardGraph;
             Handle = (FArrayGraphNodeHandle)latticeNode.Handle;
-            Position = position;
-            Rotation = rotation;
+            
         }
         
         protected override void OnInitialize()

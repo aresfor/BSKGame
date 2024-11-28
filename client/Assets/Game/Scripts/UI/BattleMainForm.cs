@@ -2,58 +2,57 @@
 using System.Collections.Generic;
 using Game.Core;
 using Game.Gameplay;
-
+using GameFramework;
 using UnityEngine;
 using UnityEngine.UI;
 using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
 {
-    public class BattleMainForm: UGuiForm, IController
+    public class BattleMainForm : UGuiForm, IController
     {
         public Transform ActionRoot;
         public CanvasGroup ActionInfoPanelCanvasGroup;
-
         public Text ActionInfoPanelDescription;
-        
+
         private BattleMainModel m_Model;
-        
-        
+
+        #region 生命周期
+
         protected override void OnInit(object userData)
         {
             base.OnInit(userData);
             m_Model = this.GetModel<BattleMainModel>();
-            
         }
+
 
         protected override void OnOpen(object userData)
         {
             base.OnOpen(userData);
             m_Model.CurrentDisplayBattleActionItem.Register(OnCurrentActionItemChange)
                 .UnRegisterWhenDisabled(this.gameObject);
-            
-            AddSelectableAction(new DefaultBattleAction());
-            var action = new DefaultBattleAction();
-            action.Description = "另一个Action";
+
+            AddSelectableAction(ReferencePool.Acquire<DefaultBattleAction>());
+            var action = ReferencePool.Acquire<SkillAction>();
+            action.Description = "技能Action";
+            action.SkillId = 2002;
             AddSelectableAction(action);
         }
-        
-        public void OnCurrentActionItemChange(BattleActionItem actionItem)
-        {
-            bool visible = actionItem != null;
-            ActionInfoPanelCanvasGroup.alpha =  visible? 1 : 0;
-            ActionInfoPanelCanvasGroup.blocksRaycasts = visible ;
-            if (visible)
-            {
-                //@TODO:设置信息
-                ActionInfoPanelDescription.text = actionItem.BattleAction.Description;
-            }
-        }
+
+        #endregion
+
+
+        #region IController
 
         public IArchitecture GetArchitecture()
         {
             return BattleMainArchitecture.Interface;
         }
+
+        #endregion
+
+
+        #region UI可选择Action列表相关操作
 
         public void AddSelectableActionList(List<IBattleAction> battleActions)
         {
@@ -62,12 +61,22 @@ namespace Game.Client
                 AddSelectableAction(battleAction);
             }
         }
-        
+
         public void AddSelectableAction(IBattleAction battleAction)
         {
             GameEntry.Resource.Instantiate(ResourceExtension.GenerateGameObjectSerialId()
                 , AssetUtility.GetUIFormAsset(battleAction.AssetName)
-            , OnLoadActionItemAssetSuccess, battleAction);
+                , OnLoadActionItemAssetSuccess, battleAction);
+        }
+
+        public void ClearAllSelectableAction()
+        {
+            foreach (var selectableActionItem in m_Model.SelectableActionSet)
+            {
+                selectableActionItem.OnRecycle();
+            }
+
+            m_Model.SelectableActionSet.Clear();
         }
 
         public void RemoveSelectableAction(IBattleAction battleAction)
@@ -89,16 +98,23 @@ namespace Game.Client
             }
         }
 
-
-        public void ClearAllSelectableAction()
-        {
-            foreach (var selectableActionItem in m_Model.SelectableActionSet)
-            {
-                selectableActionItem.OnRecycle();
-            }
-            m_Model.SelectableActionSet.Clear();
-        }
+        #endregion
         
+
+        #region 事件/回调
+
+        public void OnCurrentActionItemChange(BattleActionItem actionItem)
+        {
+            bool visible = actionItem != null;
+            ActionInfoPanelCanvasGroup.alpha = visible ? 1 : 0;
+            ActionInfoPanelCanvasGroup.blocksRaycasts = visible;
+            if (visible)
+            {
+                //@TODO:设置信息
+                ActionInfoPanelDescription.text = actionItem.BattleAction.Description;
+            }
+        }
+
         private void OnLoadActionItemAssetSuccess(GameObject actionItemGO, object userData)
         {
             var item = actionItemGO.GetComponent<BattleActionItem>();
@@ -113,37 +129,7 @@ namespace Game.Client
             item.OnShow();
             actionItemGO.transform.SetParent(ActionRoot);
         }
-        
-        public void PushAction(IBattleAction action)
-        {
-            switch (action.ActionType)
-            { 
-                case EBattleActionType.ExecuteImmediately:
-                    m_Model.ActionStack.Push(action);
-                    ExecuteActionStack();
-                    break;
-                case EBattleActionType.PushStack:
-                    m_Model.ActionStack.Push(action);
-                    break;
-                default:
-                    Log.Error("ActionType missing case, check");
-                    break;
-            }
-        }
 
-        public void PopAction()
-        {            
-
-            m_Model.ActionStack.TryPop(out var action);
-        }
-
-        public void ExecuteActionStack()
-        {
-            while (m_Model.ActionStack.Count > 0)
-            {
-                var action = m_Model.ActionStack.Pop();
-                action.Execute();
-            }
-        }
+        #endregion
     }
 }

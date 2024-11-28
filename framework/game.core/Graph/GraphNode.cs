@@ -6,7 +6,7 @@ namespace Game.Core;
 
 public interface IGraphNode
 {
-    
+    IGraphNodeHandle Handle { get; }
 }
 
 /// <summary>
@@ -18,9 +18,8 @@ public interface IGraphNode<T>: IReference,IGraphNode
     string Name { get; }
     public T Value { get; }
     IGraph<T> Owner { get; }
-    IGraphNodeHandle Handle { get; }
     void GetNeighbors(List<IGraphNode<T>> resultNodes);
-    bool IsAvailable { get; }
+    bool IsAvailable { get; set; }
     float3 GetRelativePosition();
     float3 WorldPosition { get; }
 }
@@ -78,7 +77,7 @@ public abstract class GraphNodeBase<T,  G> : IGraphNode<T> where G: IGraph<T>
     public virtual bool IsAvailable
     {
         get=>m_IsAvailable;
-        protected set=> m_IsAvailable = value;
+        set=> m_IsAvailable = value;
     }
     
 

@@ -1,6 +1,8 @@
-﻿using Game.Gameplay;
+﻿using Game.Core;
+using Game.Gameplay;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityGameFramework.Runtime;
 
 namespace Game.Client
 {
@@ -21,6 +23,10 @@ namespace Game.Client
             meshLoaderSocket.MeshPrefabName = m_RoleEntityModel.RoleData.Model;
             meshLoaderSocket.MeshLoadCompleteCallBack += OnMeshLoadComplete;
             meshLoaderSocket.BeginLoadMesh();
+            
+            var healthBindable = m_RoleEntityModel.GetBindableProperty(EPropertyDefine.Health);
+            healthBindable.Register((oldValue, newValue) =>
+                Log.Info($"Health Change To: {newValue}, Old:{oldValue}")).UnRegisterWhenDisabled(this);
         }
 
         private void OnMeshLoadComplete(BaseMeshLoader meshLoader)
@@ -38,11 +44,21 @@ namespace Game.Client
         public override void OnShow(object userData)
         {
             base.OnShow(userData);
-            
-            //@TODO: 不再attach
-            //GameEntry.Entity.AttachEntity(this.Id, m_RoleEntityModel.BelongLatticeId);
+
         }
 
+        private void AttachTile()
+        {
+            GraphUtils.GetGraph<IGraph>().WorldToGraph(ViewPosition, out var node);
+            //@TODO: 这里依赖类型了，之后改
+            var tileNode = (TileMapGraphNode)node;
+            var tileEntity = GameEntry.Entity.GetEntity(tileNode.Value.Entity.Id);
+            if (tileEntity == null)
+            {
+                Log.Error("Tile entity null, check");
+            }
+            GameEntry.Entity.AttachEntity(this.Id, tileNode.Value.Entity.Id);
+        }
 
         public override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {

@@ -7,9 +7,9 @@ namespace Game.Client
     {
         public static BoardGraph Board;
         public static int PlayerEntityId;
-        public static RoleEntityLogic SelectedRoleEntityLogic;
-
-        public static TileGraph TileGraph;
+        //public static RoleEntityLogic SelectedRoleEntityLogic;
+        public static int SelectedEntityId;
+        public static BattleManager BattleManager;
         public static Ray MouseRay => Camera.main.ScreenPointToRay(Input.mousePosition);
 
     }

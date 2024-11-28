@@ -29,7 +29,7 @@ namespace Game.Client
 
             if (false == m_EntityPointerHandler.PointerEnter(eventData))
             {
-                HoverRenderer.color = HoverColor;
+                Hover(true);
                 //((TileGraphNode)m_Model.Node).SetColor( HoverColor);
             }
 
@@ -38,11 +38,17 @@ namespace Game.Client
             return true;
         }
 
+        public void Hover(bool enable)
+        {
+            HoverRenderer.color = enable ? HoverColor : DefaultHoverColor;
+            
+        }
+
         public bool PointerExit(FPointerEventData eventData)
         {
             if (false == m_Model.Node.IsAvailable)
                 return false;
-            HoverRenderer.color = DefaultHoverColor;
+            Hover(false);
             //((TileGraphNode)m_Model.Node).SetColor( DefaultHoverColor);
             m_EntityPointerHandler.PointerExit(eventData);
             return true;
@@ -52,22 +58,27 @@ namespace Game.Client
         {
             if (false == m_Model.Node.IsAvailable)
                 return false;
-            if (GameUtils.SelectedRoleEntityLogic != null)
+            if (GameUtils.SelectedEntityId != 0)
             {
-                GameUtils.SelectedRoleEntityLogic.MoveToDestination(m_Model.Node.WorldPosition, m_Model.Node.Owner);
-                
-                //@TODO: Debug继承到gameplay
-                using var debugPointData = new FPoolWrapper<List<float3>, float3>();
-                if (m_Model.Node.Owner.AStar(GameUtils.SelectedRoleEntityLogic.Position.ToFloat3()
-                        , m_Model.Node.WorldPosition, debugPointData.Value))
+                var selectedEntity = GameEntry.Entity.GetEntity(GameUtils.SelectedEntityId);
+                if (selectedEntity != null && selectedEntity.Logic is RoleEntityLogic roleEntityLogic)
                 {
-                    foreach (var point in debugPointData.Value)
+                    roleEntityLogic.MoveToDestination(m_Model.Node.WorldPosition, m_Model.Node.Owner);
+
+                    //@TODO: Debug继承到gameplay
+                    using var debugPointData = new FPoolWrapper<List<float3>, float3>();
+                    if (m_Model.Node.Owner.AStar(roleEntityLogic.Position.ToFloat3()
+                            , m_Model.Node.WorldPosition, debugPointData.Value))
                     {
-                        DrawGizmos.Instance.DrawSphereGizmos(point, 0.3f, Color.green, 5.0f);
+                        foreach (var point in debugPointData.Value)
+                        {
+                            DrawGizmos.Instance.DrawSphereGizmos(point, 0.3f, Color.green, 5.0f);
+                        }
                     }
+
                 }
-                
             }
+
             return  m_EntityPointerHandler.PointerDown(eventData);
         }
 

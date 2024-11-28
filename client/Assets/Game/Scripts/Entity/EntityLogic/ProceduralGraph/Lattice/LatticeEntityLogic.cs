@@ -71,11 +71,6 @@ namespace Game.Client
             m_BoxCollider.size = new Vector3(m_Model.BoardGraph.NodeWidth, m_Model.BoardGraph.NodeHeight, 0.2f);
             // m_BoxCollider.isTrigger = true;
             // Physics.queriesHitTriggers = true;
-            
-            CachedTransform.position = m_Model.Position.ToVector3();
-            CachedTransform.rotation = m_Model.Rotation.ToQuaternion();
-            CachedTransform.localScale = Vector3.one;
-            
             GameEntry.Entity.AttachEntity(Id, m_Model.BoardGraph.BoardEntityId);
         }
 

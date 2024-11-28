@@ -5,6 +5,9 @@ namespace Game.Core;
 public interface IGraph
 {
     public bool AStar(float3 startWorldPos, float3 goalWorldPos, List<float3> path);
+    void BFS(List<IGraphNode> resultNodes, IGraphNode node, int distance);
+    bool WorldToGraph(float3 worldPos, out IGraphNode node);
+
 }
 
 public interface IGraph<T>:IGraph
@@ -46,7 +49,13 @@ public abstract class GraphBase<T> : IGraph<T>
     private Queue<IGraphNode<T>> m_OpenQueue = new Queue<IGraphNode<T>>();
     public abstract void DFS(List<IGraphNode<T>> resultNodes, IGraphNode<T> node, int depth);
 
-    
+    public T GetNodeValue(IGraphNodeHandle handle)
+    {
+        var node = FindNode(handle);
+        if (node != null)
+            return node.Value;
+        return default;
+    }
     private void ReconstructPath(IGraphNode<T>[, ] cameFromArr,  IGraphNode<T> goal, List<IGraphNode<T>> path)
     {
         var current = goal;
@@ -56,6 +65,20 @@ public abstract class GraphBase<T> : IGraph<T>
             path.Insert(0, current);
             current = cameFromArr[currentHandle.Row, currentHandle.Column];
         }
+    }
+    public void BFS(List<IGraphNode> resultNodes, IGraphNode node, int distance)
+    {
+        using var resultNodesWithType = new FPoolWrapper<List<IGraphNode<T>>, IGraphNode<T>>();
+        BFS(resultNodesWithType.Value, node as IGraphNode<T>, distance);
+        
+        resultNodes.AddRange(resultNodesWithType.Value);
+    }
+
+    public bool WorldToGraph(float3 worldPos, out IGraphNode node)
+    {
+        bool result =  WorldToGraph(worldPos, out IGraphNode<T> nodeWithType);
+        node = nodeWithType;
+        return result;
     }
 
     public void BFS(List<IGraphNode<T>> resultNodes,IGraphNode<T> node, int distance)
@@ -277,7 +300,7 @@ public abstract class GraphBase<T> : IGraph<T>
     
     public virtual float Distance(IGraphNode<T> a, IGraphNode<T> b)
     {
-        //@注意： 后续可以在这里加入节点的成本之类的
+        // @注意： 后续可以在这里加入节点的成本之类的
         // 网格相邻节点默认距离为1
         return 1f;
     }
@@ -287,7 +310,7 @@ public abstract class GraphBase<T> : IGraph<T>
         if (path == null || start == null || goal == null)
             return false;
 
-        var openSet = m_OpenSet; // 开放列表，按优先级排序
+        var openSet = m_OpenSet;
         openSet.Clear();
             
         using var gScore = new FPoolWrapper<Dictionary<IGraphNode<T>, float>, KeyValuePair<IGraphNode<T>, float>>(); // 从起点到每个节点的实际成本
@@ -302,7 +325,7 @@ public abstract class GraphBase<T> : IGraph<T>
 
         while (openSet.Count > 0)
         {
-            var current = openSet.Dequeue(); // 从开放列表中取出优先级最高的节点
+            var current = openSet.Dequeue();
 
             // 如果找到目标节点，则重建路径
             if (current == goal)
@@ -336,7 +359,7 @@ public abstract class GraphBase<T> : IGraph<T>
                     gScore.Value[neighbor] = tentativeGScore;
                     fScore.Value[neighbor] = tentativeGScore + Heuristic(neighbor, goal);
 
-                    // 如果邻居节点不在开放列表中，则加入
+                    // 如果邻居节点不在开放列表中，加入
                     if (!openSet.Contains(neighbor))
                     {
                         openSet.Enqueue(neighbor, fScore.Value[neighbor]);
@@ -347,8 +370,9 @@ public abstract class GraphBase<T> : IGraph<T>
             neighbors.Clear();
             ListPool<IGraphNode<T>>.Release(neighbors);
         }
-
-        return false; // 找不到路径
+        
+        // 找不到路径
+        return false; 
     }
     public bool AStar(float3 startWorldPos, float3 goalWorldPos, List<float3> path)
     {
@@ -376,6 +400,9 @@ public abstract class GraphBase<T> : IGraph<T>
         ListPool<IGraphNode<T>>.Release(resultNodes);
         return result;
     }
+
+    
+
     public abstract float3 GetWorldPosition();
 
     public abstract bool GetAllNodes(List<IGraphNode<T>> resultNodes);
@@ -384,6 +411,7 @@ public abstract class GraphBase<T> : IGraph<T>
     public abstract void Clear();
     public abstract void ForEach(Action<IGraphNode<T>> action);
     public abstract bool WorldToGraph(float3 worldPos, out IGraphNode<T> node);
-    public abstract bool WorldToGraph(float3 worldPos, out float3 nodeRelativePosition);
     public abstract bool GraphToWorld(IGraphNodeHandle handle, out float3 worldPos);
+    public abstract bool WorldToGraph(float3 worldPos, out float3 nodeRelativePosition);
+    public abstract bool WorldToGraph(float3 worldPos, out IGraphNodeHandle handle);
 }

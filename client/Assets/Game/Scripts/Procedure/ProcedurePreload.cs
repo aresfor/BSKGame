@@ -29,6 +29,7 @@ namespace Game.Client
             "Role",
             "Property",
             "VFX",
+            "Skill",
         };
 
         private Dictionary<string, bool> m_LoadedFlag = new Dictionary<string, bool>();

@@ -23,7 +23,7 @@ namespace Game.Gameplay
             base.OnShow(value, isAvailable);
             
             var model = (LatticeEntityModel)value.EntityData;
-            m_WorldPosition = model.Position;
+            m_WorldPosition = model.InitPosition;
             Name = value.EntityLogic.Name;
         }
 

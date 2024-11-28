@@ -5,6 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using Game.Core;
 using Game.Gameplay;
@@ -16,7 +17,9 @@ using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
 {
-    public abstract class GameEntityLogic : EntityLogic, IGameplayTagOwner, IGameEntityLogic
+    public abstract class GameEntityLogic : EntityLogic
+            , IGameplayTagOwner
+            , IGameEntityLogic
     {
         [SerializeField]
         private List<EntityLogicSocketBase> m_LogicSockets = new List<EntityLogicSocketBase>(); 
@@ -84,8 +87,8 @@ namespace Game.Client
             base.OnShow(userData);
             GameplayEntity?.OnShow(EntityData);
             Name = Utility.Text.Format("[Entity {0}]", Id);
-            CachedTransform.localPosition = EntityData.Position.ToVector3();
-            CachedTransform.localRotation = EntityData.Rotation.ToQuaternion();
+            CachedTransform.localPosition = EntityData.InitPosition.ToVector3();
+            CachedTransform.localRotation = EntityData.InitRotation.ToQuaternion();
             CachedTransform.localScale = Vector3.one;
             
             foreach (var entityLogicSocketBase in m_LogicSockets)
@@ -186,5 +189,6 @@ namespace Game.Client
 
                 return null;
         }
+        
     }
 }

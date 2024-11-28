@@ -15,6 +15,16 @@ namespace GameFramework.Entity
     /// </summary>
     public interface IEntity
     {
+        Dictionary<Type, IComponent> Components { get; }
+
+        public abstract T GetComponent<T>() where T : class, IComponent;
+
+        public abstract T AddComponent<T>(T component) where T : class, IComponent;
+
+        public abstract void RemoveComponent<T>() where T : class, IComponent;
+
+        public abstract void RemoveAllComponent();
+        
         /// <summary>
         /// 实体逻辑接口
         /// </summary>

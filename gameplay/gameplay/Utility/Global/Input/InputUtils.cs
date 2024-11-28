@@ -5,13 +5,18 @@ namespace Game.Gameplay;
 public static class InputUtils
 {
     public static IInputUtility s_InputUtility;
-
+    
+    public static int MouseRayTraceLayer = PhysicsLayerDefine.GetMultiFlag(PhysicTraceType.StaticActor, PhysicTraceType.Pawn);
     public static void Initialize(IInputUtility inputUtility)
     {
         s_InputUtility = inputUtility;
         s_InputUtility.Init();
     }
 
+    public static void SetMouseRayTraceLayer(int traceLayer)
+    {
+        MouseRayTraceLayer = traceLayer;
+    }
 
     public static void Update(float deltaTime)
     {

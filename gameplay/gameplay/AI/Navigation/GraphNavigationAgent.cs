@@ -22,7 +22,7 @@ public class GraphNavigationAgent: INavigationAgent
     private float3 m_CurrentMovementDirection;
     private float3 m_CurrentDestination;
     
-    public Action<bool> OnMoveFinishedCall;
+    public Action<bool> OnMoveFinishedCall { get; set; }
     private IGameEntityLogic m_EntityLogic;
     public IView EntityView=> m_EntityLogic as IView;
     private float m_CurrentSpeed = 5;
