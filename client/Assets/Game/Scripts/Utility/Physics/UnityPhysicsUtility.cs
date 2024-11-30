@@ -968,7 +968,10 @@ namespace Game.Client
                 layerMask |= (1 << UnityLayersUtil.LayerMask_AutoFire);
             }
 
-
+            if ((traceFlag & PhysicsLayerDefine.GetFlag(PhysicTraceType.Graph)) != 0)
+            {
+                layerMask |= (1 << UnityLayersUtil.LayerMask_Graph);
+            }
             return layerMask;
         }
 

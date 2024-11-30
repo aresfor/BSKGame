@@ -12,6 +12,7 @@ namespace Game.Client
         PushStack = 1,
         ExecuteAll = 2,
         UndoLast = 3,
+        ExecuteImmediately = 4,
         
     }
     public interface IBattleAction: IReference

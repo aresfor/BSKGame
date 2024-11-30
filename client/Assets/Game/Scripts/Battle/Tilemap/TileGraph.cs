@@ -60,9 +60,9 @@ namespace Game.Client
             results.Clear();
             for (int x = -range; x <= range; x++)
             {
-                for (int z = -range; z <= range; z++)
+                for (int y = -range; y <= range; y++)
                 {
-                    Vector3Int pos = new Vector3Int(center.x + x, center.y , center.z + z);
+                    Vector3Int pos = new Vector3Int(center.x + x, center.y + y, center.z);
                     if (TileMap.HasTile(pos))
                     {
                         results.Add(pos);
@@ -77,9 +77,9 @@ namespace Game.Client
         {
             for (int x = bottomLeft.x; x <= topRight.x; x++)
             {
-                for (int z = bottomLeft.y; z <= topRight.z; z++)
+                for (int y = bottomLeft.y; y <= topRight.z; y++)
                 {
-                    Vector3Int pos = new Vector3Int(x, bottomLeft.y, z);
+                    Vector3Int pos = new Vector3Int(x, y, bottomLeft.z);
                     if (TileMap.HasTile(pos))
                     {
                         results.Add(pos);

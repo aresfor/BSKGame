@@ -5,12 +5,19 @@ namespace Game.Gameplay;
 public static class InputUtils
 {
     public static IInputUtility s_InputUtility;
-    
-    public static int MouseRayTraceLayer = PhysicsLayerDefine.GetMultiFlag(PhysicTraceType.StaticActor, PhysicTraceType.Pawn);
+
+    public static int MouseRayTraceLayer =  PhysicsLayerDefine.GetFlag(PhysicTraceType.Graph) | PhysicsLayerDefine.GetFlag(PhysicTraceType.Pawn);
+    public static readonly int DefaultRayTraceLayer = PhysicsLayerDefine.GetFlag(PhysicTraceType.Graph) | PhysicsLayerDefine.GetFlag(PhysicTraceType.Pawn);
     public static void Initialize(IInputUtility inputUtility)
     {
         s_InputUtility = inputUtility;
         s_InputUtility.Init();
+        ResetMouseRayTraceLayer();
+    }
+
+    public static void ResetMouseRayTraceLayer()
+    {
+        MouseRayTraceLayer = DefaultRayTraceLayer;
     }
 
     public static void SetMouseRayTraceLayer(int traceLayer)

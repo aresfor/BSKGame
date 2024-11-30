@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1165560411154674274}
   - component: {fileID: 8261081477687987205}
-  m_Layer: 17
+  m_Layer: 18
   m_Name: ColliderLogicSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 950257286665209744}
   - component: {fileID: 2177314853088494245}
-  m_Layer: 17
+  m_Layer: 18
   m_Name: TileMapNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7342795901309480395}
-  m_Layer: 17
+  m_Layer: 18
   m_Name: LogicSocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 1361005016110358907}
   - component: {fileID: 9013548712695184429}
   - component: {fileID: 6846394206744016907}
-  m_Layer: 17
+  m_Layer: 18
   m_Name: Hover
   m_TagString: Untagged
   m_Icon: {fileID: 0}

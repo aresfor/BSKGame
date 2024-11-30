@@ -21,11 +21,13 @@ namespace Game.Client
 
         private const string LayerName_Vehicle = "Gameplay/Vechicle";          //载具
         private const string LayerName_Entity = "Gameplay/Entity";
+        private const string LayerName_Graph = "Gameplay/Graph";
 
         public static int LayerMask_UI { get; } = LayerMask.NameToLayer(LayerName_UI);
         public static int LayerMask_World { get; } = LayerMask.NameToLayer(LayerName_World);
         public static int LayerMask_Pawn { get; } = LayerMask.NameToLayer(LayerName_Pawn);
         public static int LayerMask_Entity { get; } = LayerMask.NameToLayer(LayerName_Entity);
+        public static int LayerMask_Graph { get; } = LayerMask.NameToLayer(LayerName_Graph);
 
         public static int LayerMask_FirstPerson { get; } = LayerMask.NameToLayer(LayerName_FirstPerson);
         public static int LayerMask_Monster { get; } = LayerMask.NameToLayer(LayerName_Monster);
@@ -104,6 +106,10 @@ namespace Game.Client
             else if (unitylayer == LayerMask_UI)
             {
                 return LayerType.kTypeUI;
+            }
+            else if (unitylayer == LayerMask_Graph)
+            {
+                return LayerType.kTypeGraph;
             }
 
             return LayerType.kDefault;

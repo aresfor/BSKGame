@@ -11,6 +11,7 @@ namespace Game.Client
             
             //注册System
             this.RegisterSystem<BattleActionSystem>(new BattleActionSystem());
+            this.RegisterSystem<SelectionSystem>(new SelectionSystem());
         }
         
         

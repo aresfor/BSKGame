@@ -53,5 +53,20 @@ namespace Game.Client
             
             ReferencePool.Release(damageInfo);
         }
+
+
+        public static void SelectEntity(int selectEntityId, bool select)
+        {
+            var entity = GameEntry.Entity.GetEntity(selectEntityId);
+            if (null == entity)
+                return;
+            if (entity.LogicInterface is ISelectable selectableLogic)
+            {
+                if(select)
+                    selectableLogic.OnSelect();
+                else
+                    selectableLogic.OnDeSelect();
+            }
+        }
     }
 }

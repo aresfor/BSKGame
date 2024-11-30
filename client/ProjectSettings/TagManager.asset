@@ -23,7 +23,7 @@ TagManager:
   - Gameplay/StaticActor
   - Gameplay/Entity
   - Gameplay/Pawn
-  - 
+  - Gameplay/Graph
   - 
   - 
   - 

@@ -10,7 +10,8 @@ namespace Game.Client
     {
 
         private BattleMainModel m_Model;
-        private IUpdateable m_CurrentUpdateAction;
+        private IBattleAction m_CurrentAction;
+        public IBattleAction CurrentAction => m_CurrentAction;
         
         #region 生命周期
 
@@ -31,15 +32,16 @@ namespace Game.Client
             
             if (InputUtils.GetKeyDown(EKeyCode.Mouse1))
             {
-                Undo();
+                PushAction(ReferencePool.Acquire<UndoAction>());
             }
             
-            m_CurrentUpdateAction?.Update(deltaTime);
+            if(m_CurrentAction is IUpdateable updateableAction)
+                updateableAction?.Update(deltaTime);
         }
 
         protected override void OnDeinit()
         {
-            m_CurrentUpdateAction = null;
+            m_CurrentAction = null;
             UndoAll();
             base.OnDeinit();
         }
@@ -48,28 +50,26 @@ namespace Game.Client
 
         #region Action执行相关操作
 
-        public void Undo()
+        private void Undo()
         {
-            if (m_Model.UndoStack.Count > 0)
+            if (m_Model.ActionStack.Count > 0)
             {
-                var undoAction = m_Model.UndoStack.Pop();
+                var undoAction = m_Model.ActionStack.Pop();
                 undoAction?.Undo(m_Model);
             }
         }
 
-        public void UndoAll()
+        private void UndoAll()
         {
-            while (m_Model.UndoStack.Count > 0)
+            while (m_Model.ActionStack.Count > 0)
             {
-                var undoAction = m_Model.UndoStack.Pop();
-                undoAction?.Undo(m_Model);
+                Undo();
             }
         }
 
         public bool ContainAnyAction()
         {
-            return m_Model.ActionStack.Count > 1 || m_Model.ActionStack.Count == 1
-                && m_Model.ActionStack.Peek().GetType() != typeof(SelectEntityAction);
+            return m_Model.ActionStack.Count > 0;
         }
         public void PushAction(IBattleAction action)
         {
@@ -87,8 +87,9 @@ namespace Game.Client
                             if (action.ReplaceSame 
                                 && lastTopAction.GetType() == action.GetType())
                             {
-                                Log.Error($"replace Same: {action.GetType().Name}");
+                                //Log.Error($"replace Same: {action.GetType().Name}");
                                 m_Model.ActionStack.Pop();
+                                lastTopAction.Undo(m_Model);
                             }
                         }
                         m_Model.ActionStack.Push(action);
@@ -107,13 +108,17 @@ namespace Game.Client
                         ReferencePool.Release(action);
                         Undo();
                         break;
+                    
+                    case EBattleActionType.ExecuteImmediately:
+                        action.Execute(m_Model);
+                        ReferencePool.Release(action);
+
+                        break;
                 }
             }
 
-            if (action is IUpdateable updateableAction)
-            {
-                m_CurrentUpdateAction = updateableAction;
-            }
+
+            m_CurrentAction = action;
         }
 
         public void ExecuteSingleStackAction()
@@ -122,8 +127,8 @@ namespace Game.Client
             {
                 var action = m_Model.ActionStack.Pop();
                 action.Execute(m_Model);
-                if (action == m_CurrentUpdateAction)
-                    m_CurrentUpdateAction = null;
+                if (action == m_CurrentAction)
+                    m_CurrentAction = null;
                 
                 ReferencePool.Release(action);
 #if UNITY_EDITOR

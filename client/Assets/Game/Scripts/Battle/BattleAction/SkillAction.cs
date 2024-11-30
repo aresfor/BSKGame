@@ -42,6 +42,7 @@ namespace Game.Client
         private DRSkill m_SkillData;
         private bool m_Executed = false;
         private List<Vector3Int> m_AvailableCells = new List<Vector3Int>(10);
+        private List<Vector3Int> m_SkillEffectCells = new List<Vector3Int>(10);
         private ESKillActionPhase m_Phase;
         private BattleMainModel m_Model;
         
@@ -55,10 +56,11 @@ namespace Game.Client
         public override void OnPush(BattleMainModel model)
         {
             base.OnPush(model);
+            //让初始选择目标系统关闭
+            GameUtils.BattleManager.EnableSelectionOwner(false);
             //设置选择目标Layer
             InputUtils.SetMouseRayTraceLayer(PhysicsLayerDefine.GetFlag(PhysicTraceType.Pawn));
             m_Model = model;
-            
             //1.计算可选格子， 将这些格子传递给HighlightTileAction
             CalcAvailableCells(m_AvailableCells, model);
             GraphUtils.Highlight(m_AvailableCells, true);
@@ -77,7 +79,6 @@ namespace Game.Client
 
         public override void Undo(BattleMainModel model)
         {
-
             base.Undo(model);
         }
 
@@ -109,63 +110,14 @@ namespace Game.Client
 
         public override void Execute(BattleMainModel model)
         {
-            int rangeType = m_SkillData.DamageRangeType;
-            int rangeNum = m_SkillData.DamageRangeNum;
-            float damageNum = m_SkillData.DamageNum;
-
             m_Executed = true;
             
-            //取消显示
-            //GraphUtils.Highlight(m_AvailableCells, false);
+            float damageNum = m_SkillData.DamageNum;
+            var releaseOwner = GameEntry.Entity.GetEntity(m_Model.SelectedOwnerId);
 
-            var releaseOwner = GameEntry.Entity.GetEntity(model.SelectedOwnerId);
-            if (releaseOwner == null)
-            {
-                Log.Error("技能释放者Entity为空, 检查");
-                return;
-            }
-
-            var target = GameEntry.Entity.GetEntity(m_Model.SelectedTargetId);
-            if (target == null)
-            {
-                Log.Error("技能目标为空，检查");
-                return;
-            }
-            
-            float3 ownerPosition = EntityLogicUtils.GetPosition(releaseOwner.LogicInterface);
-            float3 targetPosition = EntityLogicUtils.GetPosition(target.LogicInterface);
-            if (false == GraphUtils.WorldToGraph(targetPosition, out IGraphNode targetCenterNode))
-            {
-                Log.Error("无法根据target位置找到center位置");
-                return;
-            }
-            
-            using var skillEffectCells= new FPoolWrapper<List<Vector3Int>, Vector3Int>();
-
-
-            switch (rangeType)
-            {
-                case 1:
-
-                    //@TODO:
-                    break;
-
-                case 2:
-                    if (false == GraphUtils.GetTilesRange(((TileGraphNodeHandle)targetCenterNode.Handle).CellPos, rangeNum,
-                            skillEffectCells.Value))
-                    {
-                        Log.Error("无法获取TileRange");
-                        return;
-                    }
-
-                    break;
-                default:
-                    Log.Error("Missing case, check");
-                    break;
-            }
             
             
-            foreach (var effectCell in skillEffectCells.Value)
+            foreach (var effectCell in m_SkillEffectCells)
             {
                 var standRoleEntity = GraphUtils.GetStandRole(effectCell);
                 if (standRoleEntity != null)
@@ -188,9 +140,10 @@ namespace Game.Client
 
             if (m_Phase is ESKillActionPhase.ShouldConfirmRelease)
             {
-                if (lastTopAction is SelectEntityAction selectEntityAction 
+                if (lastTopAction is SaveSelectEntityAction selectEntityAction 
                     && selectEntityAction.SelectEntityActionType is ESelectEntityActionType.SelectTarget)
                 {
+                    GraphUtils.Highlight(m_AvailableCells, true);
                     m_Phase = ESKillActionPhase.ChoseTarget;
                 }
             }
@@ -249,26 +202,100 @@ namespace Game.Client
                    , PhysicsLayerDefine.GetFlag(PhysicTraceType.Pawn)
                    , ref impactInfo))
             {
+                // @TODO: 依赖具体handle了
+                // 只能在技能范围内选择
+                if (GraphUtils.WorldToGraph(impactInfo.HitLocation, out IGraphNodeHandle handle) && m_AvailableCells.Contains(((TileGraphNodeHandle)handle).CellPos))
+                {
+                    GraphUtils.Highlight(m_AvailableCells, false);
 
-                var selectEntityAction = ReferencePool.Acquire<SelectEntityAction>();
-                selectEntityAction.SelectEntityActionType = ESelectEntityActionType.SelectTarget;
-                selectEntityAction.SelectedEntityId  = impactInfo.HitEntityId;
-                PushAction(selectEntityAction);
+                    
+                    var selectEntityAction = ReferencePool.Acquire<SaveSelectEntityAction>();
+                    selectEntityAction.SelectEntityActionType = ESelectEntityActionType.SelectTarget;
+                    selectEntityAction.SelectedEntityId  = impactInfo.HitEntityId;
+                    PushAction(selectEntityAction);
+                    
+                    CalcSkillEffectCells();
+                    
                         
-                m_Phase = ESKillActionPhase.ShouldConfirmRelease;
+                    m_Phase = ESKillActionPhase.ShouldConfirmRelease;
+                }
+
+                
                         
             }
             ImpactInfo.Recycle(impactInfo);
 
         }
 
-        
+        private void CalcSkillEffectCells()
+        {
+            GraphUtils.Highlight(m_SkillEffectCells, false);
 
+            int rangeType = m_SkillData.DamageRangeType;
+            int rangeNum = m_SkillData.DamageRangeNum;
+            float damageNum = m_SkillData.DamageNum;
+            //取消显示
+            //GraphUtils.Highlight(m_AvailableCells, false);
+
+            m_SkillEffectCells.Clear();
+            var releaseOwner = GameEntry.Entity.GetEntity(m_Model.SelectedOwnerId);
+            if (releaseOwner == null)
+            {
+                Log.Error("技能释放者Entity为空, 检查");
+                return;
+            }
+
+            var target = GameEntry.Entity.GetEntity(m_Model.SelectedTargetId);
+            if (target == null)
+            {
+                Log.Error("技能目标为空，检查");
+                return;
+            }
+            
+            float3 ownerPosition = EntityLogicUtils.GetPosition(releaseOwner.LogicInterface);
+            float3 targetPosition = EntityLogicUtils.GetPosition(target.LogicInterface);
+            if (false == GraphUtils.WorldToGraph(targetPosition, out IGraphNode targetCenterNode))
+            {
+                Log.Error("无法根据target位置找到center位置");
+                return;
+            }
+
+
+            switch (rangeType)
+            {
+                case 1:
+
+                    //@TODO:
+                    break;
+
+                case 2:
+                    if (false == GraphUtils.GetTilesRange(((TileGraphNodeHandle)targetCenterNode.Handle).CellPos, rangeNum,
+                            m_SkillEffectCells))
+                    {
+                        Log.Error("无法获取TileRange");
+                        return;
+                    }
+
+                    break;
+                default:
+                    Log.Error("Missing case, check");
+                    break;
+            }
+            
+            GraphUtils.Highlight(m_SkillEffectCells, true);
+
+        }
+
+        
         public override void Clear()
         {
             GraphUtils.Highlight(m_AvailableCells, false);
-            InputUtils.SetMouseRayTraceLayer(PhysicsLayerDefine.GetMultiFlag(PhysicTraceType.Pawn
-                , PhysicTraceType.Entity));
+            GraphUtils.Highlight(m_SkillEffectCells, false);
+            InputUtils.ResetMouseRayTraceLayer();
+            GameUtils.BattleManager.EnableSelectionOwner(true);
+
+            m_AvailableCells.Clear();
+            m_SkillEffectCells.Clear();
             
             m_Model = null;
             m_Phase = ESKillActionPhase.ChoseTarget;

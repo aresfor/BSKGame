@@ -7,7 +7,7 @@ namespace Game.Client
         SelectOwner,
         SelectTarget
     }
-    public class SelectEntityAction:BattleAction
+    public class SaveSelectEntityAction:BattleAction
     {
         public int SelectedEntityId;
         public ESelectEntityActionType SelectEntityActionType;
@@ -17,10 +17,11 @@ namespace Game.Client
             = new[] { EBattleActionType.PushStack };
 
         public override bool ReplaceSame { get; } = true;
+        private BattleMainModel m_Model;
 
         public override IBattleAction Copy()
         {
-            var copy = ReferencePool.Acquire<SelectEntityAction>();
+            var copy = ReferencePool.Acquire<SaveSelectEntityAction>();
             copy.SelectedEntityId = SelectedEntityId;
             copy.SelectEntityActionType = SelectEntityActionType;
             return copy;
@@ -29,6 +30,7 @@ namespace Game.Client
         public override void OnPush(BattleMainModel model)
         {
             base.OnPush(model);
+            m_Model = model;
             
             m_PreSelectedEntityId = GameUtils.SelectedEntityId;
             //@TEMP: 给全局使用的
@@ -55,11 +57,11 @@ namespace Game.Client
             GameUtils.SelectedEntityId = m_PreSelectedEntityId;
             if (SelectEntityActionType is ESelectEntityActionType.SelectOwner)
             {
-                model.SelectedOwnerId = m_PreSelectedEntityId;
+                m_Model.SelectedOwnerId = m_PreSelectedEntityId;
             }
             else if (SelectEntityActionType is ESelectEntityActionType.SelectTarget)
             {
-                model.SelectedTargetId = m_PreSelectedEntityId;
+                m_Model.SelectedTargetId = m_PreSelectedEntityId;
             }
             base.Undo(model);
         }
@@ -67,6 +69,8 @@ namespace Game.Client
         
         public override void Clear()
         {
+            
+            
             SelectEntityActionType = default;
             m_PreSelectedEntityId = 0;
             SelectedEntityId = 0;

@@ -12,7 +12,7 @@ namespace Game.Client
     public class PlayerEntityLogic:GameEntityLogic
     {
         private RoleEntityModel m_Model;
-        private IEntityLogic m_LastHitEntityLogic;
+        //private IEntityLogic m_LastHitEntityLogic;
         public override void OnInit(object userData)
         {
             base.OnInit(userData);
@@ -77,7 +77,6 @@ namespace Game.Client
             
             GameUtils.PlayerEntityId = Id;
             
-            GameEntry.Event.Subscribe(MouseRayCastEventArgs.EventId, OnMouseRayCast);
         }
 
         protected override void CreateGameplayEntity()
@@ -98,7 +97,6 @@ namespace Game.Client
 
         public override void OnHide(bool isShutdown, object userData)
         {
-            GameEntry.Event.Unsubscribe(MouseRayCastEventArgs.EventId, OnMouseRayCast);
 
             base.OnHide(isShutdown, userData);
         }
@@ -109,74 +107,74 @@ namespace Game.Client
             base.OnRecycle();
         }
 
-        private void OnMouseRayCast(object sender, GameEventArgs eventArgs)
-        {
-            MouseRayCastEventArgs args = eventArgs as MouseRayCastEventArgs;
-            var impactInfo = args.ImpactInfo;
-            if (args.bIsHit)
-            {
-                var entity = GameEntry.Entity.GetEntity(impactInfo.HitEntityId);
-                if (null == entity)
-                {
-                    //Log.Info($"MouseHitEntity is null, entityId: {impactInfo.HitEntityId}");
-                }
-                else 
-                {
-                    if (m_LastHitEntityLogic != null && entity.LogicInterface != m_LastHitEntityLogic)
-                    {
-                        if(m_LastHitEntityLogic is IPointerHandler lastHitPointerHandler)
-                            lastHitPointerHandler.PointerExit(new FPointerEventData()
-                            {
-                                ImpactInfo = impactInfo
-                            });
-                    }
-                    
-                    if (entity.LogicInterface is IPointerHandler pointerHandler)
-                    {
-                        if (m_LastHitEntityLogic != entity.LogicInterface)
-                        {
-                            pointerHandler.PointerEnter(new FPointerEventData()
-                            {
-                                ImpactInfo = impactInfo
-
-                            });
-                        }
-
-                        if (InputUtils.GetKeyDown(EKeyCode.Mouse0))
-                        {
-                            pointerHandler.PointerDown(new FPointerEventData()
-                            {
-                                ImpactInfo = impactInfo
-
-                            });
-                        }
-                        
-                        if (InputUtils.GetKeyDown(EKeyCode.Mouse1))
-                        {
-                            pointerHandler.PointerUp(new FPointerEventData()
-                            {
-                                ImpactInfo = impactInfo
-
-                            });
-                        }
-
-
-                    }
-                    m_LastHitEntityLogic = entity.Logic;
-
-                }
-            }
-            else
-            {
-                if (m_LastHitEntityLogic != null)
-                {
-                    if(m_LastHitEntityLogic is IPointerHandler lastHitPointerHandler)
-                        lastHitPointerHandler.PointerExit(new FPointerEventData());
-
-                    m_LastHitEntityLogic = null;
-                }
-            }
-        }
+        // private void OnMouseRayCast(object sender, GameEventArgs eventArgs)
+        // {
+        //     MouseRayCastEventArgs args = eventArgs as MouseRayCastEventArgs;
+        //     var impactInfo = args.ImpactInfo;
+        //     if (args.bIsHit)
+        //     {
+        //         var entity = GameEntry.Entity.GetEntity(impactInfo.HitEntityId);
+        //         if (null == entity)
+        //         {
+        //             //Log.Info($"MouseHitEntity is null, entityId: {impactInfo.HitEntityId}");
+        //         }
+        //         else 
+        //         {
+        //             if (m_LastHitEntityLogic != null && entity.LogicInterface != m_LastHitEntityLogic)
+        //             {
+        //                 if(m_LastHitEntityLogic is IPointerHandler lastHitPointerHandler)
+        //                     lastHitPointerHandler.PointerExit(new FPointerEventData()
+        //                     {
+        //                         ImpactInfo = impactInfo
+        //                     });
+        //             }
+        //             
+        //             if (entity.LogicInterface is IPointerHandler pointerHandler)
+        //             {
+        //                 if (m_LastHitEntityLogic != entity.LogicInterface)
+        //                 {
+        //                     pointerHandler.PointerEnter(new FPointerEventData()
+        //                     {
+        //                         ImpactInfo = impactInfo
+        //
+        //                     });
+        //                 }
+        //
+        //                 if (InputUtils.GetKeyDown(EKeyCode.Mouse0))
+        //                 {
+        //                     pointerHandler.PointerDown(new FPointerEventData()
+        //                     {
+        //                         ImpactInfo = impactInfo
+        //
+        //                     });
+        //                 }
+        //                 
+        //                 if (InputUtils.GetKeyDown(EKeyCode.Mouse1))
+        //                 {
+        //                     pointerHandler.PointerUp(new FPointerEventData()
+        //                     {
+        //                         ImpactInfo = impactInfo
+        //
+        //                     });
+        //                 }
+        //
+        //
+        //             }
+        //             m_LastHitEntityLogic = entity.Logic;
+        //
+        //         }
+        //     }
+        //     else
+        //     {
+        //         if (m_LastHitEntityLogic != null)
+        //         {
+        //             if(m_LastHitEntityLogic is IPointerHandler lastHitPointerHandler)
+        //                 lastHitPointerHandler.PointerExit(new FPointerEventData());
+        //
+        //             m_LastHitEntityLogic = null;
+        //         }
+        //     }
+        // }
         
     }
 }
