@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2024-11-28 06:33:07.718
+// 生成时间：2024-12-02 07:32:45.724
 //------------------------------------------------------------
 
 using GameFramework;
@@ -15,6 +15,7 @@ using System.IO;
 using System.Text;
 using Game.Gameplay;
 using GameFramework.Runtime;
+using Game.Math;
 
 namespace Game.Gameplay
 {

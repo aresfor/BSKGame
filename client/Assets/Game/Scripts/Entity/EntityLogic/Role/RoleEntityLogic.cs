@@ -44,7 +44,7 @@ namespace Game.Client
         public override void OnShow(object userData)
         {
             base.OnShow(userData);
-
+            AttachTile();
         }
 
         private void AttachTile()

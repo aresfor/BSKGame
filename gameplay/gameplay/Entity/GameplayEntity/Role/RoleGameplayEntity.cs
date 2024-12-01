@@ -3,7 +3,7 @@ using GameFramework.Entity;
 
 namespace Game.Gameplay;
 
-public class RoleGameplayEntity: GameplayEntity
+public partial class RoleGameplayEntity: GameplayEntity
 {
     private RoleEntityModel m_RoleModel;
     public RoleGameplayEntity(IEntity entity) : base(entity)
@@ -14,6 +14,8 @@ public class RoleGameplayEntity: GameplayEntity
     {
         base.OnInit(entityData);
         m_RoleModel = (RoleEntityModel)entityData;
+
+        InitTeam();
     }
 
     public override void OnAttachTo(IEntity parentEntity, object userData)

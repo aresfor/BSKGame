@@ -21,7 +21,14 @@ namespace Game.Client
             }
         }
         public static BattleManager BattleManager;
-        public static Ray MouseRay => Camera.main.ScreenPointToRay(Input.mousePosition);
-
+        public static Ray MouseRay
+        {
+            get
+            {
+                if(Camera.main != null)
+                    return Camera.main.ScreenPointToRay(Input.mousePosition);
+                return default;
+            }
+        }
     }
 }

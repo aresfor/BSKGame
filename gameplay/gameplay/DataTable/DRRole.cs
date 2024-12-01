@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2024-11-28 06:33:07.719
+// 生成时间：2024-12-02 07:32:45.726
 //------------------------------------------------------------
 
 using GameFramework;
@@ -15,6 +15,7 @@ using System.IO;
 using System.Text;
 using Game.Gameplay;
 using GameFramework.Runtime;
+using Game.Math;
 
 namespace Game.Gameplay
 {
@@ -63,6 +64,15 @@ namespace Game.Gameplay
             private set;
         }
 
+        /// <summary>
+        /// 获取队伍，默认怪物1，玩家2。
+        /// </summary>
+        public int Team
+        {
+            get;
+            private set;
+        }
+
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -78,6 +88,7 @@ namespace Game.Gameplay
             Name = columnStrings[index++];
             PropertyId = int.Parse(columnStrings[index++]);
             Model = columnStrings[index++];
+            Team = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -93,6 +104,7 @@ namespace Game.Gameplay
                     Name = binaryReader.ReadString();
                     PropertyId = binaryReader.Read7BitEncodedInt32();
                     Model = binaryReader.ReadString();
+                    Team = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

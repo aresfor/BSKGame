@@ -1,4 +1,6 @@
 ﻿using Game.Client;
+using Game.Gameplay;
+using GameFramework;
 using GameFramework.Event;
 using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
@@ -11,19 +13,20 @@ namespace Game.Client
     {
         private bool m_StartGame = false;
         private MenuForm m_MenuForm = null;
-        
+        private DRBattle m_SelectBattle = null;
 
-        public void StartGame()
+        public void StartGame(DRBattle battle)
         {
             m_StartGame = true;
+            m_SelectBattle = battle;
         }
 
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
-
             GameEntry.Event.Subscribe(OpenUIFormSuccessEventArgs.EventId, OnOpenUIFormSuccess);
 
+            m_SelectBattle = null;
             m_StartGame = false;
             GameEntry.UI.OpenUIForm(UIFormId.MenuForm, this);
         }
@@ -47,8 +50,9 @@ namespace Game.Client
 
             if (m_StartGame)
             {
-                var mainSceneIndex = UnityEngine.SceneManagement.SceneUtility.GetBuildIndexByScenePath("GameRes/Scenes/Main");
+                var mainSceneIndex = UnityEngine.SceneManagement.SceneUtility.GetBuildIndexByScenePath(m_SelectBattle.BattleScenePath);
                 procedureOwner.SetData<VarInt32>("NextSceneId", mainSceneIndex);
+                procedureOwner.SetData<VarBattle>("BattleData", m_SelectBattle);
                 //procedureOwner.SetData<VarByte>("GameMode", (byte)GameMode.Survival);
                 ChangeState<ProcedureChangeScene>(procedureOwner);
             }

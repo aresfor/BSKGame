@@ -11,6 +11,8 @@ namespace Game.Client
 
         private BattleMainModel m_Model;
         private IBattleAction m_CurrentAction;
+        //不一定与CurrentAction相同
+        private IUpdateable m_CurrentUpdatableAction;
         public IBattleAction CurrentAction => m_CurrentAction;
         
         #region 生命周期
@@ -35,13 +37,14 @@ namespace Game.Client
                 PushAction(ReferencePool.Acquire<UndoAction>());
             }
             
-            if(m_CurrentAction is IUpdateable updateableAction)
-                updateableAction?.Update(deltaTime);
+            if(m_CurrentUpdatableAction != null)
+                m_CurrentUpdatableAction?.Update(deltaTime);
         }
 
         protected override void OnDeinit()
         {
             m_CurrentAction = null;
+            m_CurrentUpdatableAction = null;
             UndoAll();
             base.OnDeinit();
         }
@@ -117,6 +120,8 @@ namespace Game.Client
                 }
             }
 
+            if (action is IUpdateable updateableAction)
+                m_CurrentUpdatableAction = updateableAction;
 
             m_CurrentAction = action;
         }
@@ -129,6 +134,9 @@ namespace Game.Client
                 action.Execute(m_Model);
                 if (action == m_CurrentAction)
                     m_CurrentAction = null;
+
+                if (action == m_CurrentUpdatableAction)
+                    m_CurrentUpdatableAction = null;
                 
                 ReferencePool.Release(action);
 #if UNITY_EDITOR

@@ -14,7 +14,6 @@ namespace Game.Client
             var boardGraph = GameUtils.Board;
             m_AgentImpl = new GraphNavigationAgent(this);
             OnMoveFinishedCall += OnMoveFinished;
-            AttachTile();
         }
 
         private void OnMoveFinished(bool success)

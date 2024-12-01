@@ -74,7 +74,7 @@ namespace Game.Client
             ListPool<int>.Release(loadingEntities);
         }
         
-        public static void ShowGameplayEntity(this EntityComponent entityComponent, string entityGroup, EntityData data, Action<Entity> showEntitySuccessCallback = null) 
+        public static void ShowGameplayEntity(this EntityComponent entityComponent, string entityGroup, EntityData data, int resourceId = 0, Action<Entity> showEntitySuccessCallback = null) 
         {
             if (data == null)
             {
@@ -91,7 +91,8 @@ namespace Game.Client
             }
 
             //填入资源表id，后续资源都从对应Entity格子对应的资源表去找
-            data.ResourceId = drEntity.ResourceId;
+            if(resourceId != 0)
+                data.ResourceId = resourceId;
             data.Init();
             if(showEntitySuccessCallback != null)
                 s_LoadCallback.Add(data.Id, showEntitySuccessCallback);

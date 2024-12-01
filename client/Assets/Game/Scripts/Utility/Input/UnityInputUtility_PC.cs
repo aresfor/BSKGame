@@ -38,8 +38,11 @@ namespace Game.Client
             //检测是否在UI上
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
-            
+
+            if (Camera.main == null)
+                return;
             var mouseRay = GameUtils.MouseRay;
+
             ImpactInfo impactInfo = null;
 
             bool hit = PhysicsUtils.SingleLineCheck(mouseRay.origin.ToFloat3(), mouseRay.direction.ToFloat3()

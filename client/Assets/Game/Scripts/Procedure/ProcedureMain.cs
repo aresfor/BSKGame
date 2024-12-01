@@ -23,7 +23,9 @@ namespace Game.Client
             var playerRoleModel = new RoleEntityModel()
             {
                 Id = EntityId.GenerateSerialId(),
-                TypeId = 10000
+                TypeId = Constant.Entity.PlayerTypeId,
+                //@TEMP:
+                ResourceId = 10000
             };
             GameEntry.Entity.ShowGameplayEntity("Player", playerRoleModel);
 
@@ -39,30 +41,59 @@ namespace Game.Client
             //初始化图给全局使用
             GraphUtils.Initialize(new TileMapGraphUtility(TileMapGraphImpl));
 
+
+            var drBattle = procedureOwner.GetData<VarBattle>("BattleData").Value;
             
-            
-            var zeroNode = TileMapGraphImpl.FindNode(new TileGraphNodeHandle(new Vector3Int(0, 0,0)));
-            var roleModel = new RoleEntityModel()
+            var role1Node = TileMapGraphImpl.FindNode(new TileGraphNodeHandle(new Vector3Int((int)drBattle.Role1Cell.x, (int)drBattle.Role1Cell.y,(int)drBattle.Role1Cell.z)));
+            var role1Model = new RoleEntityModel()
             {
                 Id = EntityId.GenerateSerialId(),
-                TypeId = 40000,
-                InitPosition = zeroNode.WorldPosition,
+                TypeId = Constant.Entity.RoleTypeId,
+                InitPosition = role1Node.WorldPosition,
+                ResourceId = drBattle.Role1
                 //BelongLatticeId = zeroNode.Value.Entity.Id
                 //Rotation = latticeData.Rotation
             };
-            GameEntry.Entity.ShowGameplayEntity("Role", roleModel);
             
-            
-            var enemyNode = TileMapGraphImpl.FindNode(new TileGraphNodeHandle(new Vector3Int(1, 0,0)));
-            var enemyRoleModel = new RoleEntityModel()
+            var role2Node = TileMapGraphImpl.FindNode(new TileGraphNodeHandle(new Vector3Int((int)drBattle.Role2Cell.x, (int)drBattle.Role2Cell.y,(int)drBattle.Role2Cell.z)));
+            var role2Model = new RoleEntityModel()
             {
                 Id = EntityId.GenerateSerialId(),
-                TypeId = 40000,
-                InitPosition = enemyNode.WorldPosition,
+                TypeId = Constant.Entity.RoleTypeId,
+                InitPosition = role2Node.WorldPosition,
+                ResourceId = drBattle.Role2
                 //BelongLatticeId = zeroNode.Value.Entity.Id
                 //Rotation = latticeData.Rotation
             };
-            GameEntry.Entity.ShowGameplayEntity("Role", enemyRoleModel);
+            
+            var enemyRole1Node = TileMapGraphImpl.FindNode(new TileGraphNodeHandle(new Vector3Int((int)drBattle.EnemyRole1Cell.x
+                , (int)drBattle.EnemyRole1Cell.y,(int)drBattle.EnemyRole1Cell.z)));
+            var enemyRole1Model = new RoleEntityModel()
+            {
+                Id = EntityId.GenerateSerialId(),
+                TypeId = Constant.Entity.RoleTypeId,
+                InitPosition = enemyRole1Node.WorldPosition,
+                ResourceId = drBattle.EnemyRole1
+                //BelongLatticeId = zeroNode.Value.Entity.Id
+                //Rotation = latticeData.Rotation
+            };
+            
+            var enemyRole2Node = TileMapGraphImpl.FindNode(new TileGraphNodeHandle(new Vector3Int((int)drBattle.EnemyRole2Cell.x
+                , (int)drBattle.EnemyRole2Cell.y,(int)drBattle.EnemyRole2Cell.z)));
+            var enemyRole2Model = new RoleEntityModel()
+            {
+                Id = EntityId.GenerateSerialId(),
+                TypeId = Constant.Entity.RoleTypeId,
+                InitPosition = enemyRole2Node.WorldPosition,
+                ResourceId = drBattle.EnemyRole2
+                //BelongLatticeId = zeroNode.Value.Entity.Id
+                //Rotation = latticeData.Rotation
+            };
+            
+            GameEntry.Entity.ShowGameplayEntity("Role", role1Model);
+            GameEntry.Entity.ShowGameplayEntity("Role", role2Model);
+            GameEntry.Entity.ShowGameplayEntity("Role", enemyRole1Model);
+            GameEntry.Entity.ShowGameplayEntity("Role", enemyRole2Model);
 
         }
         

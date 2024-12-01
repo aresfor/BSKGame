@@ -24,21 +24,25 @@ namespace Game.Client
                 var tileNode = ReferencePool.Acquire<TileMapGraphNode>();
                 tileNode.OnInit(this, new TileGraphNodeHandle(cell));
                 GraphToWorld(new TileGraphNodeHandle(cell),out var tileNodeWorldPos);
+                var tile = GetTile<CustomTile>(new TileGraphNodeHandle(cell));
+
+                if (false == tile.IsAvailable)
+                    continue;
+                
                 TileNodeEntityModel model = new TileNodeEntityModel()
                 {
                     Id = EntityId.GenerateSerialId(),
                     TypeId = 60000,
                     Node = tileNode,
                     InitPosition = tileNodeWorldPos,
-                    //@TODO:
-                    ResourceId = 0
                 };
                 
-                GameEntry.Entity.ShowGameplayEntity("TileNode", model, (entity =>
+                
+                GameEntry.Entity.ShowGameplayEntity("TileNode", model, 0, (entity =>
                 {
 
                     var gameEntityLogic = entity.Logic as IGameEntityLogic;
-                    tileNode.OnShow((gameEntityLogic.GameplayEntity as TileNodeGameplayEntity), true);
+                    tileNode.OnShow((gameEntityLogic.GameplayEntity as TileNodeGameplayEntity), tile != null ? tile.IsAvailable : true);
                 }));
                 AddTile(cell, tileNode);
             }

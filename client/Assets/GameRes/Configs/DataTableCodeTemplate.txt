@@ -15,6 +15,7 @@ using System.IO;
 using System.Text;
 using Game.Gameplay;
 using GameFramework.Runtime;
+using Game.Math;
 
 namespace __DATA_TABLE_NAME_SPACE__
 {

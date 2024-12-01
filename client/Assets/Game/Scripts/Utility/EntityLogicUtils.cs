@@ -28,6 +28,10 @@ namespace Game.Client
         //@TODO: 移动到Gameplay中去
         public static void ApplyDamageTo(ApplyDamageInfo damageInfo)
         {
+            //先检查阵营
+            if (false == TeamUtils.IsHostileTo(damageInfo.CasterEntityId, damageInfo.TargetEntityId))
+                return;
+            
             var targetEntity = GameEntry.Entity.GetEntity(damageInfo.TargetEntityId);
             if (targetEntity == null)
             {

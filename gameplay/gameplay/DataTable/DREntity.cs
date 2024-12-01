@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 // 此文件由工具自动生成，请勿直接修改。
-// 生成时间：2024-11-28 06:33:07.701
+// 生成时间：2024-12-02 07:32:45.720
 //------------------------------------------------------------
 
 using GameFramework;
@@ -15,6 +15,7 @@ using System.IO;
 using System.Text;
 using Game.Gameplay;
 using GameFramework.Runtime;
+using Game.Math;
 
 namespace Game.Gameplay
 {
@@ -45,15 +46,6 @@ namespace Game.Gameplay
             private set;
         }
 
-        /// <summary>
-        /// 获取资源表Id, 默认为0。
-        /// </summary>
-        public int ResourceId
-        {
-            get;
-            private set;
-        }
-
         public override bool ParseDataRow(string dataRowString, object userData)
         {
             string[] columnStrings = dataRowString.Split(DataTableExtension.DataSplitSeparators);
@@ -67,7 +59,6 @@ namespace Game.Gameplay
             m_Id = int.Parse(columnStrings[index++]);
             index++;
             AssetName = columnStrings[index++];
-            ResourceId = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -81,7 +72,6 @@ namespace Game.Gameplay
                 {
                     m_Id = binaryReader.Read7BitEncodedInt32();
                     AssetName = binaryReader.ReadString();
-                    ResourceId = binaryReader.Read7BitEncodedInt32();
                 }
             }
 
