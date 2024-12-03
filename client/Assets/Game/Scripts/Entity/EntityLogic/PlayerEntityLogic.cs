@@ -52,6 +52,7 @@ namespace Game.Client
             };
             
             //meshLoaderSocket.BeginLoadMesh();
+            
         }
 
         
@@ -88,11 +89,15 @@ namespace Game.Client
         public override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
-            
-            if (InputUtils.GetKeyDown(EKeyCode.Mouse0))
-            {
-                //TestVFX(FindLogicSocket<BaseMeshLoaderLogicSocket>().AvatarMeshLoader);
-            }
+            // if (InputUtils.GetInput(EInputParam.kSprintBtnDownInput))
+            // {
+            //     Log.Error("sprint down");
+            // }
+            //
+            // if (InputUtils.GetInput(EInputParam.kSprintBtnUpInput))
+            // {
+            //     Log.Error("sprint up");
+            // }
         }
 
         public override void OnHide(bool isShutdown, object userData)

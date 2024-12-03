@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using Game.Client.Build.Rutime;
 using Game.Core;
 using Game.Gameplay;
 using GameFramework;
@@ -19,7 +20,12 @@ namespace Game.Client
     public class BuiltinDataComponent : GameFrameworkComponent
     {
         [SerializeField] private TextAsset m_GameplayTagTextAsset = null;
-
+        private BuildInfo m_BuildInfo = null;
+        [SerializeField]
+        private UIUpdateResourceForm m_UpdateResourceFormTemplate = null;
+        public BuildInfo BuildInfo=> m_BuildInfo;
+        public UIUpdateResourceForm UpdateResourceFormTemplate => m_UpdateResourceFormTemplate;
+        
         private List<IUpdateable> m_UpdateableUtilities = new List<IUpdateable>();
         private List<IShutdown> m_ShutdownUtilities = new List<IShutdown>();
 
