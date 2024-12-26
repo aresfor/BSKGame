@@ -1,6 +1,8 @@
-﻿namespace Game.Core;
-
-
-public interface IGraphNodeHandle
+﻿namespace Game.Core
 {
+
+
+    public interface IGraphNodeHandle
+    {
+    }
 }

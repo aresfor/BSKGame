@@ -1,5 +1,7 @@
-﻿namespace Game.Core;
-
-public static class GraphExtension
+﻿namespace Game.Core
 {
+
+    public static class GraphExtension
+    {
+    }
 }

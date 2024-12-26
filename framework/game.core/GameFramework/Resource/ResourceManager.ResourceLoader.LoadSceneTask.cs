@@ -7,9 +7,9 @@
 
 namespace GameFramework.Resource
 {
-    internal sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
+    public sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
     {
-        private sealed partial class ResourceLoader
+        public sealed partial class ResourceLoader
         {
             private sealed class LoadSceneTask : LoadResourceTaskBase
             {

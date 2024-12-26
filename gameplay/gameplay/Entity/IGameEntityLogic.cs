@@ -2,13 +2,15 @@
 
 using Game.Core;
 
-namespace Game.Gameplay;
-
-public interface IGameEntityLogic:IEntityLogic
+namespace Game.Gameplay
 {
-    
-    
-    public GameplayEntity GameplayEntity { get; }
-    EntityData EntityData { get; }
 
+    public interface IGameEntityLogic : IEntityLogic
+    {
+
+
+        public GameplayEntity GameplayEntity { get; }
+        EntityData EntityData { get; }
+
+    }
 }

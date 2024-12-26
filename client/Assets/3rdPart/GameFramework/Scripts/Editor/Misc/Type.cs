@@ -24,7 +24,13 @@ namespace UnityGameFramework.Editor
             "Assembly-CSharp",
             //自定义
             "game.core",
-            "game.gameplay"
+            "game.gameplay",
+            "BSK.Game.Launch",
+            "BSK.Game.Gameplay",
+            "BSK.Game.Core",
+            "BSK.Game.Windows",
+            "BSK.Game.UIBase",
+            "BSK.Game.Hud",
         };
 
         private static readonly string[] RuntimeOrEditorAssemblyNames =

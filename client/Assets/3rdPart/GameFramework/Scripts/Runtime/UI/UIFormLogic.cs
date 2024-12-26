@@ -6,13 +6,14 @@
 //------------------------------------------------------------
 
 using Game.Core;
+using UnityEngine;
 
 namespace UnityGameFramework.Runtime
 {
     /// <summary>
     /// 界面逻辑基类。
     /// </summary>
-    public abstract class UIFormLogic : BaseMonoBehaviour
+    public abstract class UIFormLogic : MonoBehaviour
     {
         private bool m_Available = false;
         private bool m_Visible = false;

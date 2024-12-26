@@ -2,7 +2,8 @@
     "name": "BSK.Game.CoreEditor",
     "rootNamespace": "",
     "references": [
-        "GUID:a87f1a48844795c4e977cb66bea27be0"
+        "GUID:a87f1a48844795c4e977cb66bea27be0",
+        "GUID:e34a5702dd353724aa315fb8011f08c3"
     ],
     "includePlatforms": [
         "Editor"

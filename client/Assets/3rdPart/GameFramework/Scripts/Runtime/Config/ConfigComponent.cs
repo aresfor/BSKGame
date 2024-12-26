@@ -5,6 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using Game.Client;
 using GameFramework;
 using GameFramework.Config;
 using GameFramework.Resource;

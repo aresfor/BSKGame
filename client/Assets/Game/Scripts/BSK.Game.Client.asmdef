@@ -1,0 +1,20 @@
+{
+    "name": "BSK.Game.Client",
+    "rootNamespace": "",
+    "references": [
+        "BSK.Game.Gameplay",
+        "BSK.Game.Core",
+        "BSK.Game.Common",
+        "GameFramework",
+        "Unity.2D.Tilemap.Editor"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

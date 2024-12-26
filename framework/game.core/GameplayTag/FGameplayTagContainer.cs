@@ -1,27 +1,36 @@
-﻿namespace Game.Gameplay;
+﻿using System.Collections.Generic;
+using System.Linq;
 
-public enum EGameplayTagCheckType : byte
+namespace Game.Gameplay
 {
-    Exact,//精确检测
-    Parent,//tag是子tag也通过，继承检测
-}
 
-public struct FGameplayTagContainer: IGameplayTagOwner
-{
-    private HashSet<string> m_Tags = new HashSet<string>();
-
-    public FGameplayTagContainer()
+    public enum EGameplayTagCheckType : byte
     {
-        
-    }
-    public void AddTag(string tag) => m_Tags.Add(tag);
-    public void RemoveTag(string tag) => m_Tags.Remove(tag);
-    public bool HasTag(string tag,  EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact) {
-        return m_Tags.Contains(tag) || checkType is EGameplayTagCheckType.Parent && m_Tags.Any(t => GameplayTagHelper.TagTree.IsTagChildOf(tag, t));
+        Exact, //精确检测
+        Parent, //tag是子tag也通过，继承检测
     }
 
-    public void ClearAllTag()
+    public struct FGameplayTagContainer : IGameplayTagOwner
     {
-        m_Tags.Clear();
+        private HashSet<string> m_Tags;
+
+        public FGameplayTagContainer(bool _ = true)
+        {
+            m_Tags = new HashSet<string>();
+        }
+
+        public void AddTag(string tag) => m_Tags.Add(tag);
+        public void RemoveTag(string tag) => m_Tags.Remove(tag);
+
+        public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact)
+        {
+            return m_Tags.Contains(tag) || checkType is EGameplayTagCheckType.Parent &&
+                m_Tags.Any(t => GameplayTagHelper.TagTree.IsTagChildOf(tag, t));
+        }
+
+        public void ClearAllTag()
+        {
+            m_Tags.Clear();
+        }
     }
 }

@@ -5,6 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using Game.Client;
 using GameFramework;
 using UnityEngine;
 #if UNITY_5_5_OR_NEWER
@@ -18,6 +19,7 @@ namespace UnityGameFramework.Runtime
         private sealed class EnvironmentInformationWindow : ScrollableDebuggerWindowBase
         {
             private BaseComponent m_BaseComponent = null;
+            //private ResourceComponent m_ResourceComponent = null;
             private ResourceComponent m_ResourceComponent = null;
 
             public override void Initialize(params object[] args)
@@ -29,6 +31,7 @@ namespace UnityGameFramework.Runtime
                     return;
                 }
 
+                //m_ResourceComponent = GameEntry.GetComponent<ResourceComponent>();
                 m_ResourceComponent = GameEntry.GetComponent<ResourceComponent>();
                 if (m_ResourceComponent == null)
                 {

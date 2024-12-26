@@ -1,12 +1,15 @@
 ﻿using Game.Core;
 
-namespace Game.Gameplay;
-
-public class TileNodeEntityModel:EntityData
+namespace Game.Gameplay
 {
-    public IGraphNode<TileNodeGameplayEntity> Node { get; set; } 
-    protected override void OnClear()
+
+    public class TileNodeEntityModel : EntityData
     {
-        Node = null;
+        public IGraphNode<TileNodeGameplayEntity> Node { get; set; }
+
+        protected override void OnClear()
+        {
+            Node = null;
+        }
     }
 }

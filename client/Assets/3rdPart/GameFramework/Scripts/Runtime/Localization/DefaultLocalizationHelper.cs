@@ -10,6 +10,7 @@ using GameFramework.Localization;
 using System;
 using System.IO;
 using System.Text;
+using Game.Client;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime

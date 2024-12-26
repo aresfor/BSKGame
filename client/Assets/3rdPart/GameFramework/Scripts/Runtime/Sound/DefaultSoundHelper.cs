@@ -5,6 +5,8 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using Game.Client;
+
 namespace UnityGameFramework.Runtime
 {
     /// <summary>

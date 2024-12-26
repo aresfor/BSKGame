@@ -1,22 +1,25 @@
-﻿using GameFramework;
+﻿using System;
+using GameFramework;
 using Newtonsoft.Json;
 
-namespace Game.Gameplay;
-
-public class NewtonJsonHelper:Utility.Json.IJsonHelper
+namespace Game.Gameplay
 {
-    public string ToJson(object obj)
-    {
-        return JsonConvert.SerializeObject(obj, Formatting.Indented);
-    }
 
-    public T ToObject<T>(string json)
+    public class NewtonJsonHelper : Utility.Json.IJsonHelper
     {
-        return JsonConvert.DeserializeObject<T>(json);
-    }
+        public string ToJson(object obj)
+        {
+            return JsonConvert.SerializeObject(obj, Formatting.Indented);
+        }
 
-    public object ToObject(Type objectType, string json)
-    {
-        return JsonConvert.DeserializeObject(json, objectType);
+        public T ToObject<T>(string json)
+        {
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+
+        public object ToObject(Type objectType, string json)
+        {
+            return JsonConvert.DeserializeObject(json, objectType);
+        }
     }
 }

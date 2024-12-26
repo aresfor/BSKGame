@@ -97,3 +97,6 @@ Temp
 
 #打包
 /outputResource
+
+#Hybrid
+/client/HybridCLRData

@@ -9,6 +9,7 @@ using GameFramework;
 using GameFramework.Localization;
 using GameFramework.Resource;
 using System;
+using Game.Client;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -95,7 +96,12 @@ namespace UnityGameFramework.Runtime
             get;
             set;
         }
-
+        public IYooResourceManager EditorYooResourceHelper
+        {
+            get;
+            set;
+        }
+        
         /// <summary>
         /// 获取或设置游戏帧率。
         /// </summary>

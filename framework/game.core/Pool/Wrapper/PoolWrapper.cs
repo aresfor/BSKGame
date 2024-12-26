@@ -1,27 +1,30 @@
-﻿using GameFramework;
+﻿using System;
+using System.Collections.Generic;
 
-namespace Game.Core;
-
-/// <summary>
-/// 一个集合池析构包装，搭配using使用
-/// </summary>
-/// <typeparam name="TCollection"></typeparam>
-/// <typeparam name="TItem"></typeparam>
-public struct FPoolWrapper<TCollection, TItem>:IDisposable
-    where TCollection : class, ICollection<TItem>, new()
+namespace Game.Core
 {
-    private TCollection m_Collection;
 
-    public FPoolWrapper()
+    /// <summary>
+    /// 一个集合池析构包装，搭配using使用
+    /// </summary>
+    /// <typeparam name="TCollection"></typeparam>
+    /// <typeparam name="TItem"></typeparam>
+    public struct FPoolWrapper<TCollection, TItem> : IDisposable
+        where TCollection : class, ICollection<TItem>, new()
     {
-        m_Collection = CollectionPool<TCollection, TItem>.Get();
-    }
+        private TCollection m_Collection;
 
-    public void Dispose()
-    {
-        m_Collection.Clear();
-        CollectionPool<TCollection, TItem>.Release(m_Collection);
-    }
+        public FPoolWrapper()
+        {
+            m_Collection = CollectionPool<TCollection, TItem>.Get();
+        }
 
-    public TCollection Value => m_Collection;
+        public void Dispose()
+        {
+            m_Collection.Clear();
+            CollectionPool<TCollection, TItem>.Release(m_Collection);
+        }
+
+        public TCollection Value => m_Collection;
+    }
 }

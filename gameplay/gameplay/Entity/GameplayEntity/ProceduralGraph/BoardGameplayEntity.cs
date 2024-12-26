@@ -1,10 +1,12 @@
 ﻿using GameFramework.Entity;
 
-namespace Game.Gameplay;
-
-public class BoardGameplayEntity:GameplayEntity
+namespace Game.Gameplay
 {
-    public BoardGameplayEntity(IEntity entity) : base(entity)
+
+    public class BoardGameplayEntity : GameplayEntity
     {
+        public BoardGameplayEntity(IEntity entity) : base(entity)
+        {
+        }
     }
 }

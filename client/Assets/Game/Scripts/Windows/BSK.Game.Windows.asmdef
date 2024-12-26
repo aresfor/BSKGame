@@ -1,0 +1,24 @@
+{
+    "name": "BSK.Game.Windows",
+    "rootNamespace": "",
+    "references": [
+        "GUID:244e44916fd9cf64ca87b45577a67a44",
+        "GUID:a87f1a48844795c4e977cb66bea27be0",
+        "GUID:a503553665fd58442a385c0bdd83b680",
+        "GUID:549dbbc5cc288f64da18694f432a459a",
+        "GUID:b3da6c1841f25eb4d97ff6d8fd4b7f80",
+        "GUID:761e17545168bc04992b3c9768f9ed8d",
+        "GUID:9e97e42c28a41430880bee376c274c86",
+        "GUID:603305d997f40d24c9d44a802c318013",
+        "GUID:bf1cd974aedbc1f428921cd53a21c3cd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

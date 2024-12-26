@@ -1,5 +1,5 @@
 {
-    "name": "Game.Framework.UIFramework",
+    "name": "BSK.Game.Framework.UI",
     "rootNamespace": "",
     "references": [],
     "includePlatforms": [],

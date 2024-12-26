@@ -17,7 +17,7 @@ namespace GameFramework.Resource
     /// <summary>
     /// 资源管理器。
     /// </summary>
-    internal sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
+    public sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
     {
         private const string RemoteVersionListFileName = "GameFrameworkVersion.dat";
         private const string LocalVersionListFileName = "GameFrameworkList.dat";

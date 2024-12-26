@@ -6,6 +6,8 @@
 //------------------------------------------------------------
 
 
+using System;
+using System.Collections.Generic;
 using Game.Core;
 
 namespace GameFramework.Entity

@@ -10,6 +10,7 @@ using GameFramework.DataTable;
 using System;
 using System.IO;
 using System.Text;
+using Game.Client;
 using GameFramework.Runtime;
 using UnityEngine;
 

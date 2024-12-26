@@ -1,0 +1,4 @@
+<linker>
+    <assembly fullname="BSK.Game.Launch" preserve="all" />
+    <assembly fullname="BSK.Game.Framework.UI" preserve="all" />
+</linker>

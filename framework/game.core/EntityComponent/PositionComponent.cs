@@ -1,12 +1,14 @@
 ﻿using Game.Math;
 
-namespace Game.Core;
-
-public class PositionComponent:BaseComponent
+namespace Game.Core
 {
-    public float3 Position;
-    protected override void OnClear()
+    public class PositionComponent:BaseComponent
     {
-        Position = default;
+        public float3 Position;
+        protected override void OnClear()
+        {
+            Position = default;
+        }
     }
 }
+

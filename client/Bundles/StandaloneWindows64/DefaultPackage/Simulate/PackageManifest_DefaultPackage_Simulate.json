@@ -1,0 +1,990 @@
+{
+    "FileVersion": "2.0.0",
+    "EnableAddressable": false,
+    "LocationToLower": false,
+    "IncludeAssetGUID": false,
+    "OutputNameStyle": 0,
+    "BuildPipeline": "BuiltinBuildPipeline",
+    "PackageName": "DefaultPackage",
+    "PackageVersion": "Simulate",
+    "AssetList": [
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Configs/BuildInfo.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Configs/DataTableCodeTemplate.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Configs/GameplayTag.json",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Configs/ResourceBuilder.xml",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Configs/ResourceCollection.xml",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Configs/ResourceEditor.xml",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Battle.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Battle.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Entity.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Entity.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Property.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Property.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Role.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Role.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Scene.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Scene.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Skill.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/Skill.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/UIForm.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/UIForm.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/VFX.bytes",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/DataTables/VFX.txt",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Entities/Board.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Entities/Lattice.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Entities/Player.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Entities/Role.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Entities/RoleController.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Entities/TileMapNode.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/GameFramework.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 3
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Material/GridProjector.mat",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 4
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Material/LightProjector.mat",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 4
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Material/ShadowProjector.mat",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 4
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Prefab/DefaultPlayer.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 5
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Prefab/Projector/BlobLightProjector.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 6
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Prefab/Projector/BlobShadowProjector.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 6
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Prefab/Projector/GridProjector.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 6
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Prefab/Role/DefaultEnemyRole.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 7
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Prefab/Role/DefaultRemoteRole.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 7
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Prefab/Role/DefaultRole.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 7
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Scenes/BattleStorm/BattleStorm.unity",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 8
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Scenes/BattleStorm/Depth.fbx",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 8
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Scenes/BattleStorm/M_BattleStromBG.mat",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 8
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Scenes/BattleStorm/Depth.fbm/FM(R8$]8NU98@ZG1V%`8$%9.png",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 9
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Scenes/Launch.unity",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 10
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Scenes/Main.unity",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 10
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Scenes/Menu.unity",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 10
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Scenes/Sample.unity",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 10
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Shader/ProjectorLight.shader",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 11
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Shader/ProjectorMultiply.shader",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 11
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Sprite/Material/Stone_floor_09.mat",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 12
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Sprite/Sprite/Stone_floor_09.png",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 13
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Sprite/Sprite/Stone_floor_UnAvailable.png",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 13
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Textures/base-map.png",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 14
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Textures/M_Projector.mat",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 14
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Textures/normal-map.png",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 14
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Palette/TestPalette.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 15
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/body_1.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/body_2.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/body_3.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/body_4.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/body_5.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/body_6.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/body_7.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/body_8.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_1.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_2.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_3.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_4.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_61.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_62.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_63.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_64.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_65.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_66.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_67.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_68.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_69.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_70.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_71.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_72.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_73.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_74.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_75.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_76.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_77.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_78.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_79.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_80.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_81.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_82.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_83.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_84.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_85.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_86.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_87.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_88.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_89.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_90.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_91.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/chest_92.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 16
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/StoneFloor/Stone_floor.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 17
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/Tile/Tile/StoneFloor/Stone_floor_UnAvailable.asset",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 17
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/UI/UIForms/Battle/ActionItem.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 18
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/UI/UIForms/Battle/BattleMainForm.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 18
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/UI/UIForms/Menu/MenuForm.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 19
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/UI/UIForms/Menu/SelectBattleItem.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 19
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/UI/UIForms/UpdateResource/UIUpdateResourceForm.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 20
+        },
+        {
+            "Address": "",
+            "AssetPath": "Assets/GameRes/VFX/TestVFX.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 21
+        }
+    ],
+    "BundleList": [
+        {
+            "BundleName": "assets_gameres_configs.bundle",
+            "UnityCRC": 0,
+            "FileHash": "b327849bab5aaa1e3abd8f35b5bcba49",
+            "FileCRC": "00000000",
+            "FileSize": 17858,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_datatables.bundle",
+            "UnityCRC": 0,
+            "FileHash": "8feb4e81862c14889847eb39536d5693",
+            "FileCRC": "00000000",
+            "FileSize": 5140,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_entities.bundle",
+            "UnityCRC": 0,
+            "FileHash": "ab58b0325dfbc8efb45345ce83328ace",
+            "FileCRC": "00000000",
+            "FileSize": 27108,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres.bundle",
+            "UnityCRC": 0,
+            "FileHash": "e59dba468d41ebcce5b34e5c9a312874",
+            "FileCRC": "00000000",
+            "FileSize": 28295,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_material.bundle",
+            "UnityCRC": 0,
+            "FileHash": "9338b8e6cf2d42c1d2489abf68e6762b",
+            "FileCRC": "00000000",
+            "FileSize": 11191,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_prefab.bundle",
+            "UnityCRC": 0,
+            "FileHash": "ca0d5c28d54b21fe2dda9cc75b6c6543",
+            "FileCRC": "00000000",
+            "FileSize": 8431,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_prefab_projector.bundle",
+            "UnityCRC": 0,
+            "FileHash": "7e6bebd9d2a13c5f3f2976ea270fd6e8",
+            "FileCRC": "00000000",
+            "FileSize": 4145,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_prefab_role.bundle",
+            "UnityCRC": 0,
+            "FileHash": "df1b3a5ab233f76ac84562b47dc7bc95",
+            "FileCRC": "00000000",
+            "FileSize": 31128,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_scenes_battlestorm.bundle",
+            "UnityCRC": 0,
+            "FileHash": "65999a0b60b16a394becd14ee5147343",
+            "FileCRC": "00000000",
+            "FileSize": 457715,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_scenes_battlestorm_depth_fbm.bundle",
+            "UnityCRC": 0,
+            "FileHash": "e067a98db4c29e9f2f75971773e7e11d",
+            "FileCRC": "00000000",
+            "FileSize": 1441519,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_scenes.bundle",
+            "UnityCRC": 0,
+            "FileHash": "f695608166d8a17c4f5a36821e510117",
+            "FileCRC": "00000000",
+            "FileSize": 108198,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "unityshaders.bundle",
+            "UnityCRC": 0,
+            "FileHash": "19c7721f7bea845967550f1e6c4cf3ba",
+            "FileCRC": "00000000",
+            "FileSize": 2980,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_sprite_material.bundle",
+            "UnityCRC": 0,
+            "FileHash": "7e4ea87a7152a27990887cdf0b2bb0d7",
+            "FileCRC": "00000000",
+            "FileSize": 929,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_sprite_sprite.bundle",
+            "UnityCRC": 0,
+            "FileHash": "d46bff57239aa53c9579d8324941215f",
+            "FileCRC": "00000000",
+            "FileSize": 672020,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_textures.bundle",
+            "UnityCRC": 0,
+            "FileHash": "d6f3494dd7fa8cb8f1225ee9121ac3d3",
+            "FileCRC": "00000000",
+            "FileSize": 204267,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_tile_palette.bundle",
+            "UnityCRC": 0,
+            "FileHash": "1b91814c3e2e91708cf0ec97c5c25230",
+            "FileCRC": "00000000",
+            "FileSize": 26739,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_tile_tile.bundle",
+            "UnityCRC": 0,
+            "FileHash": "4c7e54322668c52879c8af39d67c1da0",
+            "FileCRC": "00000000",
+            "FileSize": 33904,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_tile_tile_stonefloor.bundle",
+            "UnityCRC": 0,
+            "FileHash": "168b1a5d30b16bebd6117c4355f00910",
+            "FileCRC": "00000000",
+            "FileSize": 1600,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_ui_uiforms_battle.bundle",
+            "UnityCRC": 0,
+            "FileHash": "5d583e34edbd74155055237c74051372",
+            "FileCRC": "00000000",
+            "FileSize": 26092,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_ui_uiforms_menu.bundle",
+            "UnityCRC": 0,
+            "FileHash": "b8f58ac1b6d3c8990406f7f8facba786",
+            "FileCRC": "00000000",
+            "FileSize": 74212,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_ui_uiforms_updateresource.bundle",
+            "UnityCRC": 0,
+            "FileHash": "a4c7b9a4f103413f5a3a19ea24f85f7e",
+            "FileCRC": "00000000",
+            "FileSize": 15436,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "assets_gameres_vfx.bundle",
+            "UnityCRC": 0,
+            "FileHash": "7000341882bd89720208326210d3fbba",
+            "FileCRC": "00000000",
+            "FileSize": 116885,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        }
+    ]
+}

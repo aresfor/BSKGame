@@ -1,0 +1,23 @@
+{
+    "name": "BSK.Game.Gameplay",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a87f1a48844795c4e977cb66bea27be0",
+        "GUID:761e17545168bc04992b3c9768f9ed8d",
+        "GUID:b3da6c1841f25eb4d97ff6d8fd4b7f80",
+        "GUID:9e97e42c28a41430880bee376c274c86",
+        "GUID:e34a5702dd353724aa315fb8011f08c3",
+        "GUID:603305d997f40d24c9d44a802c318013",
+        "GUID:bf1cd974aedbc1f428921cd53a21c3cd",
+        "GUID:532bb98a35260604392ec13c659cf262"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,19 @@
+{
+    "name": "BSK.Game.Common",
+    "rootNamespace": "",
+    "references": [
+        "GUID:761e17545168bc04992b3c9768f9ed8d",
+        "GUID:a87f1a48844795c4e977cb66bea27be0",
+        "GUID:e34a5702dd353724aa315fb8011f08c3",
+        "GUID:bf1cd974aedbc1f428921cd53a21c3cd"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

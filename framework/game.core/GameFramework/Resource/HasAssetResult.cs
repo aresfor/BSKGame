@@ -18,6 +18,11 @@ namespace GameFramework.Resource
         NotExist = 0,
 
         /// <summary>
+        /// 资源需要从远端更新下载。
+        /// </summary>
+        AssetOnline,
+        
+        /// <summary>
         /// 资源尚未准备完毕。
         /// </summary>
         NotReady,
@@ -40,6 +45,11 @@ namespace GameFramework.Resource
         /// <summary>
         /// 存在二进制资源且存储在文件系统里。
         /// </summary>
-        BinaryOnFileSystem
+        BinaryOnFileSystem,
+        
+        /// <summary>
+        /// 非法
+        /// </summary>
+        InValid,
     }
 }

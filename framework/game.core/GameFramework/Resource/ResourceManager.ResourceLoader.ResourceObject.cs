@@ -10,14 +10,14 @@ using System.Collections.Generic;
 
 namespace GameFramework.Resource
 {
-    internal sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
+    public sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
     {
-        private sealed partial class ResourceLoader
+        public sealed partial class ResourceLoader
         {
             /// <summary>
             /// 资源对象。
             /// </summary>
-            private sealed class ResourceObject : ObjectBase
+            public sealed class ResourceObject : ObjectBase
             {
                 private List<object> m_DependencyResources;
                 private IResourceHelper m_ResourceHelper;

@@ -1,18 +1,20 @@
 ﻿using GameFramework;
 
-namespace Game.Core;
-
-public interface IComponent
+namespace Game.Core
 {
-    
-}
-
-public abstract class BaseComponent : IComponent, IReference
-{
-    public void Clear()
+    public interface IComponent
     {
-        OnClear();
+    
     }
 
-    protected abstract void OnClear();
+    public abstract class BaseComponent : IComponent, IReference
+    {
+        public void Clear()
+        {
+            OnClear();
+        }
+
+        protected abstract void OnClear();
+    }
 }
+

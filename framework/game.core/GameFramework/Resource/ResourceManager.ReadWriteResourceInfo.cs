@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 
 namespace GameFramework.Resource
 {
-    internal sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
+    public sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
     {
         [StructLayout(LayoutKind.Auto)]
         private struct ReadWriteResourceInfo

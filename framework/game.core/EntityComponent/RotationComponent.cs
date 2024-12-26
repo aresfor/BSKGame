@@ -1,13 +1,15 @@
 ﻿using Game.Math;
 
-namespace Game.Core;
-
-public class RotationComponent:BaseComponent
+namespace Game.Core
 {
-    public quaternion Rotation;
-
-    protected override void OnClear()
+    public class RotationComponent:BaseComponent
     {
-        Rotation = default;
+        public quaternion Rotation;
+
+        protected override void OnClear()
+        {
+            Rotation = default;
+        }
     }
 }
+

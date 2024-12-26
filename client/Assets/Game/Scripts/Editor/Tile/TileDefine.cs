@@ -1,4 +1,7 @@
-﻿using UnityEditor.Tilemaps;
+﻿
+#if UNITY_EDITOR
+using UnityEditor.Tilemaps;
+
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -16,3 +19,4 @@ namespace Game.Client.Editor
         }
     }
 }
+#endif

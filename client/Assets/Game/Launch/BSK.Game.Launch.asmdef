@@ -1,0 +1,22 @@
+{
+    "name": "BSK.Game.Launch",
+    "rootNamespace": "",
+    "references": [
+        "GUID:bf1cd974aedbc1f428921cd53a21c3cd",
+        "GUID:761e17545168bc04992b3c9768f9ed8d",
+        "GUID:e34a5702dd353724aa315fb8011f08c3",
+        "GUID:b3da6c1841f25eb4d97ff6d8fd4b7f80",
+        "GUID:a87f1a48844795c4e977cb66bea27be0",
+        "GUID:13ba8ce62aa80c74598530029cb2d649",
+        "GUID:2373f786d14518f44b0f475db77ba4de"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -13,25 +13,31 @@ using System.IO;
 
 namespace GameFramework.Resource
 {
-    internal sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
+    public sealed partial class ResourceManager : GameFrameworkModule, IResourceManager
     {
         /// <summary>
         /// 加载资源器。
         /// </summary>
-        private sealed partial class ResourceLoader
+        public sealed partial class ResourceLoader
         {
             private const int CachedHashBytesLength = 4;
 
             private readonly ResourceManager m_ResourceManager;
             private readonly TaskPool<LoadResourceTaskBase> m_TaskPool;
             private readonly Dictionary<object, int> m_AssetDependencyCount;
+            public Dictionary<object, int> AssetDependencyCount => m_AssetDependencyCount;
+            
             private readonly Dictionary<object, int> m_ResourceDependencyCount;
             private readonly Dictionary<object, object> m_AssetToResourceMap;
+            public Dictionary<object, object> AssetToResourceMap=>m_AssetToResourceMap;
             private readonly Dictionary<string, object> m_SceneToAssetMap;
             private readonly LoadBytesCallbacks m_LoadBytesCallbacks;
             private readonly byte[] m_CachedHashBytes;
             private IObjectPool<AssetObject> m_AssetPool;
+            public IObjectPool<AssetObject> AssetPool=>m_AssetPool;
             private IObjectPool<ResourceObject> m_ResourcePool;
+            public IObjectPool<ResourceObject> ResourcePool=>m_ResourcePool;
+            
 
             /// <summary>
             /// 初始化加载资源器的新实例。

@@ -1,16 +1,19 @@
-﻿namespace Game.Gameplay;
-
-public partial class RoleGameplayEntity:ITeamAgentGetter
+﻿namespace Game.Gameplay
 {
 
-    private DefaultGenericTeamAgentImpl m_TeamImpl;
-    public void InitTeam()
+    public partial class RoleGameplayEntity : ITeamAgentGetter
     {
-        m_TeamImpl = new DefaultGenericTeamAgentImpl((ETeam)m_RoleModel.RoleData.Team);
-    }
-    
-    public IGenericTeamAgent GetGenericTeamAgent()
-    {
-        return m_TeamImpl;
+
+        private DefaultGenericTeamAgentImpl m_TeamImpl;
+
+        public void InitTeam()
+        {
+            m_TeamImpl = new DefaultGenericTeamAgentImpl((ETeam)m_RoleModel.RoleData.Team);
+        }
+
+        public IGenericTeamAgent GetGenericTeamAgent()
+        {
+            return m_TeamImpl;
+        }
     }
 }

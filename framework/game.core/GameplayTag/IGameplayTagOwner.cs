@@ -1,10 +1,12 @@
-﻿namespace Game.Gameplay;
-
-public interface IGameplayTagOwner
+﻿namespace Game.Gameplay
 {
-    public void AddTag(string tag);
-    public void RemoveTag(string tag);
-    public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact);
 
-    public void ClearAllTag();
+    public interface IGameplayTagOwner
+    {
+        public void AddTag(string tag);
+        public void RemoveTag(string tag);
+        public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact);
+
+        public void ClearAllTag();
+    }
 }
