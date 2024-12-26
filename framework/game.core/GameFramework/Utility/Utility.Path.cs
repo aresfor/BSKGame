@@ -38,12 +38,19 @@ namespace GameFramework
             /// <returns>远程格式路径。</returns>
             public static string GetRemotePath(string path)
             {
+                //WebGL indexDB资源
+                if (path.StartsWith("/idbfs"))
+                {
+                    return path;
+                }
+                
                 string regularPath = GetRegularPath(path);
                 if (regularPath == null)
                 {
                     return null;
                 }
 
+                
                 return regularPath.Contains("://") ? regularPath : ("file:///" + regularPath).Replace("file:////", "file:///");
             }
 

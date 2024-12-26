@@ -69,6 +69,8 @@ public class BuildAppListener : IPostprocessBuildWithReport, IPreprocessBuildWit
                 return "Android";
             case BuildTarget.iOS:
                 return "IOS";
+            case BuildTarget.WebGL:
+                return "WebGL";
             default:
                 throw new System.NotSupportedException(Utility.Text.Format("Platform '{0}' is not supported.", Application.platform.ToString()));
         }

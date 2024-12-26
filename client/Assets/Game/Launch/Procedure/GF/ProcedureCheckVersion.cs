@@ -151,6 +151,8 @@ namespace Game.Client
                 case RuntimePlatform.Android:
                     return "Android";
 
+                case RuntimePlatform.WebGLPlayer:
+                    return "WebGL";
                 default:
                     throw new System.NotSupportedException(Utility.Text.Format("Platform '{0}' is not supported.", Application.platform.ToString()));
             }

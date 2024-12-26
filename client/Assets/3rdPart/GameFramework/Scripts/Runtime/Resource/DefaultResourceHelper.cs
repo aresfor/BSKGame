@@ -143,10 +143,21 @@ namespace UnityGameFramework.Runtime
             www.Dispose();
 #endif
 
+            //WebGL资源用File接口加载
+            //@TODO:资源保存需要与javascript交互
+#if UNITY_WEBGL && !UNITY_EDITOR
+                var localBytes = System.IO.File.ReadAllBytes(fileUri);
+                if (localBytes != null && localBytes.Length > 0)
+                {
+                    bytes = localBytes;
+                    isError = false;
+                }
+#endif
             if (!isError)
             {
                 float elapseSeconds = (float)(DateTime.UtcNow - startTime).TotalSeconds;
                 loadBytesCallbacks.LoadBytesSuccessCallback(fileUri, bytes, elapseSeconds, userData);
+
             }
             else if (loadBytesCallbacks.LoadBytesFailureCallback != null)
             {

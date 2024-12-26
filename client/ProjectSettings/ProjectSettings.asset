@@ -355,7 +355,8 @@ PlayerSettings:
   openGLRequireES31: 0
   openGLRequireES31AEP: 0
   openGLRequireES32: 0
-  m_TemplateCustomTags: {}
+  m_TemplateCustomTags:
+    PRODUCT_DESCRIPTION: 
   mobileMTRendering:
     Android: 1
     iPhone: 1
@@ -385,6 +386,8 @@ PlayerSettings:
     m_Encoding: 1
   m_BuildTargetDefaultTextureCompressionFormat:
   - m_BuildTarget: Android
+    m_Format: 3
+  - m_BuildTarget: WebGL
     m_Format: 3
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
@@ -646,7 +649,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     Android: ENABLE_LOG
     Standalone: ENABLE_LOG;FLOWCANVAS;NODECANVAS;ENABLE_HYBRIDCLR
-    WebGL: ENABLE_LOG
+    WebGL: ENABLE_LOG;ENABLE_HYBRIDCLR;FLOWCANVAS;NODECANVAS
     Windows Store Apps: ENABLE_LOG
     iPhone: ENABLE_LOG
   additionalCompilerArguments: {}
@@ -667,7 +670,7 @@ PlayerSettings:
     Stadia: 1
     Standalone: 4
     VisionOS: 1
-    WebGL: 1
+    WebGL: 4
     Windows Store Apps: 1
     XboxOne: 1
     iPhone: 1
@@ -769,4 +772,4 @@ PlayerSettings:
   hmiLoadingImage: {fileID: 0}
   platformRequiresReadableAssets: 0
   virtualTexturingSupportEnabled: 0
-  insecureHttpOption: 0
+  insecureHttpOption: 2
