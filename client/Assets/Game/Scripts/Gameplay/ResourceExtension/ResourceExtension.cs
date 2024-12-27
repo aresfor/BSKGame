@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Game.Core;
 using Game.Gameplay;
 using GameFramework;
 using GameFramework.ObjectPool;
@@ -13,7 +14,7 @@ namespace Game.Client
 {
     public static class ResourceExtension
     {
-        private static IObjectPool<GameObjectInstanceBase> s_GameObjectPool;
+        private static GameFramework.ObjectPool.IObjectPool<GameObjectInstanceBase> s_GameObjectPool;
         private static LoadAssetCallbacks m_LoadAssetCallbacks;
         private static uint s_GameObjectSerialId = 0;
         private static Dictionary<uint, Action<GameObject, object>> s_LoadCallbackDic;

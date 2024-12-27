@@ -62,7 +62,7 @@ namespace Game.Client
                 return;
             }
 
-            ChangeState<ProcedurePreload>(procedureOwner);
+            ChangeState<ProcedureLoadAssembly>(procedureOwner);
         }
 
         private void StartUpdateResources(string resourceGroupName)

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Game.Gameplay
+namespace Game.Core
 {
 
     public class GameplayTagTree

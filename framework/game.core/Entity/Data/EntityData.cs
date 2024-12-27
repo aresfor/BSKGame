@@ -4,10 +4,11 @@ using Game.Math;
 using GameFramework;
 using GameFramework.Entity;
 
-namespace Game.Gameplay
+namespace Game.Core
 {
     /// <summary>
     /// 与Entity绑定的数据，子类需要在特定时机调用InitProperties
+    /// @Deprecated: EntityData的大内容需要全部替换成Component形式实现
     /// </summary>
     [Serializable]
     public abstract class EntityData: IReference, IGameplayTagOwner
@@ -22,7 +23,6 @@ namespace Game.Gameplay
         
         private quaternion m_InitRotation = quaternion.identity;
 
-        private IPropertyArr m_Properties = new PropertyArr();
 
         private FGameplayTagContainer m_GameplayTagContainer 
             = new FGameplayTagContainer();
@@ -41,9 +41,8 @@ namespace Game.Gameplay
         {
         }
         
-        protected void InitProperties(int propertyId)
+        protected virtual void InitProperties(int propertyId)
         {
-            m_Properties.Initialize(propertyId);
         }
         
         protected abstract void OnClear();
@@ -65,7 +64,6 @@ namespace Game.Gameplay
         public void Clear()
         {
             OnClear();
-            m_Properties.Reset();
             ClearAllTag();
         }
         
@@ -77,24 +75,24 @@ namespace Game.Gameplay
         /// <summary>
         /// 获取属性值
         /// </summary>
-        public float GetProperty(EPropertyDefine propertyDefine)
+        public virtual float GetProperty(int propertyDefine)
         {
-            return m_Properties.GetProperty(propertyDefine);
+            return default;
         }
 
         /// <summary>
         /// 设置属性值
         /// </summary>
-        public void SetProperty(EPropertyDefine propertyDefine, float value, bool triggerEvent = true)
+        public virtual void SetProperty(int propertyDefine, float value, bool triggerEvent = true)
         {
-            m_Properties.SetProperty(propertyDefine, value, triggerEvent);
+            return;
         }
         /// <summary>
         /// 获取可绑定属性
         /// </summary>
-        public IReadonlyBindableProperty<float> GetBindableProperty(EPropertyDefine propertyDefine)
+        public virtual IReadonlyBindableProperty<float> GetBindableProperty(int propertyDefine)
         {
-            return m_Properties[(int)propertyDefine];
+            return null;
         }
         /// <summary>
         /// 实体编号。

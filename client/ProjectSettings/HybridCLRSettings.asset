@@ -22,28 +22,31 @@ MonoBehaviour:
   - {fileID: 5897886265953266890, guid: a503553665fd58442a385c0bdd83b680, type: 3}
   - {fileID: 5897886265953266890, guid: 8090baf8378afa145b1fa6a546329a0e, type: 3}
   - {fileID: 5897886265953266890, guid: 39dd42b6979e5c54ab0f73fe03fad273, type: 3}
-  hotUpdateAssemblies: []
+  hotUpdateAssemblies:
+  - game.gameplay
+  - Assembly-CSharp
   preserveHotUpdateAssemblies: []
   hotUpdateDllCompileOutputRootDir: HybridCLRData/HotUpdateDlls
   externalHotUpdateAssembliyDirs:
   - Assets/Plugins
   strippedAOTDllOutputRootDir: HybridCLRData/AssembliesPostIl2CppStrip
   patchAOTAssemblies:
-  - Newtonsoft.Json.dll
-  - System.Core.dll
-  - System.dll
-  - Unity.RenderPipelines.Core.Runtime.dll
-  - UnityEngine.AnimationModule.dll
-  - UnityEngine.CoreModule.dll
-  - mscorlib.dll
-  - YooAsset.dll
-  - game.core.dll
-  - game.gameplay.dll
-  - BSK.Game.Core.dll
-  - BSK.Game.Common.dll
-  - UnityGameFramework.Runtime.dll
-  - BSK.Game.Launch.dll
-  - BSK.Game.Framework.UI.dll
+  - Newtonsoft.Json
+  - System.Core
+  - System
+  - Unity.RenderPipelines.Core.Runtime
+  - UnityEngine.AnimationModule
+  - UnityEngine.CoreModule
+  - mscorlib
+  - YooAsset
+  - game.core
+  - ReGoap
+  - BSK.Game.Core
+  - BSK.Game.Common
+  - GameFramework
+  - UnityGameFramework.Runtime
+  - BSK.Game.Launch
+  - BSK.Game.Framework.UI
   outputLinkFile: HybridCLRGenerate/link.xml
   outputAOTGenericReferenceFile: HybridCLRGenerate/AOTGenericReferences.cs
   maxGenericReferenceIteration: 10

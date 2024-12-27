@@ -18,11 +18,11 @@ namespace Game.Client
             base.OnInit(userData);
 
             m_Model = (RoleEntityModel)userData;
-            var healthBindable = m_Model.GetBindableProperty(EPropertyDefine.Health);
+            var healthBindable = m_Model.GetBindableProperty((int)EPropertyDefine.Health);
             healthBindable.Register((oldValue, newValue) =>
                 Log.Info($"Health Change To: {newValue}, Old:{oldValue}")).UnRegisterWhenDisabled(this);
             
-            m_Model.SetProperty(EPropertyDefine.Health, 110);
+            m_Model.SetProperty((int)EPropertyDefine.Health, 110);
             
             AddTag("Entity.Effect.Frozen");
             

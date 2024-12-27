@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Game.Core;
 using Game.Gameplay;
 using GameFramework;
 using GameFramework.ObjectPool;

@@ -1,5 +1,5 @@
 ﻿
-namespace Game.Gameplay
+namespace Game.Core
 {
     public static partial class Constant
     {

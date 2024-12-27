@@ -12,10 +12,13 @@
       <Resource Name="DataTables/Skill" LoadType="0" Packed="False" />
       <Resource Name="DataTables/UIForm" LoadType="0" Packed="True" />
       <Resource Name="DataTables/VFX" LoadType="0" Packed="False" />
+      <Resource Name="DLL/Assembly-CSharp" LoadType="0" Packed="False" />
       <Resource Name="DLL/BSK" LoadType="0" Packed="False" />
       <Resource Name="DLL/game" LoadType="0" Packed="False" />
+      <Resource Name="DLL/GameFramework" LoadType="0" Packed="False" />
       <Resource Name="DLL/mscorlib" LoadType="0" Packed="False" />
       <Resource Name="DLL/Newtonsoft" LoadType="0" Packed="False" />
+      <Resource Name="DLL/ReGoap" LoadType="0" Packed="False" />
       <Resource Name="DLL/System" LoadType="0" Packed="False" />
       <Resource Name="DLL/Unity" LoadType="0" Packed="False" />
       <Resource Name="DLL/UnityEngine" LoadType="0" Packed="False" />
@@ -99,7 +102,6 @@
     <Assets>
       <Asset Guid="021a4b284a7112747b8cc43f933b4208" ResourceName="Tile/Tile/body_5" />
       <Asset Guid="082c91fb824dbad41a70b68eaae1b613" ResourceName="Configs/GameplayTag" />
-      <Asset Guid="09512d4bf3f263a468f5a0e051152bd5" ResourceName="DLL/game" />
       <Asset Guid="0a82dc0ff9397ea45b083026f6f636e4" ResourceName="DataTables/Role" />
       <Asset Guid="0bf8d024e3bb6ae4f946d50dae7b14c6" ResourceName="DLL/Newtonsoft" />
       <Asset Guid="0d46fa11cb002604a8fce0c2e0e7da9f" ResourceName="DataTables/VFX" />
@@ -111,6 +113,8 @@
       <Asset Guid="20e1841eb61ab19428f6913d07c7caa5" ResourceName="DLL/BSK" />
       <Asset Guid="2209adb3f4edfc64d87b1feff475fb6a" ResourceName="Tile/Tile/body_7" />
       <Asset Guid="229bf96312d21c448b58c108a7950efa" ResourceName="Tile/Tile/chest_64" />
+      <Asset Guid="248209a2a73773446be01e199d3f8c06" ResourceName="DLL/game" />
+      <Asset Guid="2839c5b9728bd1d48a33c60fc55edc07" ResourceName="DLL/ReGoap" />
       <Asset Guid="2bd9233589eb44e4a86ece43984ca0cd" ResourceName="DataTables/Scene" />
       <Asset Guid="2ca9c9a75eff4fa4e81c7d1b6567dddc" ResourceName="Tile/Tile/chest_75" />
       <Asset Guid="3c45ad33e1cddfb43aebd1e902d3275e" ResourceName="Tile/Tile/chest_77" />
@@ -194,11 +198,13 @@
       <Asset Guid="eb17f714ae0672d408e56b634fcc438f" ResourceName="Scenes/BattleStorm/BattleStorm" />
       <Asset Guid="eb948056f01be664aa89948e0e75fe79" ResourceName="DLL/BSK" />
       <Asset Guid="ec25ef320e1f0544491c34590f870c6e" ResourceName="Entities/Player" />
+      <Asset Guid="f0c92fa3ab412f547a10f7a4da5b128a" ResourceName="DLL/GameFramework" />
       <Asset Guid="f200af20caf77ac4ea0fe7c029c58df7" ResourceName="UI/UIForms/Menu/MenuForm" />
       <Asset Guid="f2e9c118df11c83468539f3634d2a984" ResourceName="Tile/Tile/chest_81" />
       <Asset Guid="f6a58bd9266333e4392b0ba4707a1a10" ResourceName="Scenes/Launch" />
       <Asset Guid="f76120db1002cce41ae55c9b0727bc56" ResourceName="Scenes/Menu" />
       <Asset Guid="fa670347cd0aeb54ca3f3373de5cc628" ResourceName="Tile/Tile/chest_79" />
+      <Asset Guid="fae0099399c36d94580366660bd9198a" ResourceName="DLL/Assembly-CSharp" />
       <Asset Guid="fbcdfc6d6ed1a80468bdd08283ed0dfa" ResourceName="Entities/RoleController" />
       <Asset Guid="fcf2d4504e9679a4aa6094c92c8565cc" ResourceName="DLL/System" />
       <Asset Guid="ff79bc94524a8bd41b8c45b5a7f743db" ResourceName="Tile/Tile/chest_70" />

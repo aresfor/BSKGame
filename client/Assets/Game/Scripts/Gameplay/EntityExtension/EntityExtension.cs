@@ -30,7 +30,7 @@ namespace Game.Client
         //     {
         //         return null;
         //     }
-        //
+        // 
         //     return (GameEntityLogic)entity.Logic;
         // }
         public static void HideGameplayEntity(this EntityComponent entityComponent, int entityId)

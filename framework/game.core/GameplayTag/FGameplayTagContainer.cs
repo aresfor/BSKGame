@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Game.Gameplay
+namespace Game.Core
 {
 
     public enum EGameplayTagCheckType : byte

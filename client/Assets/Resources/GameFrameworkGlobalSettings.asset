@@ -78,6 +78,8 @@ MonoBehaviour:
       componentName: CanvasGroup
   m_HybridCLRCustomGlobalSettings:
     HotUpdateAssemblies:
+    - game.gameplay.dll
+    - Assembly-CSharp.dll
     - BSK.Game.UIBase.dll
     - BSK.Game.Gameplay.dll
     - BSK.Game.Hud.dll
@@ -93,9 +95,10 @@ MonoBehaviour:
     - mscorlib.dll
     - YooAsset.dll
     - game.core.dll
-    - game.gameplay.dll
+    - ReGoap.dll
     - BSK.Game.Core.dll
     - BSK.Game.Common.dll
+    - GameFramework.dll
     - UnityGameFramework.Runtime.dll
     - BSK.Game.Launch.dll
     - BSK.Game.Framework.UI.dll

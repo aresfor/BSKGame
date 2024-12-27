@@ -1,6 +1,6 @@
 ﻿using GameFramework.Entity;
 
-namespace Game.Gameplay
+namespace Game.Core
 {
 
     public static partial class GameplayTagExtension

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.Gameplay
+namespace Game.Core
 {
 
     public struct FGameplayTag : IEquatable<FGameplayTag>

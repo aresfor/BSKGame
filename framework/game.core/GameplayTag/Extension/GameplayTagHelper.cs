@@ -5,7 +5,7 @@ using GameFramework;
 using Newtonsoft.Json;
 using Log = GameFramework.GameFrameworkLog;
 
-namespace Game.Gameplay
+namespace Game.Core
 {
 
     public static class GameplayTagHelper

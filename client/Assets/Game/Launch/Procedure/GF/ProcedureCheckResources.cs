@@ -40,7 +40,7 @@ namespace Game.Client
             }
             else
             {
-                ChangeState<ProcedurePreload>(procedureOwner);
+                ChangeState<ProcedureLoadAssembly>(procedureOwner);
             }
         }
 

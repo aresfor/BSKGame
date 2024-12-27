@@ -1,4 +1,5 @@
-﻿using Game.Gameplay;
+﻿using Game.Core;
+using Game.Gameplay;
 using GameFramework.DataTable;
 using GameFramework.Event;
 using UnityEngine;

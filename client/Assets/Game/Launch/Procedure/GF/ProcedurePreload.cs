@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Core;
 using Game.Gameplay;
 using GameFramework;
 using GameFramework.DataTable;
@@ -75,16 +76,14 @@ namespace Game.Client
                     return;
                 }
             }
-
-            //@TODO:切换进主游戏
-            IDataTable<DRScene> sceneDataTable = GameEntry.DataTable.GetDataTable<DRScene>();
+            
             string menuSceneAssetName = "GameRes/Scenes/Menu";
             var menuSceneIndex = UnityEngine.SceneManagement.SceneUtility.GetBuildIndexByScenePath(menuSceneAssetName);
              
             procedureOwner.SetData<VarInt32>("NextSceneId", menuSceneIndex);
             procedureOwner.SetData<VarString>("NextSceneAssetName", menuSceneAssetName);
              
-            ChangeState<ProcedureLoadAssembly>(procedureOwner);
+            ChangeState<ProcedureGame>(procedureOwner);
         }
 
         private void PreloadResources()

@@ -24,7 +24,7 @@ namespace Game.Client
             meshLoaderSocket.MeshLoadCompleteCallBack += OnMeshLoadComplete;
             meshLoaderSocket.BeginLoadMesh();
             
-            var healthBindable = m_RoleEntityModel.GetBindableProperty(EPropertyDefine.Health);
+            var healthBindable = m_RoleEntityModel.GetBindableProperty((int)EPropertyDefine.Health);
             healthBindable.Register((oldValue, newValue) =>
                 Log.Info($"Health Change To: {newValue}, Old:{oldValue}")).UnRegisterWhenDisabled(this);
         }

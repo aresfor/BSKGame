@@ -1,7 +1,7 @@
 ﻿using GameFramework;
 using GameFramework.Localization;
 
-namespace Game.Gameplay
+namespace Game.Core
 {
     public static class AssetUtility
     {

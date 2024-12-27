@@ -1,4 +1,5 @@
 ﻿
+using Game.Core;
 using Game.Gameplay;
 using GameFramework;
 #if UNITY_EDITOR

@@ -39,15 +39,15 @@ namespace Game.Client
                 return;
             }
             var targetEntityData = targetEntity.Logic.EntityData;
-            float currentHealth = targetEntityData.GetProperty(EPropertyDefine.Health);
-            targetEntityData.SetProperty(EPropertyDefine.Health, currentHealth - damageInfo.DamageNum);
+            float currentHealth = targetEntityData.GetProperty((int)EPropertyDefine.Health);
+            targetEntityData.SetProperty((int)EPropertyDefine.Health, currentHealth - damageInfo.DamageNum);
             
             //调用链
             if (targetEntity.Logic is IGameEntityLogic gameEntityLogic)
             {
                 gameEntityLogic.GameplayEntity.ReceiveDamage(damageInfo);
                 //如果死了
-                if (targetEntityData.GetProperty(EPropertyDefine.Health) <= 0)
+                if (targetEntityData.GetProperty((int)EPropertyDefine.Health) <= 0)
                 {
                     targetEntity.AddTag(Constant.GameplayTag.Dead);
                     gameEntityLogic.GameplayEntity.Kill(damageInfo);

@@ -206,60 +206,7 @@ namespace Game.Client
 
         private void AllAssemblyLoadComplete()
         {
-            ChangeState<ProcedureGame>(m_ProcedureOwner);
-#if UNITY_EDITOR
-            m_MainLogicAssembly = GetMainLogicAssembly();
-#endif
-            if (m_MainLogicAssembly == null)
-            {
-                Log.Fatal($"Main logic assembly missing.");
-                return;
-            }
-
-            var appType = m_MainLogicAssembly.GetType("Game.Client.GameStarter");
-            if (appType == null)
-            {
-                Log.Fatal($"Main logic type 'GameStarter' missing.");
-                return;
-            }
-
-            // var entryMethod = appType.GetMethod("StartGame");
-            // if (entryMethod == null)
-            // {
-            //     Log.Fatal($"Main logic entry method 'StartGame' missing.");
-            //     return;
-            // }
-            //
-            // object[] objects = new object[] { new object[] { m_HotfixAssemblys } };
-            // entryMethod.Invoke(appType, objects);
-
-            
-            try
-            {
-                GameObject go = new GameObject("GameStarter");
-                go.AddComponent(appType);
-            }
-            catch (TargetInvocationException ex)
-            {
-                if (ex.InnerException != null)
-                {
-                    Debug.LogError($"InnerException: {ex.InnerException.Message}");
-                    Debug.LogError($"StackTrace: {ex.InnerException.StackTrace}");
-                }
-                else
-                {
-                    Debug.LogError("TargetInvocationException: 未能捕获 InnerException");
-                }
-
-                Log.Fatal(ex.Message);
-
-            }
-            catch (Exception e)
-            {
-
-                Log.Fatal(e.Message);
-                throw e;
-            }
+            ChangeState<ProcedurePreload>(m_ProcedureOwner);
         }
 
         private Assembly GetMainLogicAssembly()

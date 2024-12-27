@@ -56,8 +56,11 @@ namespace Game.Client
             m_GameState.EnterMenu();
             
             Log.Info("Hello StartGame Success!");
-            Log.Info("HotUpdate Success!");
-            
+            Log.Info("HotUpdate Success!==!");
+
+            GameplayTest test = new GameplayTest();
+            test.GetNumber();
+
         }
         private void RegisterListener()
         {

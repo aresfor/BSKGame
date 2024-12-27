@@ -150,7 +150,7 @@ namespace Game.Client
 
                 case RuntimePlatform.Android:
                     return "Android";
-
+                
                 case RuntimePlatform.WebGLPlayer:
                     return "WebGL";
                 default:

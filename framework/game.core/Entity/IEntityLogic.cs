@@ -1,5 +1,4 @@
-﻿using Game.Gameplay;
-using GameFramework.Entity;
+﻿using GameFramework.Entity;
 
 namespace Game.Core
 {

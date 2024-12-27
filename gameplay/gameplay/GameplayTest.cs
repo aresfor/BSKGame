@@ -10,8 +10,7 @@ namespace Game.Gameplay
     {
         public int GetNumber()
         {
-
-
+            Log.Info("Gameplay HotUpdate Success!==!!!!");
             return 11;
         }
     }

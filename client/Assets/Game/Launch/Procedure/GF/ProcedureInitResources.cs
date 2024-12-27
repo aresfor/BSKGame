@@ -31,7 +31,7 @@ namespace Game.Client
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
             if (initResourceComplete)
-                ChangeState<ProcedurePreload>(procedureOwner);
+                ChangeState<ProcedureLoadAssembly>(procedureOwner);
         }
 
 
