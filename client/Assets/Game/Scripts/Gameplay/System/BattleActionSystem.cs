@@ -6,6 +6,9 @@ using UnityGameFramework.Runtime;
 
 namespace Game.Client
 {
+    /// <summary>
+    /// 战旗行动系统，维护命令(Action)栈，控制战旗操作上下文
+    /// </summary>
     public class BattleActionSystem:ManagedSystem, IUpdateable
     {
 

@@ -3,7 +3,10 @@ using GameFramework.Entity;
 
 namespace Game.Gameplay
 {
-
+    /// <summary>
+    /// 程序生成棋盘的棋格GameplayEntity逻辑类
+    /// @TODO:目前在client中用tilemap代替了
+    /// </summary>
     public class LatticeGameplayEntity : GameplayEntity
     {
         private LatticeEntityModel m_Model;

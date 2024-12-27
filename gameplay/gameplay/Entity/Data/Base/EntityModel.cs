@@ -3,6 +3,7 @@ using GameFramework;
 
 namespace Game.Gameplay
 {
+    [Obsolete]
     public abstract class EntityModel:EntityData
     {
         private IPropertyArr m_Properties = new PropertyArr();

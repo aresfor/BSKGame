@@ -6,8 +6,6 @@ using GameFramework;
 
 namespace Game.Gameplay
 {
-
-
     public enum ENavigationState : byte
     {
         None,
@@ -17,6 +15,9 @@ namespace Game.Gameplay
 
     }
 
+    /// <summary>
+    /// 无向图寻路代理
+    /// </summary>
     public class GraphNavigationAgent : INavigationAgent
     {
         private ENavigationState m_NavigationState = ENavigationState.Idle;
@@ -39,8 +40,7 @@ namespace Game.Gameplay
         {
             m_EntityLogic = entityLogic;
         }
-
-        //@TODO: 改造一个非泛型基类
+        
         public new bool MoveToDestination(float3 destination, IGraph graph)
         {
             if (!IsValidPosition(destination))

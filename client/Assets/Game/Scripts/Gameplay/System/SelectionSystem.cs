@@ -5,6 +5,9 @@ using GameFramework.Event;
 
 namespace Game.Client
 {
+    /// <summary>
+    /// 战旗的初始目标选择系统，tips:目前技能的选择由技能自己负责
+    /// </summary>
     public class SelectionSystem:ManagedSystem
     {
 

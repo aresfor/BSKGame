@@ -3,6 +3,9 @@ using GameFramework;
 
 namespace Game.Client
 {
+    /// <summary>
+    /// 暴露战旗操作系统接口给Action和其他游戏System
+    /// </summary>
     public class BattleManager:IController
     {
         

@@ -6,6 +6,9 @@ namespace Game.Client
     {
         protected override void OnInit()
         {
+            //@TODO:接入到GameStarter中
+            
+            
             //UnityGameFramework.Runtime.GameEntry.GetComponent<BuiltinDataComponent>().AddSystem(this);
         }
 

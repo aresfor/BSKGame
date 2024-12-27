@@ -8,6 +8,10 @@ using GameFramework.Runtime;
 
 namespace Game.Gameplay
 {
+    /// <summary>
+    /// 程序生成棋盘
+    /// @TODO:目前在client中用tilemap代替了
+    /// </summary>
     public class BoardGraph : ArrayGraph<LatticeGameplayEntity>
     {
         //[Min(1)] public float BoardWidth = 1;

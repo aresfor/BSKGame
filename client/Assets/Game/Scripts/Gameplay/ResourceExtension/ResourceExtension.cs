@@ -12,6 +12,10 @@ using Object = UnityEngine.Object;
 
 namespace Game.Client
 {
+    /// <summary>
+    /// 提供GameObject的池化生成，处理通用GameObject池和生命周期管理，特效池独立管理，并不使用这些拓展方法
+    /// @TODO:目前以SerialId作为生成和回收/取消的依据是否合理？
+    /// </summary>
     public static class ResourceExtension
     {
         private static GameFramework.ObjectPool.IObjectPool<GameObjectInstanceBase> s_GameObjectPool;
@@ -37,63 +41,63 @@ namespace Game.Client
             }
         }
 
-        public static uint Instantiate(this YooResourceComponent resourceComponent
-            , string assetName
-            , Action<GameObject, object> loadSuccessCallback
-            , object loadUserData)
-        {
-            uint serialId = GenerateGameObjectSerialId();
-
-            CoroutineUtils.StartCoroutine(Instantiate(resourceComponent,serialId
-                ,assetName,  loadSuccessCallback, loadUserData));
-            return serialId;
-        }
+        // public static uint Instantiate(this YooResourceComponent resourceComponent
+        //     , string assetName
+        //     , Action<GameObject, object> loadSuccessCallback
+        //     , object loadUserData)
+        // {
+        //     uint serialId = GenerateGameObjectSerialId();
+        //
+        //     CoroutineUtils.StartCoroutine(Instantiate(resourceComponent,serialId
+        //         ,assetName,  loadSuccessCallback, loadUserData));
+        //     return serialId;
+        // }
+        //
+        // public static IEnumerator Instantiate(this YooResourceComponent resourceComponent
+        //     , uint serialId
+        //     , string assetName
+        //     , Action<GameObject, object> loadSuccessCallback
+        //     , object loadUserData)
+        // {
+        //     GameObjectInstanceBase goInstance = s_GameObjectPool.Spawn(assetName);
+        //     if (goInstance != null)
+        //     {
+        //         loadSuccessCallback?.Invoke((GameObject)goInstance.Target, loadUserData);
+        //     }
+        //     else
+        //     {
+        //         VarUInt32 serialIdData = ReferencePool.Acquire<VarUInt32>();
+        //         serialIdData.Value = serialId;
+        //         var info = ReferencePool.Acquire<InstantiateInfo>();
+        //         info.SerialIdData = serialIdData;
+        //         info.LoadUserData = loadUserData;
+        //         
+        //         s_LoadCallbackDic[serialIdData.Value] = loadSuccessCallback; 
+        //         resourceComponent.LoadGameObjectAsync(assetName, (go) =>
+        //         {
+        //             OnLoadYooAssetSuccess(go, assetName, info);
+        //         });
+        //         //OnLoadYooAssetSuccess(assetName, handle, info);
+        //     }
+        //
+        //     return null;
+        // }
         
-        public static IEnumerator Instantiate(this YooResourceComponent resourceComponent
-            , uint serialId
-            , string assetName
-            , Action<GameObject, object> loadSuccessCallback
-            , object loadUserData)
-        {
-            GameObjectInstanceBase goInstance = s_GameObjectPool.Spawn(assetName);
-            if (goInstance != null)
-            {
-                loadSuccessCallback?.Invoke((GameObject)goInstance.Target, loadUserData);
-            }
-            else
-            {
-                VarUInt32 serialIdData = ReferencePool.Acquire<VarUInt32>();
-                serialIdData.Value = serialId;
-                var info = ReferencePool.Acquire<InstantiateInfo>();
-                info.SerialIdData = serialIdData;
-                info.LoadUserData = loadUserData;
-                
-                s_LoadCallbackDic[serialIdData.Value] = loadSuccessCallback; 
-                resourceComponent.LoadGameObjectAsync(assetName, (go) =>
-                {
-                    OnLoadYooAssetSuccess(go, assetName, info);
-                });
-                //OnLoadYooAssetSuccess(assetName, handle, info);
-            }
-
-            return null;
-        }
-        
-        public static void UnInstantiate(this YooResourceComponent resourceComponent, uint serialId)
-        {
-            if (serialId == 0)
-                return;
-            
-            if (false == s_GameObjectInstanceDic.ContainsKey(serialId))
-            {
-                Log.Error($"can not find gameobject instance, serialId: {serialId}");
-                return;
-            }
-        
-            var go = s_GameObjectInstanceDic[serialId];
-            s_GameObjectInstanceDic.Remove(serialId);
-            s_GameObjectPool.Unspawn(go);
-        }
+        // public static void UnInstantiate(this YooResourceComponent resourceComponent, uint serialId)
+        // {
+        //     if (serialId == 0)
+        //         return;
+        //     
+        //     if (false == s_GameObjectInstanceDic.ContainsKey(serialId))
+        //     {
+        //         Log.Error($"can not find gameobject instance, serialId: {serialId}");
+        //         return;
+        //     }
+        //
+        //     var go = s_GameObjectInstanceDic[serialId];
+        //     s_GameObjectInstanceDic.Remove(serialId);
+        //     s_GameObjectPool.Unspawn(go);
+        // }
         
         
         public static void Instantiate(this ResourceComponent resourceComponent
@@ -158,24 +162,24 @@ namespace Game.Client
             ReferencePool.Release(info);
         }
         
-        private static void OnLoadYooAssetSuccess(GameObject gameObject, string assetName,object userData)
-        {
-            InstantiateInfo info = (InstantiateInfo)userData;
-            VarUInt32 id = info.SerialIdData;
-            if (s_LoadCallbackDic.ContainsKey(id.Value))
-            {
-                //GameObject gameObject = handle.InstantiateSync();
-                s_LoadCallbackDic[id.Value].Invoke(gameObject, info.LoadUserData);
-                s_GameObjectInstanceDic.Add(id.Value, gameObject);
-                s_LoadCallbackDic.Remove(id.Value);
-                s_GameObjectPool.Register(GameObjectInstanceBase.Create(assetName, id.Value, gameObject),true);
-            }
-            else
-            {
-                Log.Error($"can not find gameobject instance accroding to serial id: {id.Value}");
-            }
-            ReferencePool.Release(info);
-        }
+        // private static void OnLoadYooAssetSuccess(GameObject gameObject, string assetName,object userData)
+        // {
+        //     InstantiateInfo info = (InstantiateInfo)userData;
+        //     VarUInt32 id = info.SerialIdData;
+        //     if (s_LoadCallbackDic.ContainsKey(id.Value))
+        //     {
+        //         //GameObject gameObject = handle.InstantiateSync();
+        //         s_LoadCallbackDic[id.Value].Invoke(gameObject, info.LoadUserData);
+        //         s_GameObjectInstanceDic.Add(id.Value, gameObject);
+        //         s_LoadCallbackDic.Remove(id.Value);
+        //         s_GameObjectPool.Register(GameObjectInstanceBase.Create(assetName, id.Value, gameObject),true);
+        //     }
+        //     else
+        //     {
+        //         Log.Error($"can not find gameobject instance accroding to serial id: {id.Value}");
+        //     }
+        //     ReferencePool.Release(info);
+        // }
         
         private static void OnLoadAssetFail(string assetName, LoadResourceStatus status, string errorMessage, object userData)
         {

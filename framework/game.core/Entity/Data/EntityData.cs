@@ -11,6 +11,7 @@ namespace Game.Core
     /// @Deprecated: EntityData的大内容需要全部替换成Component形式实现
     /// </summary>
     [Serializable]
+    [Obsolete]
     public abstract class EntityData: IReference, IGameplayTagOwner
     {
         private int m_Id = 0;

@@ -4,7 +4,10 @@ using Game.Math;
 
 namespace Game.Gameplay
 {
-    
+    /// <summary>
+    /// 程序生成棋盘的棋格
+    /// @TODO:目前在client中用tilemap代替了
+    /// </summary>
     public class LatticeNode: GraphNodeBase<LatticeGameplayEntity, BoardGraph>
     {
         private float3 m_WorldPosition;

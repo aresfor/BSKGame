@@ -51,7 +51,7 @@ namespace Game.Client
         
         public void StartGame(object[] objects)
         {
-            //@TODO:状态机逻辑
+            //@TODO:局内用状态机逻辑接管，目前先简单处理
             m_GameState = new TempGameState();
             m_GameState.EnterMenu();
             

@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Game.Client
 {
+    /// <summary>
+    /// @TEMP：搭建完整局内流程和数据链暂时没有必要，先用一个单独静态类代替
+    /// </summary>
     public static class GameUtils
     {
         public static BoardGraph Board;
