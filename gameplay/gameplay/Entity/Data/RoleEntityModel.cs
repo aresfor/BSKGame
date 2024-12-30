@@ -6,16 +6,9 @@ namespace Game.Gameplay
     public class RoleEntityModel:EntityModel
     {
         public DRRole RoleData;
-
-        //public int BelongLatticeId;
-
-        
-        //public LatticeGameplayEntity BelongLattice;
         public RoleEntityModel()
         {
-            
         }
-        
         protected override void OnInitialize()
         {
             IDataTable<DRRole> dtPlayer = GameFramework

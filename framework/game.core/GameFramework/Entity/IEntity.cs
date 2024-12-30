@@ -32,7 +32,7 @@ namespace GameFramework.Entity
         /// </summary>
         IEntityLogic LogicInterface
         {
-            get;
+            get;    
         }
         /// <summary>
         /// 获取实体编号。

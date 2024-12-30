@@ -14,7 +14,7 @@ namespace Game.Core
     {
         private HashSet<string> m_Tags;
 
-        public FGameplayTagContainer(bool _ = true)
+        public FGameplayTagContainer()
         {
             m_Tags = new HashSet<string>();
         }

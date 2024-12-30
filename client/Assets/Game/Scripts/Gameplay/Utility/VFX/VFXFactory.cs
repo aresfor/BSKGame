@@ -174,7 +174,7 @@ namespace Game.Client
                     //     OnLoadYooVFXAssetSuccess(go, assetName, 0, loadInfo);
                     // });
                     
-                    //GameEntry.Resource.LoadAsset(assetName, m_LoadAssetCallbacks, loadInfo);
+                    GameEntry.Resource.LoadAsset(assetName, m_LoadAssetCallbacks, loadInfo);
 
                     // //@TODO: 挂载
                     // //vfxGO.transform.SetParent();

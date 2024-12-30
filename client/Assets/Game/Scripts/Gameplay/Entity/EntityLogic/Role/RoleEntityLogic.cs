@@ -1,5 +1,6 @@
 ﻿using Game.Core;
 using Game.Gameplay;
+using GameFramework.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityGameFramework.Runtime;
@@ -27,6 +28,7 @@ namespace Game.Client
             var healthBindable = m_RoleEntityModel.GetBindableProperty((int)EPropertyDefine.Health);
             healthBindable.Register((oldValue, newValue) =>
                 Log.Info($"Health Change To: {newValue}, Old:{oldValue}")).UnRegisterWhenDisabled(this);
+            
         }
 
         private void OnMeshLoadComplete(BaseMeshLoader meshLoader)

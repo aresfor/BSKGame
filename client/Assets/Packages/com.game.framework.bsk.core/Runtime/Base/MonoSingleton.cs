@@ -18,9 +18,7 @@ namespace Game.Core
                     {
                         m_HasInit = true;
                         GameObject go = new GameObject(typeof(T).Name);
-                        //_mInstance = go.AddComponent<T>();
                         _mInstance = go.AddComponent<T>();
-                        _mInstance = go.GetComponent<T>();
                         GameObject parent = GameObject.Find("Boot");
                         if (parent == null)
                         {

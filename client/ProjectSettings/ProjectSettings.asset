@@ -658,7 +658,10 @@ PlayerSettings:
     Standalone: 1
   il2cppCompilerConfiguration:
     Standalone: 0
-  il2cppCodeGeneration: {}
+    WebGL: 1
+  il2cppCodeGeneration:
+    Standalone: 0
+    WebGL: 1
   managedStrippingLevel:
     EmbeddedLinux: 1
     GameCoreScarlett: 1
@@ -670,7 +673,7 @@ PlayerSettings:
     Stadia: 1
     Standalone: 2
     VisionOS: 1
-    WebGL: 4
+    WebGL: 2
     Windows Store Apps: 1
     XboxOne: 1
     iPhone: 1

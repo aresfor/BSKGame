@@ -2,6 +2,7 @@
 using Game.Core;
 using Game.Gameplay;
 using Game.UIFramework;
+using GameFramework.Runtime;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -48,7 +49,19 @@ namespace Game.Client
         {
             var menuModel = this.GetModel<MenuModel>();
             
+            //先单纯Show一个Player，场景加载的逻辑需要一个状态机维护
+            //可以参考ProcedureChange
+            var playerRoleModel = new RoleEntityModel()
+             {
+                 Id = EntityId.GenerateSerialId(),
+                 TypeId = Constant.Entity.PlayerTypeId,
+                 //@TEMP:
+                 ResourceId = 10000
+             };
+             GameEntry.Entity.ShowGameplayEntity("Player", playerRoleModel);
             
+             GameEntry.UI.GetUIForm(UIFormId.MenuForm).Close();
+             
             //@TODO：启动逻辑放到游戏状态机中
             //m_ProcedureMenu.StartBattle(menuModel.SelectBattle);
             

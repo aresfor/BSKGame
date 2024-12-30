@@ -3,8 +3,10 @@ using Game.Core;
 using Game.Gameplay;
 using GameFramework;
 using GameFramework.Event;
+using GameFramework.Runtime;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityGameFramework.Runtime;
 using Log = UnityGameFramework.Runtime.Log;
 
 namespace Game.Client
@@ -18,20 +20,21 @@ namespace Game.Client
             base.OnInit(userData);
 
             m_Model = (RoleEntityModel)userData;
+            
+            //属性
             var healthBindable = m_Model.GetBindableProperty((int)EPropertyDefine.Health);
             healthBindable.Register((oldValue, newValue) =>
                 Log.Info($"Health Change To: {newValue}, Old:{oldValue}")).UnRegisterWhenDisabled(this);
             
             m_Model.SetProperty((int)EPropertyDefine.Health, 110);
             
+            //Tag
             AddTag("Entity.Effect.Frozen");
-            
             bool exact = HasTag("Entity.Effect.Burn", EGameplayTagCheckType.Exact);
             bool parent = HasTag("Entity.Effect", EGameplayTagCheckType.Parent);
-            
             Log.Info($"exact: {exact}, parent: {parent}");
             
-            //vfx
+            //vfx/特效用例
             VFXBaseSpawnParam spawnParam = ReferencePool.Acquire<VFXBaseSpawnParam>();
             spawnParam.SpawnerEntityId = Id;
             spawnParam.ReceiverEntityId = Id;
@@ -41,24 +44,64 @@ namespace Game.Client
             spawnParam.VFXTypeId = (int)VFXType.Base;
             var vfxSerialId = VFXUtils.SpawnVFX(spawnParam);
 
+            //"销毁"特效
             VFXUtils.DeSpawnVFX(vfxSerialId);
 
+            
+            //Entity Prefab上配置插槽，用于独立功能
+            //MeshLoaderSocket用于模型加载
             var meshLoaderSocket = FindLogicSocket<BaseMeshLoaderLogicSocket>();
-
-            //model
             meshLoaderSocket.MeshLoadCompleteCallBack += meshloader =>
             {
+                //模型加载完之后生成一个测试特效
                 TestVFX(meshloader);
             };
+            meshLoaderSocket.BeginLoadMesh();
             
-            //meshLoaderSocket.BeginLoadMesh();
             
+            //框架功能示例
+            //全局事件
+            //GF全局事件，基于Id
+            // GameEntry.Event.Subscribe(ShowEntitySuccessEventArgs.EventId
+            //    , (sender, args) => Log.Info("ShowEntitySuccess"));
+            //GameEntry.Event.FireNow();
+            //GameEntry.Event.Unsubscribe();
+            //另一种全局事件，基于结构体/类，如下，接受所有参数类型为int的的事件
+            //TypeEventSystem.Global.Register<int>(i => Log.Info("int received"));
+            
+            //加载GameObject
+            var goId = ResourceExtension.GenerateGameObjectSerialId();
+            //GameEntry.Resource.Instantiate(goId, "Model/PlayerModel"
+            //    , null, null);
+            //GameEntry.Resource.UnInstantiate(goId);
+            
+            //Entity
+            //获取Entity，这个Id是创建Entity时候的Id
+            var entity = GameEntry.Entity.GetEntity(Id);
+            var entityLogic = entity.Logic;
+            var entityLogicInterface = entity.LogicInterface;
+            var gameplayEntity = ((GameEntityLogic)entityLogic)?.GameplayEntity;
+            //创建Entity，只用ShowGameplayEntity，不要用其他ShowEntity接口
+            //@TODO:之后不再使用xxxEntityModel来包装数据，全部转到Entity->Component中去
+            // var entityId = EntityId.GenerateSerialId();
+            // var playerRoleModel = new RoleEntityModel()
+            // {
+            //     Id = entityId,
+            //     TypeId = Constant.Entity.PlayerTypeId,
+            //     //@TEMP:
+            //     ResourceId = 10000
+            // };
+            // GameEntry.Entity.ShowGameplayEntity("Player", playerRoleModel);
+            // //隐藏一个实体
+            // GameEntry.Entity.HideEntity(entityId);
+            
+
         }
 
         
         private void TestVFX(BaseMeshLoader meshloader)
         {
-
+            //挂点，在模型预制体上配置，和Entity Prefab不同，挂点信息都是配置在模型预制体上的
             var firePoint = meshloader.FindTransformFromAvatarMesh("FirePoint");
             VFXBaseSpawnParam nextSpawnParams = ReferencePool.Acquire<VFXBaseSpawnParam>();
             nextSpawnParams.SpawnerEntityId = Id;
@@ -76,7 +119,7 @@ namespace Game.Client
         {
             base.OnShow(userData);
             
-            GameUtils.PlayerEntityId = Id;
+            //GameUtils.PlayerEntityId = Id;
             
         }
 
@@ -89,15 +132,22 @@ namespace Game.Client
         public override void OnUpdate(float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(elapseSeconds, realElapseSeconds);
-            // if (InputUtils.GetInput(EInputParam.kSprintBtnDownInput))
-            // {
-            //     Log.Error("sprint down");
-            // }
-            //
-            // if (InputUtils.GetInput(EInputParam.kSprintBtnUpInput))
-            // {
-            //     Log.Error("sprint up");
-            // }
+            
+            //利用输入类进行输入逻辑处理
+            if (InputUtils.GetKeyDown(EKeyCode.A))
+            {
+                Log.Info("Press A");
+            }
+            
+            if (InputUtils.GetInput(EInputParam.kSprintBtnDownInput))
+            {
+                Log.Info("sprint down");
+            }
+            
+            if (InputUtils.GetInput(EInputParam.kSprintBtnUpInput))
+            {
+                Log.Info("sprint up");
+            }
         }
 
         public override void OnHide(bool isShutdown, object userData)
@@ -111,75 +161,5 @@ namespace Game.Client
         {
             base.OnRecycle();
         }
-
-        // private void OnMouseRayCast(object sender, GameEventArgs eventArgs)
-        // {
-        //     MouseRayCastEventArgs args = eventArgs as MouseRayCastEventArgs;
-        //     var impactInfo = args.ImpactInfo;
-        //     if (args.bIsHit)
-        //     {
-        //         var entity = GameEntry.Entity.GetEntity(impactInfo.HitEntityId);
-        //         if (null == entity)
-        //         {
-        //             //Log.Info($"MouseHitEntity is null, entityId: {impactInfo.HitEntityId}");
-        //         }
-        //         else 
-        //         {
-        //             if (m_LastHitEntityLogic != null && entity.LogicInterface != m_LastHitEntityLogic)
-        //             {
-        //                 if(m_LastHitEntityLogic is IPointerHandler lastHitPointerHandler)
-        //                     lastHitPointerHandler.PointerExit(new FPointerEventData()
-        //                     {
-        //                         ImpactInfo = impactInfo
-        //                     });
-        //             }
-        //             
-        //             if (entity.LogicInterface is IPointerHandler pointerHandler)
-        //             {
-        //                 if (m_LastHitEntityLogic != entity.LogicInterface)
-        //                 {
-        //                     pointerHandler.PointerEnter(new FPointerEventData()
-        //                     {
-        //                         ImpactInfo = impactInfo
-        //
-        //                     });
-        //                 }
-        //
-        //                 if (InputUtils.GetKeyDown(EKeyCode.Mouse0))
-        //                 {
-        //                     pointerHandler.PointerDown(new FPointerEventData()
-        //                     {
-        //                         ImpactInfo = impactInfo
-        //
-        //                     });
-        //                 }
-        //                 
-        //                 if (InputUtils.GetKeyDown(EKeyCode.Mouse1))
-        //                 {
-        //                     pointerHandler.PointerUp(new FPointerEventData()
-        //                     {
-        //                         ImpactInfo = impactInfo
-        //
-        //                     });
-        //                 }
-        //
-        //
-        //             }
-        //             m_LastHitEntityLogic = entity.Logic;
-        //
-        //         }
-        //     }
-        //     else
-        //     {
-        //         if (m_LastHitEntityLogic != null)
-        //         {
-        //             if(m_LastHitEntityLogic is IPointerHandler lastHitPointerHandler)
-        //                 lastHitPointerHandler.PointerExit(new FPointerEventData());
-        //
-        //             m_LastHitEntityLogic = null;
-        //         }
-        //     }
-        // }
-        
     }
 }
