@@ -1,7 +1,7 @@
 {
   "GameVersion": "0.1.0",
   "InternalGameVersion": 0,
-  "CheckVersionUrl": "https://a.unity.cn/client_api/v1/buckets/0d7910a3-89be-4c14-b1a5-5aaa6a55e597/content/{0}Version.txt",
+  "CheckVersionUrl": "https://a.unity.cn/client_api/v1/buckets/0d7910a3-89be-4c14-b1a5-5aaa6a55e597/release_by_badge/Dev/content/{0}Version.txt",
   "WindowsAppUrl": "https://aresfor.github.io",
   "MacOSAppUrl": "https://aresfor.github.io",
   "IOSAppUrl": "https://aresfor.github.io",
