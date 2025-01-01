@@ -264,6 +264,12 @@ namespace UnityGameFramework.Editor.ResourceTools
                         }
                     }
                     EditorGUILayout.EndHorizontal();
+                    // EditorGUILayout.BeginHorizontal();
+                    // {
+                    //     EditorGUILayout.LabelField("UpdatePrefixUri Directory", GUILayout.Width(160f));
+                    //     m_Controller.UpdatePrefixUri = EditorGUILayout.TextField(m_Controller.UpdatePrefixUri);
+                    // }
+                    // EditorGUILayout.EndHorizontal();
                     EditorGUILayout.BeginHorizontal();
                     {
                         EditorGUILayout.LabelField("Working Path", GUILayout.Width(160f));

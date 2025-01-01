@@ -114,25 +114,47 @@ namespace UnityGameFramework.Runtime
             byte[] bytes = null;
             string errorMessage = null;
             DateTime startTime = DateTime.UtcNow;
-
+            Log.Info($"Platform is: {Application.platform}");
+            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            {
+                //WebGL资源用File接口加载
+                //@TODO:资源保存需要与javascript交互
+                //Log.Error($"WebGL load bytes: {fileUri}");
+                if (System.IO.File.Exists(fileUri))
+                {
+                    var localBytes = System.IO.File.ReadAllBytes(fileUri);
+                    if (localBytes != null && localBytes.Length > 0)
+                    {
+                        bytes = localBytes;
+                        isError = false;
+                    }
+                }
+                else
+                {
+                    isError = true;
+                }
+                
+            }
+            else
+            {
 #if UNITY_5_4_OR_NEWER
-            UnityWebRequest unityWebRequest = UnityWebRequest.Get(fileUri);
+            
+                UnityWebRequest unityWebRequest = UnityWebRequest.Get(fileUri);
 #if UNITY_2017_2_OR_NEWER
-            yield return unityWebRequest.SendWebRequest();
+                yield return unityWebRequest.SendWebRequest();
 #else
             yield return unityWebRequest.Send();
 #endif
-
 #if UNITY_2020_2_OR_NEWER
-            isError = unityWebRequest.result != UnityWebRequest.Result.Success;
+                isError = unityWebRequest.result != UnityWebRequest.Result.Success;
 #elif UNITY_2017_1_OR_NEWER
             isError = unityWebRequest.isNetworkError || unityWebRequest.isHttpError;
 #else
             isError = unityWebRequest.isError;
 #endif
-            bytes = unityWebRequest.downloadHandler.data;
-            errorMessage = isError ? unityWebRequest.error : null;
-            unityWebRequest.Dispose();
+                bytes = unityWebRequest.downloadHandler.data;
+                errorMessage = isError ? unityWebRequest.error : null;
+                unityWebRequest.Dispose();
 #else
             WWW www = new WWW(fileUri);
             yield return www;
@@ -143,16 +165,10 @@ namespace UnityGameFramework.Runtime
             www.Dispose();
 #endif
 
-            //WebGL资源用File接口加载
-            //@TODO:资源保存需要与javascript交互
-#if UNITY_WEBGL && !UNITY_EDITOR
-                var localBytes = System.IO.File.ReadAllBytes(fileUri);
-                if (localBytes != null && localBytes.Length > 0)
-                {
-                    bytes = localBytes;
-                    isError = false;
-                }
-#endif
+            }
+
+
+
             if (!isError)
             {
                 float elapseSeconds = (float)(DateTime.UtcNow - startTime).TotalSeconds;

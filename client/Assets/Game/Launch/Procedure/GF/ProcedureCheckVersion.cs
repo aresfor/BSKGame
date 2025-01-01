@@ -43,7 +43,7 @@ namespace Game.Client
                 return;
             }
             builtinDataComp.InitBuildInfo();
-            GameEntry.WebRequest.AddWebRequest(Utility.Text.Format(builtinDataComp.BuildInfo.CheckVersionUrl, GetPlatformPath()), this);
+            GameEntry.WebRequest.AddWebRequest(Utility.Text.Format(builtinDataComp.BuildInfo.CheckVersionUrl, UnityExtension.GetPlatform()), this);
         }
 
         protected override void OnLeave(ProcedureOwner procedureOwner, bool isShutdown)
@@ -133,29 +133,29 @@ namespace Game.Client
             Log.Warning("Check version failure, error message is '{0}'.", ne.ErrorMessage);
         }
 
-        private string GetPlatformPath()
-        {
-            switch (Application.platform)
-            {
-                case RuntimePlatform.WindowsEditor:
-                case RuntimePlatform.WindowsPlayer:
-                    return "Windows";
-
-                case RuntimePlatform.OSXEditor:
-                case RuntimePlatform.OSXPlayer:
-                    return "MacOS";
-
-                case RuntimePlatform.IPhonePlayer:
-                    return "IOS";
-
-                case RuntimePlatform.Android:
-                    return "Android";
-                
-                case RuntimePlatform.WebGLPlayer:
-                    return "WebGL";
-                default:
-                    throw new System.NotSupportedException(Utility.Text.Format("Platform '{0}' is not supported.", Application.platform.ToString()));
-            }
-        }
+        // private string GetPlatformPath()
+        // {
+        //     switch (Application.platform)
+        //     {
+        //         case RuntimePlatform.WindowsEditor:
+        //         case RuntimePlatform.WindowsPlayer:
+        //             return "Windows";
+        //
+        //         case RuntimePlatform.OSXEditor:
+        //         case RuntimePlatform.OSXPlayer:
+        //             return "MacOS";
+        //
+        //         case RuntimePlatform.IPhonePlayer:
+        //             return "IOS";
+        //
+        //         case RuntimePlatform.Android:
+        //             return "Android";
+        //         
+        //         case RuntimePlatform.WebGLPlayer:
+        //             return "WebGL";
+        //         default:
+        //             throw new System.NotSupportedException(Utility.Text.Format("Platform '{0}' is not supported.", Application.platform.ToString()));
+        //     }
+        // }
     }
 }

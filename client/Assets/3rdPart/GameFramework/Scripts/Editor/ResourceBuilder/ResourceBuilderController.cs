@@ -216,6 +216,7 @@ namespace UnityGameFramework.Editor.ResourceTools
             set;
         }
 
+    
         public bool OutputPackageSelected
         {
             get;
@@ -290,7 +291,18 @@ namespace UnityGameFramework.Editor.ResourceTools
                 return Utility.Path.GetRegularPath(new DirectoryInfo(Utility.Text.Format("{0}/Full/{1}_{2}/", OutputDirectory, ApplicableGameVersion.Replace('.', '_'), InternalResourceVersion)).FullName);
             }
         }
+        public string OutputFullPathWithoutVersion
+        {
+            get
+            {
+                if (!IsValidOutputDirectory)
+                {
+                    return string.Empty;
+                }
 
+                return Utility.Path.GetRegularPath(new DirectoryInfo(Utility.Text.Format("{0}/Full/", OutputDirectory)).FullName);
+            }
+        }
         public string OutputPackedPath
         {
             get
@@ -317,6 +329,7 @@ namespace UnityGameFramework.Editor.ResourceTools
             }
         }
 
+        
         public event GameFrameworkAction<int, int> OnLoadingResource = null;
 
         public event GameFrameworkAction<int, int> OnLoadingAsset = null;
@@ -390,7 +403,7 @@ namespace UnityGameFramework.Editor.ResourceTools
                         case "OutputDirectory":
                             OutputDirectory = xmlNode.InnerText;
                             break;
-
+                        
                         case "OutputPackageSelected":
                             OutputPackageSelected = bool.Parse(xmlNode.InnerText);
                             break;

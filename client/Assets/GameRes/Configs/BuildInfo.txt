@@ -1,10 +1,10 @@
 {
   "GameVersion": "0.1.0",
   "InternalGameVersion": 0,
-  "CheckVersionUrl": "http://localhost:5000/Resources/{0}Version.txt",
-  "WindowsAppUrl": "https://starforce.gameframework.cn",
-  "MacOSAppUrl": "https://starforce.gameframework.cn",
-  "IOSAppUrl": "https://starforce.gameframework.cn",
-  "AndroidAppUrl": "https://starforce.gameframework.cn",
+  "CheckVersionUrl": "https://a.unity.cn/client_api/v1/buckets/0d7910a3-89be-4c14-b1a5-5aaa6a55e597/content/{0}Version.txt",
+  "WindowsAppUrl": "https://aresfor.github.io",
+  "MacOSAppUrl": "https://aresfor.github.io",
+  "IOSAppUrl": "https://aresfor.github.io",
+  "AndroidAppUrl": "https://aresfor.github.io",
   "END_OF_JSON": ""
 }

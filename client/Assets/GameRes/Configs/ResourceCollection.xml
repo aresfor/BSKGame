@@ -98,6 +98,7 @@
       <Resource Name="UI/UIForms/Menu/MenuForm" LoadType="0" Packed="True" />
       <Resource Name="UI/UIForms/Menu/SelectBattleItem" LoadType="0" Packed="False" />
       <Resource Name="UI/UIForms/UpdateResource/UIUpdateResourceForm" LoadType="0" Packed="True" />
+      <Resource Name="VFX/TestVFX" LoadType="0" Packed="False" />
     </Resources>
     <Assets>
       <Asset Guid="021a4b284a7112747b8cc43f933b4208" ResourceName="Tile/Tile/body_5" />
@@ -113,6 +114,7 @@
       <Asset Guid="20e1841eb61ab19428f6913d07c7caa5" ResourceName="DLL/BSK" />
       <Asset Guid="2209adb3f4edfc64d87b1feff475fb6a" ResourceName="Tile/Tile/body_7" />
       <Asset Guid="229bf96312d21c448b58c108a7950efa" ResourceName="Tile/Tile/chest_64" />
+      <Asset Guid="23ac4694b269b2943b34d633da7701e0" ResourceName="VFX/TestVFX" />
       <Asset Guid="248209a2a73773446be01e199d3f8c06" ResourceName="DLL/game" />
       <Asset Guid="2839c5b9728bd1d48a33c60fc55edc07" ResourceName="DLL/ReGoap" />
       <Asset Guid="2bd9233589eb44e4a86ece43984ca0cd" ResourceName="DataTables/Scene" />

@@ -81,7 +81,7 @@ namespace Game.Client.Build.Editor
 
             if (versionInfoEditorData.IsGenerateToFullPath)
             {
-                versionInfoEditorData.Generate(Path.Combine(builderController.OutputFullPath, platform.ToString(), $"{platform}Version.txt"));
+                versionInfoEditorData.Generate(Path.Combine(builderController.OutputFullPathWithoutVersion, $"{platform}Version.txt"));
             }
         }
 

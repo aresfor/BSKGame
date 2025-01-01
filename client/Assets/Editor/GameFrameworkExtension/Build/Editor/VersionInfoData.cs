@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Game.Client.Build.Rutime;
 using UnityEngine;
+using UnityGameFramework.Runtime;
 
 namespace Game.Client.Build.Editor
 {
@@ -130,7 +131,10 @@ namespace Game.Client.Build.Editor
         public string UpdatePrefixUri =>
             GameFramework.Utility.Path.GetRegularPath(Path.Combine(m_ServerPath??string.Empty, m_ResourceVersion??string.Empty,
                 m_Platform.ToString()));
-
+        // public string UpdatePrefixUri =>
+        //     GameFramework.Utility.Path.GetRegularPath(Path.Combine(m_ServerPath??string.Empty,
+        //         m_Platform.ToString()));
+        
         /// <summary>
         /// 资源版本列表长度
         /// </summary>
@@ -186,7 +190,9 @@ namespace Game.Client.Build.Editor
         }
         public string ToVersionInfoJson()
         {
-            throw new NotImplementedException("请自行实现Json 序列化. Serialize(ToVersionInfo())");
+            return Newtonsoft.Json.JsonConvert.SerializeObject(ToVersionInfo(), Newtonsoft.Json.Formatting.Indented);
+
+            //throw new NotImplementedException("请自行实现Json 序列化. Serialize(ToVersionInfo())");
         }
 
         public void AutoIncrementInternalGameVersion()

@@ -88,24 +88,24 @@ public class StripLinkConfigWindow : EditorWindow
         {
             RefreshListData();
         }
-        if (GUILayout.Button("Save", GUILayout.Width(120)))
-        {
-            switch (mode)
-            {
-                // case ConfigEditorMode.StripLinkConfig:
-                //     if (MyGameTools.Save2LinkFile(GetCurrentSelectedList()))
-                //     {
-                //         EditorUtility.DisplayDialog("Strip LinkConfig Editor", "Update link.xml success!", "OK");
-                //     }
-                //     break;
-                // case ConfigEditorMode.AotDllConfig:
-                //     if (MyGameTools.Save2AotDllList(GetCurrentSelectedList()))
-                //     {
-                //         EditorUtility.DisplayDialog("AOT dlls Editor", "Update AOT dll List success!", "OK");
-                //     }
-                //     break;
-            }
-        }
+        // if (GUILayout.Button("Save", GUILayout.Width(120)))
+        // {
+        //     switch (mode)
+        //     {
+        //         // case ConfigEditorMode.StripLinkConfig:
+        //         //     if (MyGameTools.Save2LinkFile(GetCurrentSelectedList()))
+        //         //     {
+        //         //         EditorUtility.DisplayDialog("Strip LinkConfig Editor", "Update link.xml success!", "OK");
+        //         //     }
+        //         //     break;
+        //         // case ConfigEditorMode.AotDllConfig:
+        //         //     if (MyGameTools.Save2AotDllList(GetCurrentSelectedList()))
+        //         //     {
+        //         //         EditorUtility.DisplayDialog("AOT dlls Editor", "Update AOT dll List success!", "OK");
+        //         //     }
+        //         //     break;
+        //     }
+        // }
         EditorGUILayout.EndHorizontal();
         EditorGUILayout.EndVertical();
     }

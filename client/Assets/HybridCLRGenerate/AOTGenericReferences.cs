@@ -115,7 +115,6 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// GameFramework.GameFrameworkLinkedList.Enumerator<object>
 	// GameFramework.GameFrameworkLinkedList<object>
 	// GameFramework.ObjectPool.IObjectPool<object>
-	// GameFramework.Variable<object>
 	// GameFramework.Variable<uint>
 	// SerializableDictionary<object,object>
 	// SerializableDictionaryBase.Dictionary<object,object>

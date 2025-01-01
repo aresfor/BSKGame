@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using GameFramework;
 using UnityEngine;
 
 /// <summary>
@@ -106,6 +107,31 @@ public static class UnityExtension
     public static Vector3 ToVector3(this Vector2 vector2, float y)
     {
         return new Vector3(vector2.x, y, vector2.y);
+    }
+
+    public static string GetPlatform()
+    {
+        switch (Application.platform)
+        {
+            case RuntimePlatform.WindowsEditor:
+            case RuntimePlatform.WindowsPlayer:
+                return "Windows";
+
+            case RuntimePlatform.OSXEditor:
+            case RuntimePlatform.OSXPlayer:
+                return "MacOS";
+
+            case RuntimePlatform.IPhonePlayer:
+                return "IOS";
+
+            case RuntimePlatform.Android:
+                return "Android";
+                
+            case RuntimePlatform.WebGLPlayer:
+                return "WebGL";
+            default:
+                throw new System.NotSupportedException(Utility.Text.Format("Platform '{0}' is not supported.", Application.platform.ToString()));
+        }
     }
 
     #region Transform

@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
   <assembly fullname="BSK.Game.Common">
-    <type fullname="Game.Client.CoroutineUtils" preserve="all" />
     <type fullname="Game.Client.GameEntry" preserve="all" />
     <type fullname="SerializableDictionaryBase`3" preserve="all" />
     <type fullname="SerializableDictionary`2" preserve="all" />
@@ -110,7 +109,6 @@
     <type fullname="UnityEngine.MonoBehaviour" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
     <type fullname="UnityEngine.Plane" preserve="all" />
-    <type fullname="UnityEngine.PlayerPrefs" preserve="all" />
     <type fullname="UnityEngine.Quaternion" preserve="all" />
     <type fullname="UnityEngine.Random" preserve="all" />
     <type fullname="UnityEngine.RangeAttribute" preserve="all" />
@@ -211,7 +209,6 @@
     <type fullname="UnityEngine.CanvasGroup" preserve="all" />
   </assembly>
   <assembly fullname="UnityGameFramework.Runtime">
-    <type fullname="Game.Client.YooResourceComponent" preserve="all" />
     <type fullname="UnityExtension" preserve="all" />
     <type fullname="UnityGameFramework.Runtime.BaseComponent" preserve="all" />
     <type fullname="UnityGameFramework.Runtime.DataTableComponent" preserve="all" />
@@ -247,6 +244,7 @@
     <type fullname="Game.Core.Architecture`1" preserve="all" />
     <type fullname="Game.Core.ArrayGraph`1" preserve="all" />
     <type fullname="Game.Core.AssetUtility" preserve="all" />
+    <type fullname="Game.Core.BaseComponent" preserve="all" />
     <type fullname="Game.Core.BindableProperty`1" preserve="all" />
     <type fullname="Game.Core.CanGetModelExtension" preserve="all" />
     <type fullname="Game.Core.CanGetSystemExtension" preserve="all" />
@@ -309,8 +307,6 @@
     <type fullname="Game.Core.OnGlobalEventExtension" preserve="all" />
     <type fullname="Game.Core.OrEvent" preserve="all" />
     <type fullname="Game.Core.OrEventExtensions" preserve="all" />
-    <type fullname="Game.Core.PositionComponent" preserve="all" />
-    <type fullname="Game.Core.RotationComponent" preserve="all" />
     <type fullname="Game.Core.TimeUtils" preserve="all" />
     <type fullname="Game.Core.TypeEventSystem" preserve="all" />
     <type fullname="GameFramework.DataTable.IDataRow" preserve="all" />
@@ -438,6 +434,7 @@
     <type fullname="System.IndexOutOfRangeException" preserve="all" />
     <type fullname="System.Linq.Enumerable" preserve="all" />
     <type fullname="System.Linq.IOrderedEnumerable`1" preserve="all" />
+    <type fullname="System.ObsoleteAttribute" preserve="all" />
     <type fullname="System.Random" preserve="all" />
     <type fullname="System.Reflection.AssemblyCompanyAttribute" preserve="all" />
     <type fullname="System.Reflection.AssemblyConfigurationAttribute" preserve="all" />
@@ -448,5 +445,8 @@
     <type fullname="System.Reflection.DefaultMemberAttribute" preserve="all" />
     <type fullname="System.Runtime.Versioning.TargetFrameworkAttribute" preserve="all" />
     <type fullname="System.Text.Encoding" preserve="all" />
+  </assembly>
+  <assembly fullname="wx-runtime">
+    <type fullname="PlayerPrefs" preserve="all" />
   </assembly>
 </linker>

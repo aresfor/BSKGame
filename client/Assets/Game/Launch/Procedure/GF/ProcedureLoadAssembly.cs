@@ -52,17 +52,17 @@ namespace Game.Client
                 m_LoadMetadataAssemblyComplete = false;
                 LoadMetadataForAOTAssembly();
 #else
-                //m_LoadMetadataAssemblyComplete = true;
+                m_LoadMetadataAssemblyComplete = true;
 
-                if (GameEntry.Resource.ResourceMode == ResourceMode.Unspecified)
-                {
-                    m_LoadMetadataAssemblyComplete = true;
-                }
-                else
-                {
-                    m_LoadMetadataAssemblyComplete = false;
-                    LoadMetadataForAOTAssembly();
-                }
+                // if (GameEntry.Resource.ResourceMode == ResourceMode.Unspecified)
+                // {
+                //     m_LoadMetadataAssemblyComplete = true;
+                // }
+                // else
+                // {
+                //     m_LoadMetadataAssemblyComplete = false;
+                //     LoadMetadataForAOTAssembly();
+                // }
 #endif
             }
             else

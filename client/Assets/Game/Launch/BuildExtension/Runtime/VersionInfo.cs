@@ -5,7 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
-namespace Game.Client.Build.Rutime
+namespace Game.Client
 {
     public class VersionInfo
     {

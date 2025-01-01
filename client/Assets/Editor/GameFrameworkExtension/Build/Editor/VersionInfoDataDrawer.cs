@@ -26,6 +26,7 @@ namespace Game.Client.Build.Editor
             var platform = property.FindPropertyRelative("m_Platform");
             string platformStr = platform.enumNames[platform.enumValueIndex];
             string updatePrefixUri = GameFramework.Utility.Path.GetRegularPath(Path.Combine(server, resourceVersion, platformStr));
+            //string updatePrefixUri = GameFramework.Utility.Path.GetRegularPath(Path.Combine(server, platformStr));
             EditorGUI.LabelField(rect,"UpdatePrefixUri",updatePrefixUri);
          
             bool isValidUri = Utility.Uri.CheckUri(updatePrefixUri);

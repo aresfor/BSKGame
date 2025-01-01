@@ -12,11 +12,13 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using UnityEditor;
+using UnityGameFramework.Runtime;
 
 namespace UnityGameFramework.Editor.ResourceTools
 {
     public sealed partial class ResourceBuilderController
     {
+
         private sealed class BuildReport
         {
             private const string BuildReportName = "BuildReport.xml";
@@ -41,7 +43,7 @@ namespace UnityGameFramework.Editor.ResourceTools
             private BuildAssetBundleOptions m_BuildAssetBundleOptions = BuildAssetBundleOptions.None;
             private StringBuilder m_LogBuilder = null;
             private SortedDictionary<string, ResourceData> m_ResourceDatas = null;
-
+            
             public void Initialize(string buildReportPath, string productName, string companyName, string gameIdentifier, string gameFrameworkVersion, string unityVersion, string applicableGameVersion, int internalResourceVersion,
                 Platform platforms, AssetBundleCompressionType assetBundleCompression, string compressionHelperTypeName, bool additionalCompressionSelected, bool forceRebuildAssetBundleSelected, string buildEventHandlerTypeName, string outputDirectory, BuildAssetBundleOptions buildAssetBundleOptions, SortedDictionary<string, ResourceData> resourceDatas)
             {
@@ -52,6 +54,7 @@ namespace UnityGameFramework.Editor.ResourceTools
 
                 m_BuildReportName = Utility.Path.GetRegularPath(Path.Combine(buildReportPath, BuildReportName));
                 m_BuildLogName = Utility.Path.GetRegularPath(Path.Combine(buildReportPath, BuildLogName));
+                
                 m_ProductName = productName;
                 m_CompanyName = companyName;
                 m_GameIdentifier = gameIdentifier;
@@ -244,14 +247,15 @@ namespace UnityGameFramework.Editor.ResourceTools
                     xmlResource.AppendChild(xmlCodes);
                     foreach (ResourceCode resourceCode in resourceData.GetCodes())
                     {
-                        XmlElement xmlCode = xmlDocument.CreateElement(resourceCode.Platform.ToString());
+                        string platformName = resourceCode.Platform.ToString();
+                        XmlElement xmlCode = xmlDocument.CreateElement(platformName);
                         xmlAttribute = xmlDocument.CreateAttribute("Length");
                         xmlAttribute.Value = resourceCode.Length.ToString();
                         xmlCode.Attributes.SetNamedItem(xmlAttribute);
                         xmlAttribute = xmlDocument.CreateAttribute("HashCode");
                         xmlAttribute.Value = resourceCode.HashCode.ToString();
                         xmlCode.Attributes.SetNamedItem(xmlAttribute);
-                        xmlAttribute = xmlDocument.CreateAttribute("CompressedLength");
+                        xmlAttribute = xmlDocument.CreateAttribute("CompressedLength"); 
                         xmlAttribute.Value = resourceCode.CompressedLength.ToString();
                         xmlCode.Attributes.SetNamedItem(xmlAttribute);
                         xmlAttribute = xmlDocument.CreateAttribute("CompressedHashCode");
