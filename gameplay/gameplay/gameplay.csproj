@@ -35,7 +35,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\framework\game.core\game.core.csproj" />
-      <ProjectReference Include="..\game.core\game.core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
