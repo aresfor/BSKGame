@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Configurations>Debug;Release;ReleaseNPublish</Configurations>
+        <LangVersion>11</LangVersion>
+        <Platforms>AnyCPU</Platforms>
+        <Product>assem.gameplay</Product>
+        <AssemblyName>game.gameplay</AssemblyName>
+        <Company>game.gameplay</Company>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <OutputPath>bin\Output\</OutputPath>
+        <DefineConstants>LOG_DEBUG;LOG_WARNING;LOG_ERROR;LOG_PUBLISH</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <OutputPath>bin\Output\</OutputPath>
+        <DefineConstants>LOG_WARNING;LOG_ERROR;LOG_PUBLISH</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'ReleaseNPublish' ">
+        <OutputPath>bin\Output\</OutputPath>
+        <DefineConstants>LOG_WARNING;LOG_ERROR;LOG_PUBLISH;SHIPPING_EXTERNAL</DefineConstants>
+        <Optimize>true</Optimize>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="CopyDLL.bat" />
+        <None Remove="Deletemeta.bat" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\framework\game.core\game.core.csproj" />
+      <ProjectReference Include="..\game.core\game.core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Game.Math">
+        <HintPath>..\..\Library\Game.Math.dll</HintPath>
+      </Reference>
+        
+      <Reference Include="Newtonsoft.Json">
+        <HintPath>..\..\Library\Newtonsoft.Json.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Utility\Json\" />
+    </ItemGroup>
+    
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Command="CopyDLL.bat" />
+    </Target>
+</Project>

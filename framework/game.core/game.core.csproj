@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Configurations>Debug;Release;ReleaseNPublish</Configurations>
+        <LangVersion>11</LangVersion>
+        <Platforms>AnyCPU</Platforms>
+        <Product>game.core</Product>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <RootNamespace>bsk.game</RootNamespace>
+        <Company>game.core</Company>
+    </PropertyGroup>
+    
+    <PropertyGroup>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    </PropertyGroup>
+
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <OutputPath>bin\Output\</OutputPath>
+        <DefineConstants>LOG_DEBUG;LOG_WARNING;LOG_ERROR;LOG_PUBLISH</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <OutputPath>bin\Output\</OutputPath>
+        <DefineConstants>LOG_WARNING;LOG_ERROR;LOG_PUBLISH</DefineConstants>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'ReleaseNPublish' ">
+        <OutputPath>bin\Output\</OutputPath>
+        <DefineConstants>LOG_WARNING;LOG_ERROR;LOG_PUBLISH;SHIPPING_EXTERNAL</DefineConstants>
+        <Optimize>true</Optimize>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Game.Math">
+        <HintPath>..\..\Library\Game.Math.dll</HintPath>
+      </Reference>
+      <Reference Include="Newtonsoft.Json">
+        <HintPath>..\..\Library\Newtonsoft.Json.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <None Remove="CopyDLL.bat" />
+        <None Remove="Deletemeta.bat" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="AI\" />
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Command="CopyDLL.bat" />
+    </Target>
+    
+</Project>
