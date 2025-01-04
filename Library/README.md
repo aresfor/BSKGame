@@ -1,0 +1,1 @@
+unity package（例game.core）和gameplay可能使用的第三方库放在这里
