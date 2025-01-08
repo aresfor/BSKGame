@@ -46,7 +46,8 @@ namespace Game.Client
                 return;
             }
 
-            ChangeState<ProcedureCheckResources>(procedureOwner);
+            //ChangeState<ProcedureCheckResources>(procedureOwner);
+            ChangeState<ProcedureVerifyResources>(procedureOwner);
         }
 
         private void OnUpdateVersionListSuccess(string downloadPath, string downloadUri)

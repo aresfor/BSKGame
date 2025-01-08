@@ -3,16 +3,16 @@
   <ResourceBuilder>
     <Settings>
       <InternalResourceVersion>1</InternalResourceVersion>
-      <Platforms>130</Platforms>
+      <Platforms>128</Platforms>
       <AssetBundleCompression>1</AssetBundleCompression>
       <CompressionHelperTypeName>UnityGameFramework.Runtime.DefaultCompressionHelper</CompressionHelperTypeName>
       <AdditionalCompressionSelected>False</AdditionalCompressionSelected>
       <ForceRebuildAssetBundleSelected>False</ForceRebuildAssetBundleSelected>
       <BuildEventHandlerTypeName>Game.Client.Build.Editor.BuildEventHandle</BuildEventHandlerTypeName>
       <OutputDirectory>G:/Repos/BSKGame/outputResource</OutputDirectory>
-      <OutputPackageSelected>True</OutputPackageSelected>
+      <OutputPackageSelected>False</OutputPackageSelected>
       <OutputFullSelected>True</OutputFullSelected>
-      <OutputPackedSelected>True</OutputPackedSelected>
+      <OutputPackedSelected>False</OutputPackedSelected>
     </Settings>
   </ResourceBuilder>
 </UnityGameFramework>

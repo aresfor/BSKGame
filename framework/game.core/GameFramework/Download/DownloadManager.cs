@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Game.Core;
 
 namespace GameFramework.Download
 {
@@ -26,6 +27,7 @@ namespace GameFramework.Download
         private EventHandler<DownloadSuccessEventArgs> m_DownloadSuccessEventHandler;
         private EventHandler<DownloadFailureEventArgs> m_DownloadFailureEventHandler;
 
+        private IWXHelper m_WXHelper;
         /// <summary>
         /// 初始化下载管理器的新实例。
         /// </summary>
@@ -39,6 +41,8 @@ namespace GameFramework.Download
             m_DownloadUpdateEventHandler = null;
             m_DownloadSuccessEventHandler = null;
             m_DownloadFailureEventHandler = null;
+
+            m_WXHelper = null;
         }
 
         /// <summary>
@@ -244,8 +248,18 @@ namespace GameFramework.Download
             agent.DownloadAgentUpdate += OnDownloadAgentUpdate;
             agent.DownloadAgentSuccess += OnDownloadAgentSuccess;
             agent.DownloadAgentFailure += OnDownloadAgentFailure;
-
+            
+            agent.SetWXHelper(m_WXHelper);
             m_TaskPool.AddAgent(agent);
+        }
+
+        public void SetWXHelper(IWXHelper wxHelper)
+        {
+            if (wxHelper == null)
+            {
+                throw new GameFrameworkException("WXHelper is null");
+            }
+            m_WXHelper = wxHelper;
         }
 
         /// <summary>

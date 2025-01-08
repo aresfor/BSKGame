@@ -9,6 +9,7 @@ using GameFramework.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Game.Core;
 
 namespace GameFramework.Resource
 {
@@ -33,6 +34,7 @@ namespace GameFramework.Resource
                 private readonly DecryptResourceCallback m_DecryptResourceCallback;
                 private LoadResourceTaskBase m_Task;
 
+                private IResourceManager m_ResourceManager;
                 /// <summary>
                 /// 初始化加载资源代理的新实例。
                 /// </summary>
@@ -42,7 +44,7 @@ namespace GameFramework.Resource
                 /// <param name="readOnlyPath">资源只读区路径。</param>
                 /// <param name="readWritePath">资源读写区路径。</param>
                 /// <param name="decryptResourceCallback">解密资源回调函数。</param>
-                public LoadResourceAgent(ILoadResourceAgentHelper loadResourceAgentHelper, IResourceHelper resourceHelper, ResourceLoader resourceLoader, string readOnlyPath, string readWritePath, DecryptResourceCallback decryptResourceCallback)
+                public LoadResourceAgent(IResourceManager resourceManager, ILoadResourceAgentHelper loadResourceAgentHelper, IResourceHelper resourceHelper, ResourceLoader resourceLoader, string readOnlyPath, string readWritePath, DecryptResourceCallback decryptResourceCallback)
                 {
                     if (loadResourceAgentHelper == null)
                     {
@@ -64,6 +66,7 @@ namespace GameFramework.Resource
                         throw new GameFrameworkException("Decrypt resource callback is invalid.");
                     }
 
+                    m_ResourceManager = resourceManager;
                     m_Helper = loadResourceAgentHelper;
                     m_ResourceHelper = resourceHelper;
                     m_ResourceLoader = resourceLoader;
@@ -72,7 +75,7 @@ namespace GameFramework.Resource
                     m_DecryptResourceCallback = decryptResourceCallback;
                     m_Task = null;
                 }
-
+                
                 public ILoadResourceAgentHelper Helper
                 {
                     get
@@ -150,7 +153,7 @@ namespace GameFramework.Resource
                     m_Task = task;
                     m_Task.StartTime = DateTime.UtcNow;
                     ResourceInfo resourceInfo = m_Task.ResourceInfo;
-
+                    
                     if (!resourceInfo.Ready)
                     {
                         m_Task.StartTime = default(DateTime);
@@ -203,7 +206,12 @@ namespace GameFramework.Resource
                     string fullPath = null;
                     if (!s_CachedResourceNames.TryGetValue(resourceName, out fullPath))
                     {
+                        #if WEIXINMINIGAME
+                        fullPath = Utility.Path.GetRegularPath(Path.Combine(resourceInfo.StorageInReadOnly ? m_ReadOnlyPath :m_ResourceManager.UpdatePrefixUri , resourceInfo.UseFileSystem ? resourceInfo.FileSystemName : resourceInfo.ResourceName.GetFullNameWithHashCode(resourceInfo.HashCode)));
+                        #else
                         fullPath = Utility.Path.GetRegularPath(Path.Combine(resourceInfo.StorageInReadOnly ? m_ReadOnlyPath : m_ReadWritePath, resourceInfo.UseFileSystem ? resourceInfo.FileSystemName : resourceInfo.ResourceName.FullName));
+                        #endif
+                        
                         s_CachedResourceNames.Add(resourceName, fullPath);
                     }
 

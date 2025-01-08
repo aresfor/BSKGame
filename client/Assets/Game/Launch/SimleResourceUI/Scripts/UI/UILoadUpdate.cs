@@ -42,7 +42,7 @@ namespace Game.Client
         private void RefreshVersion()
         {
             _label_appid.text = string.Format(LoadText.Instance.Label_App_id, Version.GameVersion);
-            _label_resid.text = string.Format(LoadText.Instance.Label_Res_id, GameEntry.YooResource.PackageVersion);
+            _label_resid.text = string.Format(LoadText.Instance.Label_Res_id, GameEntry.Resource.InternalResourceVersion);
         }
 
         public virtual void OnContinue(GameObject obj)
@@ -65,7 +65,8 @@ namespace Game.Client
                 LoadStyle.StyleEnum.Style_Clear,
                 () =>
                 {
-                    GameEntry.YooResource.ClearUnusedCacheFilesAsync();
+                    //@TODO:
+                    //GameEntry.YooResource.ClearUnusedCacheFilesAsync();
                     Application.Quit();
                 }, () => { OnContinue(null); });
         }

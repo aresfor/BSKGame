@@ -8,6 +8,7 @@
 using GameFramework.FileSystem;
 using GameFramework.Resource;
 using System;
+using Game.Core;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -92,5 +93,7 @@ namespace UnityGameFramework.Runtime
         /// 重置加载资源代理辅助器。
         /// </summary>
         public abstract void Reset();
+
+        public abstract void SetWXHelper(IWXHelper wxHelper);
     }
 }

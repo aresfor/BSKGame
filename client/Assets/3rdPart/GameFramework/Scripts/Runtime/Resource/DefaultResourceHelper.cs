@@ -8,6 +8,8 @@
 using GameFramework.Resource;
 using System;
 using System.Collections;
+using System.IO;
+using Game.Core;
 using UnityEngine;
 #if UNITY_5_4_OR_NEWER
 using UnityEngine.Networking;
@@ -21,6 +23,8 @@ namespace UnityGameFramework.Runtime
     /// </summary>
     public class DefaultResourceHelper : ResourceHelperBase
     {
+        private IWXHelper m_WXHelper;
+        
         /// <summary>
         /// 直接从指定文件路径加载数据流。
         /// </summary>
@@ -104,22 +108,45 @@ namespace UnityGameFramework.Runtime
             */
         }
 
+        
         private void Start()
         {
         }
-
+        
+        public override void SetWXHelper(IWXHelper wxHelper)
+        {
+            m_WXHelper = wxHelper;
+        }
         private IEnumerator LoadBytesCo(string fileUri, LoadBytesCallbacks loadBytesCallbacks, object userData)
         {
             bool isError = false;
             byte[] bytes = null;
             string errorMessage = null;
-            DateTime startTime = DateTime.UtcNow;
-            Log.Info($"Platform is: {Application.platform}");
-            if (Application.platform == RuntimePlatform.WebGLPlayer)
+            bool instantComplete = true;
+            
+#if WEIXINMINIGAME
+            instantComplete = false;
+            var lastSlashIndex = fileUri.LastIndexOf('/');
+            var fileName = fileUri.Substring(lastSlashIndex + 1, fileUri.Length - lastSlashIndex - 1);
+            var wxPath = Path.Combine(m_WXHelper.GetWXUserDataPrefix(), fileName);
+            //Log.Info($"LoadBytes: {wxPath}");
+            m_WXHelper.ReadFile(wxPath, new LoadWXFileCallback(bytes =>
+                {
+                    OnLoadBytesComplete(false, bytes, wxPath, loadBytesCallbacks, errorMessage, userData);                    
+                }
+                , () =>
+                {
+                    OnLoadBytesComplete(true, null, wxPath, loadBytesCallbacks, errorMessage, userData);       
+                })
+                
+            );
+#else
+            if (fileUri.StartsWith("/idbfs"))
             {
                 //WebGL资源用File接口加载
                 //@TODO:资源保存需要与javascript交互
-                //Log.Error($"WebGL load bytes: {fileUri}");
+                
+                
                 if (System.IO.File.Exists(fileUri))
                 {
                     var localBytes = System.IO.File.ReadAllBytes(fileUri);
@@ -133,12 +160,14 @@ namespace UnityGameFramework.Runtime
                 {
                     isError = true;
                 }
-                
+
             }
+
             else
+
             {
 #if UNITY_5_4_OR_NEWER
-            
+
                 UnityWebRequest unityWebRequest = UnityWebRequest.Get(fileUri);
 #if UNITY_2017_2_OR_NEWER
                 yield return unityWebRequest.SendWebRequest();
@@ -164,10 +193,19 @@ namespace UnityGameFramework.Runtime
             errorMessage = www.error;
             www.Dispose();
 #endif
+            }
+#endif
 
+            if (instantComplete)
+            {
+                OnLoadBytesComplete(isError, bytes, fileUri, loadBytesCallbacks, errorMessage, userData);
             }
 
-
+            yield return null;
+        }
+        private void OnLoadBytesComplete(bool isError, byte[] bytes , string fileUri, LoadBytesCallbacks loadBytesCallbacks, string errorMessage, object userData)
+        {
+            DateTime startTime = DateTime.UtcNow;
 
             if (!isError)
             {
@@ -180,7 +218,6 @@ namespace UnityGameFramework.Runtime
                 loadBytesCallbacks.LoadBytesFailureCallback(fileUri, errorMessage, userData);
             }
         }
-
 #if UNITY_5_5_OR_NEWER
         private IEnumerator UnloadSceneCo(string sceneAssetName, UnloadSceneCallbacks unloadSceneCallbacks, object userData)
         {

@@ -25,9 +25,28 @@ namespace Game.Core
         public bool HasTag(string tag, EGameplayTagCheckType checkType = EGameplayTagCheckType.Exact)
         {
             return m_Tags.Contains(tag) || checkType is EGameplayTagCheckType.Parent &&
-                m_Tags.Any(t => GameplayTagHelper.TagTree.IsTagChildOf(tag, t));
+                m_Tags.Any(t => IsTagChildOf(tag, t));
         }
 
+        public static bool IsTagChildOf(string tag, string checkTag)
+        {
+            var parts = tag.Split(FGameplayTag.Split);
+            var checkParts = checkTag.Split(FGameplayTag.Split);
+
+            if (parts.Length > checkParts.Length)
+                return false;
+
+            for (int i = 0; i < parts.Length; ++i)
+            {
+                if (parts[i] != checkParts[i])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        
         public void ClearAllTag()
         {
             m_Tags.Clear();

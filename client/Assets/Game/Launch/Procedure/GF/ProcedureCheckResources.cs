@@ -33,6 +33,10 @@ namespace Game.Client
                 return;
             }
 
+#if WEIXINMINIGAME
+            ChangeState<ProcedureLoadAssembly>(procedureOwner);
+
+            #else
             if (m_NeedUpdateResources)
             {
                 procedureOwner.SetData<VarInt32>("UpdateResourceCount", m_UpdateResourceCount);
@@ -42,6 +46,7 @@ namespace Game.Client
             {
                 ChangeState<ProcedureLoadAssembly>(procedureOwner);
             }
+#endif
         }
 
         private void OnCheckResourcesComplete(int movedCount, int removedCount, int updateCount, long updateTotalLength, long updateTotalZipLength)

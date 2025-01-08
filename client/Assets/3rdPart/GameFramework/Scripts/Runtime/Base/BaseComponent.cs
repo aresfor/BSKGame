@@ -96,11 +96,11 @@ namespace UnityGameFramework.Runtime
             get;
             set;
         }
-        public IYooResourceManager EditorYooResourceHelper
-        {
-            get;
-            set;
-        }
+        // public IYooResourceManager EditorYooResourceHelper
+        // {
+        //     get;
+        //     set;
+        // }
         
         /// <summary>
         /// 获取或设置游戏帧率。

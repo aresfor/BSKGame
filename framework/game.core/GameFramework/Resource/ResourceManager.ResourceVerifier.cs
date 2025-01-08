@@ -9,6 +9,7 @@ using GameFramework.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Game.Core;
 
 namespace GameFramework.Resource
 {
@@ -34,6 +35,7 @@ namespace GameFramework.Resource
             public GameFrameworkAction<ResourceName> ResourceVerifyFailure;
             public GameFrameworkAction<bool> ResourceVerifyComplete;
 
+            private IWXHelper m_WXHelper;
             /// <summary>
             /// 初始化资源校验器的新实例。
             /// </summary>
@@ -246,7 +248,7 @@ namespace GameFramework.Resource
                 FileStream fileStream = null;
                 try
                 {
-                    fileStream = new FileStream(readWriteVersionListTempFileName, FileMode.Create, FileAccess.Write);
+                    fileStream = new FileStream(readWriteVersionListTempFileName, FileMode.Create, FileAccess.ReadWrite);
                     LocalVersionList.Resource[] resources = m_VerifyInfos.Count > 0 ? new LocalVersionList.Resource[m_VerifyInfos.Count] : null;
                     if (resources != null)
                     {
@@ -287,6 +289,22 @@ namespace GameFramework.Resource
                         throw new GameFrameworkException("Serialize read-write version list failure.");
                     }
 
+#if WEIXINMINIGAME
+                    fileStream.Position = 0L;
+                    var length = fileStream.Length;
+                    //本地list，remotelist在versionlistprocessor
+                    using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                    {
+                        var binData = binaryReader.ReadBytes((int)fileStream.Length);
+                        m_WXHelper.WriteFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(),LocalVersionListFileName), binData, new WriteWXFileCallback(null, null));
+                        fileStream.Position = length;
+                    }
+                    
+                    // m_WXHelper.ReadFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(), RemoteVersionListFileName)
+                    //     , new LoadWXFileCallback((bytes => GameFrameworkLog.Error($"read after write, bytelength: {bytes.Length}, first: {bytes[0]}"))
+                    //         , ()=> GameFrameworkLog.Error("read after write fail")));
+#endif
+                    
                     if (fileStream != null)
                     {
                         fileStream.Dispose();
@@ -315,6 +333,12 @@ namespace GameFramework.Resource
                 }
 
                 File.Move(readWriteVersionListTempFileName, readWriteVersionListFileName);
+
+            }
+
+            public void SetWXHelper(IWXHelper wxHelper)
+            {
+                m_WXHelper = wxHelper;
             }
 
             private void OnLoadReadWriteVersionListSuccess(string fileUri, byte[] bytes, float duration, object userData)

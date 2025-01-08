@@ -8,6 +8,7 @@
 using GameFramework.Download;
 using System;
 using System.IO;
+using Game.Core;
 
 namespace GameFramework.Resource
 {
@@ -28,6 +29,7 @@ namespace GameFramework.Resource
             public GameFrameworkAction<string, string> VersionListUpdateSuccess;
             public GameFrameworkAction<string, string> VersionListUpdateFailure;
 
+            private IWXHelper m_WXHelper;
             /// <summary>
             /// 初始化版本资源列表处理器的新实例。
             /// </summary>
@@ -45,6 +47,10 @@ namespace GameFramework.Resource
                 VersionListUpdateFailure = null;
             }
 
+            public void SetWXHelper(IWXHelper wxHelper)
+            {
+                m_WXHelper = wxHelper;
+            }
             /// <summary>
             /// 关闭并清理版本资源列表处理器。
             /// </summary>
@@ -146,6 +152,7 @@ namespace GameFramework.Resource
                 string localVersionListFilePath = Utility.Path.GetRegularPath(Path.Combine(m_ResourceManager.m_ReadWritePath, RemoteVersionListFileName));
                 int dotPosition = RemoteVersionListFileName.LastIndexOf('.');
                 string latestVersionListFullNameWithCrc32 = Utility.Text.Format("{0}.{2:x8}.{1}", RemoteVersionListFileName.Substring(0, dotPosition), RemoteVersionListFileName.Substring(dotPosition + 1), m_VersionListHashCode);
+                //GameFrameworkLog.Error($"Updateverionlist, downloaduri: {Utility.Path.GetRemotePath(Path.Combine(m_ResourceManager.m_UpdatePrefixUri, latestVersionListFullNameWithCrc32))}");
                 m_DownloadManager.AddDownload(localVersionListFilePath, Utility.Path.GetRemotePath(Path.Combine(m_ResourceManager.m_UpdatePrefixUri, latestVersionListFullNameWithCrc32)), this);
             }
 
@@ -210,6 +217,24 @@ namespace GameFramework.Resource
                         fileStream.Position = 0L;
                         fileStream.SetLength(0L);
                         fileStream.Write(m_ResourceManager.m_CachedStream.GetBuffer(), 0, uncompressedLength);
+                        
+#if WEIXINMINIGAME
+                        fileStream.Position = 0L;
+                        //remotelist,本地list在resourceverifier
+                        using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                        {
+                            byte[] binData = binaryReader.ReadBytes(uncompressedLength);
+                            //GameFrameworkLog.Error($"filestream: {fileStream.Length}, ucompLength: {uncompressedLength}, firstChar: {binData[0]}");
+                            m_WXHelper.WriteFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(), RemoteVersionListFileName), binData, new WriteWXFileCallback(null, null));
+
+                            fileStream.Position = uncompressedLength;
+                        }
+                        // m_WXHelper.ReadFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(), RemoteVersionListFileName)
+                        //     , new LoadWXFileCallback((bytes => GameFrameworkLog.Error($"read after write, bytelength: {bytes.Length}, first: {bytes[0]}"))
+                        //     , ()=> GameFrameworkLog.Error("read after write fail")));
+
+
+#endif
                     }
 
                     if (VersionListUpdateSuccess != null)

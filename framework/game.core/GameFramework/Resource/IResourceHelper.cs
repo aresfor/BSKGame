@@ -5,6 +5,8 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using Game.Core;
+
 namespace GameFramework.Resource
 {
     /// <summary>
@@ -33,5 +35,8 @@ namespace GameFramework.Resource
         /// </summary>
         /// <param name="objectToRelease">要释放的资源。</param>
         void Release(object objectToRelease);
+
+        void SetWXHelper(IWXHelper wxHelper);
+
     }
 }

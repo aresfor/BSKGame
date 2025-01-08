@@ -20,6 +20,7 @@ namespace GameFramework.Resource
         private struct ResourceName : IComparable, IComparable<ResourceName>, IEquatable<ResourceName>
         {
             private static readonly Dictionary<ResourceName, string> s_ResourceFullNames = new Dictionary<ResourceName, string>();
+            private static readonly Dictionary<ResourceName, string> s_ResourceFullNamesWithHashCode = new Dictionary<ResourceName, string>();
 
             private readonly string m_Name;
             private readonly string m_Variant;
@@ -95,6 +96,21 @@ namespace GameFramework.Resource
                     s_ResourceFullNames.Add(this, fullName);
                     return fullName;
                 }
+            }
+
+            public string GetFullNameWithHashCode(int hashCode)
+            {
+                string fullName = null;
+                if (s_ResourceFullNamesWithHashCode.TryGetValue(this, out fullName))
+                {
+                    return fullName;
+                }
+
+                fullName = m_Variant != null
+                    ? Utility.Text.Format("{0}.{1}.{2:x8}.{3}", m_Name, m_Variant, hashCode, m_Extension)
+                    : Utility.Text.Format("{0}.{1:x8}.{2}", m_Name, hashCode, m_Extension);
+                s_ResourceFullNamesWithHashCode.Add(this, fullName);
+                return fullName;
             }
 
             public override string ToString()

@@ -20,17 +20,17 @@
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <OutputPath>bin\Output\</OutputPath>
-        <DefineConstants>LOG_DEBUG;LOG_WARNING;LOG_ERROR;LOG_PUBLISH</DefineConstants>
+        <DefineConstants>LOG_DEBUG;LOG_WARNING;LOG_ERROR;LOG_PUBLISH;WEIXINMINIGAME;</DefineConstants>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
         <OutputPath>bin\Output\</OutputPath>
-        <DefineConstants>LOG_WARNING;LOG_ERROR;LOG_PUBLISH</DefineConstants>
+        <DefineConstants>LOG_WARNING;LOG_ERROR;LOG_PUBLISH;WEIXINMINIGAME;</DefineConstants>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'ReleaseNPublish' ">
         <OutputPath>bin\Output\</OutputPath>
-        <DefineConstants>LOG_WARNING;LOG_ERROR;LOG_PUBLISH;SHIPPING_EXTERNAL</DefineConstants>
+        <DefineConstants>LOG_WARNING;LOG_ERROR;LOG_PUBLISH;SHIPPING_EXTERNAL;WEIXINMINIGAME;</DefineConstants>
         <Optimize>true</Optimize>
     </PropertyGroup>
 

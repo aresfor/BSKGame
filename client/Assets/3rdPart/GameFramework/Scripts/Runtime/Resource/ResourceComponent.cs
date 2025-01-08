@@ -12,6 +12,7 @@ using GameFramework.ObjectPool;
 using GameFramework.Resource;
 using System;
 using System.Collections.Generic;
+using Game.Core;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -99,6 +100,8 @@ namespace UnityGameFramework.Runtime
         [SerializeField]
         private int m_LoadResourceAgentHelperCount = 3;
 
+
+        private IWXHelper m_WXHelper;
         /// <summary>
         /// 获取资源只读路径。
         /// </summary>
@@ -588,6 +591,12 @@ namespace UnityGameFramework.Runtime
             base.Awake();
         }
 
+        // public void OverrideReadWritePathWithWXPath(string path)
+        // {
+        //     m_ResourceManager.SetReadWritePath(path);
+        //     InternalAddResourceAgentHelper();
+        //
+        // }
         private void Start()
         {
             BaseComponent baseComponent = GameEntry.GetComponent<BaseComponent>();
@@ -623,7 +632,11 @@ namespace UnityGameFramework.Runtime
             m_ResourceManager.ResourceUpdateSuccess += OnResourceUpdateSuccess;
             m_ResourceManager.ResourceUpdateFailure += OnResourceUpdateFailure;
             m_ResourceManager.ResourceUpdateAllComplete += OnResourceUpdateAllComplete;
-
+            
+            //wx
+            m_WXHelper = new WXHelper();
+            m_ResourceManager.SetWXHelper(m_WXHelper);
+            
             m_ResourceManager.SetReadOnlyPath(Application.streamingAssetsPath);
             if (m_ReadWritePathType == ReadWritePathType.TemporaryCache)
             {
@@ -670,6 +683,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
+            m_ResourceHelper.SetWXHelper(m_WXHelper);
             m_ResourceHelper.name = "Resource Helper";
             Transform transform = m_ResourceHelper.transform;
             transform.SetParent(this.transform);
@@ -683,7 +697,12 @@ namespace UnityGameFramework.Runtime
                 m_InstanceRoot.SetParent(gameObject.transform);
                 m_InstanceRoot.localScale = Vector3.one;
             }
+            
+            InternalAddResourceAgentHelper();
+        }
 
+        private void InternalAddResourceAgentHelper()
+        {
             for (int i = 0; i < m_LoadResourceAgentHelperCount; i++)
             {
                 AddLoadResourceAgentHelper(i);
@@ -1440,9 +1459,11 @@ namespace UnityGameFramework.Runtime
             transform.SetParent(m_InstanceRoot);
             transform.localScale = Vector3.one;
 
+            loadResourceAgentHelper.SetWXHelper(m_WXHelper);
             m_ResourceManager.AddLoadResourceAgentHelper(loadResourceAgentHelper);
         }
 
+        
         private void OnResourceVerifyStart(object sender, GameFramework.Resource.ResourceVerifyStartEventArgs e)
         {
             m_EventComponent.Fire(this, ResourceVerifyStartEventArgs.Create(e));

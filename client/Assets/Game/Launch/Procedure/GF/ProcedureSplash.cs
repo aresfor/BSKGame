@@ -16,7 +16,11 @@ namespace Game.Client
             // ...
 
             //ChangeState<ProcedurePreload>(procedureOwner);
-
+            
+// #if WEIXINMINIGAME
+//             GameEntry.Resource.OverrideReadWritePathWithWXPath();   
+// #endif
+//             
             if (GameEntry.Base.EditorResourceMode)
             {
                 // 编辑器模式

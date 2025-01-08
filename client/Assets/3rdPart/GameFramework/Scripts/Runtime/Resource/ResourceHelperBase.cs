@@ -5,6 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using Game.Core;
 using GameFramework.Resource;
 using UnityEngine;
 
@@ -36,5 +37,7 @@ namespace UnityGameFramework.Runtime
         /// </summary>
         /// <param name="objectToRelease">要释放的资源。</param>
         public abstract void Release(object objectToRelease);
+
+        public abstract void SetWXHelper(IWXHelper wxHelper);
     }
 }

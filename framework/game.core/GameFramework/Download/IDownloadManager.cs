@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Game.Core;
 
 namespace GameFramework.Download
 {
@@ -108,6 +109,8 @@ namespace GameFramework.Download
         /// <param name="downloadAgentHelper">要增加的下载代理辅助器。</param>
         void AddDownloadAgentHelper(IDownloadAgentHelper downloadAgentHelper);
 
+        void SetWXHelper(IWXHelper wxHelper);
+        
         /// <summary>
         /// 根据下载任务的序列编号获取下载任务的信息。
         /// </summary>

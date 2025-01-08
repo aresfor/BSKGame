@@ -8,6 +8,7 @@
 using GameFramework;
 using GameFramework.Download;
 using System.Collections.Generic;
+using Game.Core;
 using UnityEngine;
 
 namespace UnityGameFramework.Runtime
@@ -163,6 +164,9 @@ namespace UnityGameFramework.Runtime
             m_DownloadManager.DownloadFailure += OnDownloadFailure;
             m_DownloadManager.FlushSize = m_FlushSize;
             m_DownloadManager.Timeout = m_Timeout;
+            
+            //wx
+            m_DownloadManager.SetWXHelper(new WXHelper());
         }
 
         private void Start()
@@ -381,7 +385,7 @@ namespace UnityGameFramework.Runtime
             Transform transform = downloadAgentHelper.transform;
             transform.SetParent(m_InstanceRoot);
             transform.localScale = Vector3.one;
-
+            
             m_DownloadManager.AddDownloadAgentHelper(downloadAgentHelper);
         }
 

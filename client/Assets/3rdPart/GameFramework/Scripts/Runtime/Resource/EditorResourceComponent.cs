@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using Game.Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -784,6 +785,11 @@ namespace UnityGameFramework.Runtime
         public void SetDownloadManager(IDownloadManager downloadManager)
         {
             throw new NotSupportedException("SetDownloadManager");
+        }
+
+        public void SetWXHelper(IWXHelper wxHelper)
+        {
+            throw new NotSupportedException("SetWXHelper");
         }
 
         /// <summary>

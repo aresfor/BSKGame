@@ -143,11 +143,11 @@ namespace Game.Client
             private set;
         }
         
-        public static YooResourceComponent YooResource
-        {
-            get;
-            private set;
-        }
+        // public static YooResourceComponent YooResource
+        // {
+        //     get;
+        //     private set;
+        // }
 
         /// <summary>
         /// 获取场景组件。

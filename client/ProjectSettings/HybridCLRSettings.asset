@@ -38,7 +38,6 @@ MonoBehaviour:
   - UnityEngine.AnimationModule
   - UnityEngine.CoreModule
   - mscorlib
-  - YooAsset
   - game.core
   - ReGoap
   - BSK.Game.Core

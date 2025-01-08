@@ -1,6 +1,7 @@
 ﻿using GameFramework.Fsm;
 using GameFramework.Procedure;
 using UnityGameFramework.Runtime;
+using WeChatWASM;
 
 namespace Game.Client
 {
@@ -33,8 +34,11 @@ namespace Game.Client
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            // 运行一帧即切换到 Splash 展示流程
-            ChangeState<ProcedureSplash>(procedureOwner);
+            // 运行一帧开始初始化WX SDK，回调切换到splash流程
+            WX.InitSDK(code =>
+            {
+                ChangeState<ProcedureSplash>(procedureOwner);
+            });
         }
 
         private void InitLanguageSettings()

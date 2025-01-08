@@ -9,6 +9,7 @@ using GameFramework;
 using GameFramework.FileSystem;
 using GameFramework.Resource;
 using System;
+using Game.Core;
 using UnityEngine;
 #if UNITY_5_4_OR_NEWER
 using UnityEngine.Networking;
@@ -46,6 +47,7 @@ namespace UnityGameFramework.Runtime
         private EventHandler<LoadResourceAgentHelperLoadCompleteEventArgs> m_LoadResourceAgentHelperLoadCompleteEventHandler = null;
         private EventHandler<LoadResourceAgentHelperErrorEventArgs> m_LoadResourceAgentHelperErrorEventHandler = null;
 
+        private IWXHelper m_WXHelper;
         /// <summary>
         /// 加载资源代理辅助器异步加载资源更新事件。
         /// </summary>
@@ -149,7 +151,17 @@ namespace UnityGameFramework.Runtime
             }
 
             m_FileFullPath = fullPath;
+            
+// #if WEIXINMINIGAME
+//             if (fullPath.StartsWith("/idbfs"))
+//             {
+//                 fullPath = m_WXHelper.GetWXUserDataPrefix() + fullPath;
+//             }
+//             Log.Error($"loadfile fullpath: {fullPath}");
+// #endif
+
             m_FileAssetBundleCreateRequest = AssetBundle.LoadFromFileAsync(fullPath);
+            
         }
 
         /// <summary>
@@ -187,6 +199,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
+            
             m_BytesFullPath = fullPath;
 #if UNITY_5_4_OR_NEWER
             m_UnityWebRequest = UnityWebRequest.Get(Utility.Path.GetRemotePath(fullPath));
@@ -212,7 +225,7 @@ namespace UnityGameFramework.Runtime
                 Log.Fatal("Load resource agent helper handler is invalid.");
                 return;
             }
-
+            
             byte[] bytes = fileSystem.ReadFile(name);
             LoadResourceAgentHelperReadBytesCompleteEventArgs loadResourceAgentHelperReadBytesCompleteEventArgs = LoadResourceAgentHelperReadBytesCompleteEventArgs.Create(bytes);
             m_LoadResourceAgentHelperReadBytesCompleteEventHandler(this, loadResourceAgentHelperReadBytesCompleteEventArgs);
@@ -324,6 +337,15 @@ namespace UnityGameFramework.Runtime
             m_BytesAssetBundleCreateRequest = null;
             m_AssetBundleRequest = null;
             m_AsyncOperation = null;
+        }
+
+        public override void SetWXHelper(IWXHelper wxHelper)
+        {
+            if (wxHelper == null)
+            {
+                throw new GameFrameworkException("WXHelper is null");
+            }
+            m_WXHelper = wxHelper;
         }
 
         /// <summary>

@@ -344,6 +344,7 @@ MonoBehaviour:
   - Game.Client.ProcedureSplash
   - Game.Client.ProcedureUpdateResources
   - Game.Client.ProcedureUpdateVersion
+  - Game.Client.ProcedureVerifyResources
   m_EntranceProcedureTypeName: Game.Client.ProcedureLaunch
 --- !u!1 &1157571305
 GameObject:
@@ -675,7 +676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11497722, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_ResourceMode
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 11499388, guid: adb3eb1c35fcff14f89fba7b05c9d71c, type: 3}
       propertyPath: m_Enabled

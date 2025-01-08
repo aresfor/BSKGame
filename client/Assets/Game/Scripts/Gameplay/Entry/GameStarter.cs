@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.Core;
 using Game.Gameplay;
+using GameFramework;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -37,7 +38,15 @@ namespace Game.Client
         private void InitGame()
         {
             Application.runInBackground = true;
+            //
+            #if UNITY_WEBGL
+            //Looks like you are rendering without using requestAnimationFrame for the main loop.
+            //You should use 0 for the frame rate in emscripten_set_main_loop in order to use requestAnimationFrame
+            //, as that can greatly improve your frame rates!
+            Application.targetFrameRate = -1;
+            #else
             Application.targetFrameRate = 60;
+            #endif
             Application.lowMemory += OnLowMemory;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             
@@ -92,6 +101,10 @@ namespace Game.Client
         /// </summary>
         private void RegisterUtilities()
         {
+#if !UNITY_EDITOR
+            //关闭类型检查可以降低性能消耗
+            ReferencePool.EnableStrictCheck = false;
+#endif
             //@TEMP
             ResourceExtension.Initialize();
             TimeUtils.Initialize(new UnityTimeUtility());

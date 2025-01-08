@@ -2,214 +2,77 @@
 <UnityGameFramework>
   <ResourceCollection>
     <Resources>
-      <Resource Name="Configs/BuildInfo" LoadType="0" Packed="False" />
-      <Resource Name="Configs/GameplayTag" LoadType="0" Packed="False" />
-      <Resource Name="DataTables/Battle" LoadType="0" Packed="False" />
-      <Resource Name="DataTables/Entity" LoadType="0" Packed="True" />
-      <Resource Name="DataTables/Property" LoadType="0" Packed="False" />
-      <Resource Name="DataTables/Role" LoadType="0" Packed="False" />
-      <Resource Name="DataTables/Scene" LoadType="0" Packed="True" />
-      <Resource Name="DataTables/Skill" LoadType="0" Packed="False" />
-      <Resource Name="DataTables/UIForm" LoadType="0" Packed="True" />
-      <Resource Name="DataTables/VFX" LoadType="0" Packed="False" />
-      <Resource Name="DLL/Assembly-CSharp" LoadType="0" Packed="False" />
-      <Resource Name="DLL/BSK" LoadType="0" Packed="False" />
-      <Resource Name="DLL/game" LoadType="0" Packed="False" />
-      <Resource Name="DLL/GameFramework" LoadType="0" Packed="False" />
-      <Resource Name="DLL/mscorlib" LoadType="0" Packed="False" />
-      <Resource Name="DLL/Newtonsoft" LoadType="0" Packed="False" />
-      <Resource Name="DLL/ReGoap" LoadType="0" Packed="False" />
-      <Resource Name="DLL/System" LoadType="0" Packed="False" />
-      <Resource Name="DLL/Unity" LoadType="0" Packed="False" />
-      <Resource Name="DLL/UnityEngine" LoadType="0" Packed="False" />
-      <Resource Name="DLL/UnityGameFramework" LoadType="0" Packed="False" />
-      <Resource Name="DLL/YooAsset" LoadType="0" Packed="False" />
-      <Resource Name="Entities/Board" LoadType="0" Packed="False" />
-      <Resource Name="Entities/Lattice" LoadType="0" Packed="False" />
-      <Resource Name="Entities/Player" LoadType="0" Packed="False" />
-      <Resource Name="Entities/Role" LoadType="0" Packed="False" />
-      <Resource Name="Entities/RoleController" LoadType="0" Packed="False" />
-      <Resource Name="Entities/TileMapNode" LoadType="0" Packed="False" />
-      <Resource Name="GameFramework" LoadType="0" Packed="True" />
-      <Resource Name="Prefab/DefaultPlayer" LoadType="0" Packed="False" />
-      <Resource Name="Prefab/Role/DefaultEnemyRole" LoadType="0" Packed="False" />
-      <Resource Name="Prefab/Role/DefaultRemoteRole" LoadType="0" Packed="False" />
-      <Resource Name="Prefab/Role/DefaultRole" LoadType="0" Packed="False" />
-      <Resource Name="Scenes/BattleStorm/BattleStorm" LoadType="0" Packed="False" />
-      <Resource Name="Scenes/BattleStorm/Depth" LoadType="0" Packed="False" />
-      <Resource Name="Scenes/BattleStorm/M_BattleStromBG" LoadType="0" Packed="False" />
-      <Resource Name="Scenes/Launch" LoadType="0" Packed="True" />
-      <Resource Name="Scenes/Main" LoadType="0" Packed="False" />
-      <Resource Name="Scenes/Menu" LoadType="0" Packed="True" />
-      <Resource Name="Scenes/Sample" LoadType="0" Packed="False" />
-      <Resource Name="Sprite/Material/Stone_floor_09" LoadType="0" Packed="False" />
-      <Resource Name="Sprite/Sprite/Stone_floor_09" LoadType="0" Packed="False" />
-      <Resource Name="Sprite/Sprite/Stone_floor_UnAvailable" LoadType="0" Packed="False" />
-      <Resource Name="Textures/base-map" LoadType="0" Packed="False" />
-      <Resource Name="Textures/normal-map" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/body_1" LoadType="0" Packed="True" />
-      <Resource Name="Tile/Tile/body_2" LoadType="0" Packed="True" />
-      <Resource Name="Tile/Tile/body_3" LoadType="0" Packed="True" />
-      <Resource Name="Tile/Tile/body_4" LoadType="0" Packed="True" />
-      <Resource Name="Tile/Tile/body_5" LoadType="0" Packed="True" />
-      <Resource Name="Tile/Tile/body_6" LoadType="0" Packed="True" />
-      <Resource Name="Tile/Tile/body_7" LoadType="0" Packed="True" />
-      <Resource Name="Tile/Tile/body_8" LoadType="0" Packed="True" />
-      <Resource Name="Tile/Tile/chest_1" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_2" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_3" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_4" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_61" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_62" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_63" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_64" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_65" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_66" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_67" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_68" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_69" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_70" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_71" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_72" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_73" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_74" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_75" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_76" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_77" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_78" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_79" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_80" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_81" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_82" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_83" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_84" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_85" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_86" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_87" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_88" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_89" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_90" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_91" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/chest_92" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/StoneFloor/Stone_floor" LoadType="0" Packed="False" />
-      <Resource Name="Tile/Tile/StoneFloor/Stone_floor_UnAvailable" LoadType="0" Packed="False" />
-      <Resource Name="UI/UIForms/Battle/ActionItem" LoadType="0" Packed="False" />
-      <Resource Name="UI/UIForms/Battle/BattleMainForm" LoadType="0" Packed="False" />
-      <Resource Name="UI/UIForms/Menu/MenuForm" LoadType="0" Packed="True" />
-      <Resource Name="UI/UIForms/Menu/SelectBattleItem" LoadType="0" Packed="False" />
-      <Resource Name="UI/UIForms/UpdateResource/UIUpdateResourceForm" LoadType="0" Packed="True" />
-      <Resource Name="VFX/TestVFX" LoadType="0" Packed="False" />
+      <Resource Name="Configs/GameplayTag" LoadType="1" Packed="False" />
+      <Resource Name="DataTables/Battle" LoadType="1" Packed="False" />
+      <Resource Name="DataTables/Entity" LoadType="1" Packed="True" />
+      <Resource Name="DataTables/Property" LoadType="1" Packed="False" />
+      <Resource Name="DataTables/Role" LoadType="1" Packed="False" />
+      <Resource Name="DataTables/Scene" LoadType="1" Packed="True" />
+      <Resource Name="DataTables/Skill" LoadType="1" Packed="False" />
+      <Resource Name="DataTables/UIForm" LoadType="1" Packed="True" />
+      <Resource Name="DataTables/VFX" LoadType="1" Packed="False" />
+      <Resource Name="DLL/Assembly-CSharp" LoadType="1" Packed="False" />
+      <Resource Name="DLL/BSK" LoadType="1" Packed="False" />
+      <Resource Name="DLL/game" LoadType="1" Packed="False" />
+      <Resource Name="DLL/GameFramework" LoadType="1" Packed="False" />
+      <Resource Name="DLL/mscorlib" LoadType="1" Packed="False" />
+      <Resource Name="DLL/Newtonsoft" LoadType="1" Packed="False" />
+      <Resource Name="DLL/ReGoap" LoadType="1" Packed="False" />
+      <Resource Name="DLL/System" LoadType="1" Packed="False" />
+      <Resource Name="DLL/Unity" LoadType="1" Packed="False" />
+      <Resource Name="DLL/UnityEngine" LoadType="1" Packed="False" />
+      <Resource Name="DLL/UnityGameFramework" LoadType="1" Packed="False" />
+      <Resource Name="Entities/Player" LoadType="1" Packed="False" />
+      <Resource Name="Entities/Role" LoadType="1" Packed="False" />
+      <Resource Name="Entities/RoleController" LoadType="1" Packed="False" />
+      <Resource Name="Prefab/DefaultPlayer" LoadType="1" Packed="False" />
+      <Resource Name="Scenes/Launch" LoadType="1" Packed="True" />
+      <Resource Name="UI/UIForms/Menu/MenuForm" LoadType="1" Packed="True" />
+      <Resource Name="UI/UIForms/Menu/SelectBattleItem" LoadType="1" Packed="True" />
+      <Resource Name="UI/UIForms/UpdateResource/UIUpdateResourceForm" LoadType="1" Packed="True" />
+      <Resource Name="VFX/TestVFX" LoadType="1" Packed="False" />
     </Resources>
     <Assets>
-      <Asset Guid="021a4b284a7112747b8cc43f933b4208" ResourceName="Tile/Tile/body_5" />
       <Asset Guid="082c91fb824dbad41a70b68eaae1b613" ResourceName="Configs/GameplayTag" />
       <Asset Guid="0a82dc0ff9397ea45b083026f6f636e4" ResourceName="DataTables/Role" />
       <Asset Guid="0bf8d024e3bb6ae4f946d50dae7b14c6" ResourceName="DLL/Newtonsoft" />
       <Asset Guid="0d46fa11cb002604a8fce0c2e0e7da9f" ResourceName="DataTables/VFX" />
       <Asset Guid="0fefe93f2e57a7d45b87b52f17ead6c8" ResourceName="UI/UIForms/Menu/SelectBattleItem" />
       <Asset Guid="126811b888c196f4b809b4fe1ab5701b" ResourceName="DLL/UnityGameFramework" />
-      <Asset Guid="1603a53d57c2d784ba4e729118fe2e2e" ResourceName="Tile/Tile/chest_86" />
-      <Asset Guid="191b2a5ac0f367a45814316dcc87725b" ResourceName="Tile/Tile/body_3" />
-      <Asset Guid="1f8dd6e2627688342a24687667531c91" ResourceName="Tile/Tile/chest_1" />
       <Asset Guid="20e1841eb61ab19428f6913d07c7caa5" ResourceName="DLL/BSK" />
-      <Asset Guid="2209adb3f4edfc64d87b1feff475fb6a" ResourceName="Tile/Tile/body_7" />
-      <Asset Guid="229bf96312d21c448b58c108a7950efa" ResourceName="Tile/Tile/chest_64" />
       <Asset Guid="23ac4694b269b2943b34d633da7701e0" ResourceName="VFX/TestVFX" />
       <Asset Guid="248209a2a73773446be01e199d3f8c06" ResourceName="DLL/game" />
       <Asset Guid="2839c5b9728bd1d48a33c60fc55edc07" ResourceName="DLL/ReGoap" />
       <Asset Guid="2bd9233589eb44e4a86ece43984ca0cd" ResourceName="DataTables/Scene" />
-      <Asset Guid="2ca9c9a75eff4fa4e81c7d1b6567dddc" ResourceName="Tile/Tile/chest_75" />
-      <Asset Guid="3c45ad33e1cddfb43aebd1e902d3275e" ResourceName="Tile/Tile/chest_77" />
-      <Asset Guid="3de4e98f90123ff4fa25fd82091321cb" ResourceName="Tile/Tile/chest_69" />
-      <Asset Guid="400eca41c71dd4c4183ee86713f8b9fa" ResourceName="Tile/Tile/chest_2" />
-      <Asset Guid="429c4c1a8c1468c49846bb2c027c1846" ResourceName="Tile/Tile/chest_66" />
       <Asset Guid="490d49229d3408b429532667a5697cb1" ResourceName="DLL/Unity" />
-      <Asset Guid="499d1ce70c56d0f479a799be640f14ba" ResourceName="Tile/Tile/body_1" />
-      <Asset Guid="4bb77a87893eefb43ba5a076ef27843e" ResourceName="Tile/Tile/chest_84" />
-      <Asset Guid="4e048612712abad4c8d11eae90375553" ResourceName="Prefab/Role/DefaultRemoteRole" />
-      <Asset Guid="4e3b1d4462c11354e8dfea9bc23d84a7" ResourceName="Tile/Tile/chest_89" />
       <Asset Guid="52741e8972a8106409aa32955576ef79" ResourceName="DLL/BSK" />
-      <Asset Guid="52a406122ba400d4d8489a9c8b2de6e6" ResourceName="Tile/Tile/chest_92" />
-      <Asset Guid="56e0325b6bdc34d4589107c410b65eb9" ResourceName="Tile/Tile/StoneFloor/Stone_floor_UnAvailable" />
       <Asset Guid="6679823fce2729847818e5c9c01a8785" ResourceName="DataTables/Skill" />
-      <Asset Guid="69fa089e89414a943953bf03bfe3d3dd" ResourceName="Tile/Tile/chest_80" />
       <Asset Guid="6c39114400a796e45935cf5de95ac734" ResourceName="UI/UIForms/UpdateResource/UIUpdateResourceForm" />
-      <Asset Guid="6cac73f2a8fa6ce42b25c745285032ec" ResourceName="Sprite/Sprite/Stone_floor_09" />
-      <Asset Guid="6df4a69ac6009054ba3c6ac528c5af3c" ResourceName="Tile/Tile/chest_91" />
-      <Asset Guid="6e054a262e7bcbe458af9965d0b6c93b" ResourceName="Scenes/BattleStorm/M_BattleStromBG" />
-      <Asset Guid="6e6ce57affabd6546a2abe00531cf973" ResourceName="Tile/Tile/chest_88" />
-      <Asset Guid="6f3b764d69dc4d04d8e2ce516d2dfaa3" ResourceName="Sprite/Material/Stone_floor_09" />
-      <Asset Guid="707c95a5ff78a9a4dbfef1cdce6cb52e" ResourceName="Textures/normal-map" />
-      <Asset Guid="739a36f0ecc073748b362483d3864066" ResourceName="Tile/Tile/chest_61" />
-      <Asset Guid="77ec33443978b784bb2d23504ce03bb4" ResourceName="Tile/Tile/chest_62" />
-      <Asset Guid="7926c0634f65528498c0957c0775b5a1" ResourceName="Tile/Tile/chest_90" />
       <Asset Guid="7dd899d3623c15944a17eb37d9b84800" ResourceName="DataTables/Battle" />
-      <Asset Guid="7e4badfd39456664f8de4d5a1f5aafd9" ResourceName="Scenes/BattleStorm/Depth" />
-      <Asset Guid="7ebcd6810896c91449b016e0b5aeee47" ResourceName="Prefab/Role/DefaultEnemyRole" />
-      <Asset Guid="8003af8662ddf774985a89b0138eade4" ResourceName="DLL/YooAsset" />
-      <Asset Guid="8199fa762c3ca81449230f7b4ad3b905" ResourceName="Tile/Tile/body_6" />
       <Asset Guid="844fed761489d5146b5b7a094dd7703b" ResourceName="DLL/BSK" />
-      <Asset Guid="84dec5f08b9c5924cb44c544c896eead" ResourceName="Tile/Tile/chest_63" />
-      <Asset Guid="85751cf9e6476ce4a83f6270c1ad6694" ResourceName="Tile/Tile/body_8" />
       <Asset Guid="865381280ca59924d93ec3eece60e8c8" ResourceName="Prefab/DefaultPlayer" />
-      <Asset Guid="8cb7e6c1cadcc324fac78149cc44f10e" ResourceName="Textures/base-map" />
       <Asset Guid="8d3b26ad534437a48916d1f52e8a38f6" ResourceName="DLL/game" />
-      <Asset Guid="9fc0d4010bbf28b4594072e72b8655ab" ResourceName="Scenes/Sample" />
-      <Asset Guid="a2d4382fd5e33b24696a3b9a94f28f2f" ResourceName="Tile/Tile/chest_4" />
-      <Asset Guid="a4dd5cb6c10953b48b7dd7aa6e7362d9" ResourceName="Entities/TileMapNode" />
-      <Asset Guid="a62c9d575a7c3814781296a512dd553c" ResourceName="Tile/Tile/chest_82" />
-      <Asset Guid="a8a55f7a1638a524bb13506cb6132aa7" ResourceName="Tile/Tile/chest_72" />
       <Asset Guid="a96f07fb5e19cea4cb188a1a81c0c624" ResourceName="DLL/mscorlib" />
       <Asset Guid="a984af5c830061c4c8d9f16f84d64362" ResourceName="DataTables/Entity" />
-      <Asset Guid="aa9735f69028ac34d9d69f739d023c09" ResourceName="Tile/Tile/chest_76" />
-      <Asset Guid="adb3eb1c35fcff14f89fba7b05c9d71c" ResourceName="GameFramework" />
       <Asset Guid="af31f3023684a2b4d8ee2b2edc8504af" ResourceName="DLL/BSK" />
-      <Asset Guid="b030e83ef44da924d96ba07765e36eb5" ResourceName="Tile/Tile/chest_71" />
-      <Asset Guid="b10ff774eb16da840bf4beacff95c9b3" ResourceName="Tile/Tile/chest_3" />
-      <Asset Guid="b1a372f73ce05da48a49be71c5173bbe" ResourceName="Prefab/Role/DefaultRole" />
       <Asset Guid="b734e65b3b10c0f4db6075a0c5a91046" ResourceName="DataTables/UIForm" />
-      <Asset Guid="b92b682f02006d646b0d9fc1340d216f" ResourceName="Tile/Tile/chest_78" />
       <Asset Guid="ba1bd7202bb6122488c42c49539875c9" ResourceName="DataTables/Property" />
-      <Asset Guid="bbd365e3b669609409a16e9cd9f0a340" ResourceName="Entities/Lattice" />
-      <Asset Guid="bc22acd2da60e91439559e42b5686389" ResourceName="Tile/Tile/chest_65" />
-      <Asset Guid="bc2b6e345c6053749a5feff6019f341b" ResourceName="Configs/BuildInfo" />
-      <Asset Guid="bf63f1b1c0d5a6b4e9032e2ed0237d99" ResourceName="Sprite/Sprite/Stone_floor_UnAvailable" />
       <Asset Guid="c027ac5d28971094ca5ab88e5ee88ef6" ResourceName="DLL/BSK" />
       <Asset Guid="c077272529829ed47b19b6b462c1af7d" ResourceName="DLL/UnityEngine" />
-      <Asset Guid="c0a7969c0b09ad749bf125c77d243038" ResourceName="Scenes/BattleStorm/Depth" />
-      <Asset Guid="c0facca20d1c53b4bb5c53baf1365bb6" ResourceName="Tile/Tile/chest_74" />
       <Asset Guid="c18bce30796eeb14e9c0e358c23e13de" ResourceName="DLL/BSK" />
-      <Asset Guid="c3fde92358a1568458d957b85f5308c6" ResourceName="Tile/Tile/body_2" />
       <Asset Guid="c43f41974f844f4438a9646539444af8" ResourceName="Entities/Role" />
       <Asset Guid="c8d5644a2392b7a4fb6ffd1a4b7745d1" ResourceName="DLL/BSK" />
-      <Asset Guid="ca197f8b2dd2b6f449a6e4e82ed5b447" ResourceName="Tile/Tile/chest_87" />
-      <Asset Guid="cc65d4c850019204aa02f5ec6145fa10" ResourceName="Tile/Tile/chest_73" />
       <Asset Guid="ccd0cc97e3fcb9c438829da229591998" ResourceName="DLL/UnityEngine" />
-      <Asset Guid="ccf6ef694f4eaeb41a39bbe74af1beb7" ResourceName="Entities/Board" />
-      <Asset Guid="ce7875eb6c92d6040ac0e79298d5e2c0" ResourceName="Tile/Tile/StoneFloor/Stone_floor" />
-      <Asset Guid="d46ef70496c456e48ac7d6027a1ab8b3" ResourceName="Tile/Tile/chest_67" />
-      <Asset Guid="d4b41ef1253349647a8f85e1677a6656" ResourceName="UI/UIForms/Battle/ActionItem" />
       <Asset Guid="d4c17d121e39fe8439b7807ae8ebefae" ResourceName="DLL/BSK" />
-      <Asset Guid="d6287dfe81f0ab146909eb378b3e972d" ResourceName="Scenes/Main" />
-      <Asset Guid="db0e86d1d4b07004abc20ccc4d9bff35" ResourceName="Tile/Tile/chest_85" />
-      <Asset Guid="dbf36944c25df9944b836a67496705d5" ResourceName="Tile/Tile/chest_68" />
-      <Asset Guid="dc041bb1b4c2873498ba1d0fa08c68b8" ResourceName="Tile/Tile/chest_83" />
-      <Asset Guid="dedbf2422b65d7b43a72bbe31be363b8" ResourceName="UI/UIForms/Battle/BattleMainForm" />
       <Asset Guid="df55abb29e2602944a813c592ebbf798" ResourceName="DLL/System" />
-      <Asset Guid="e2ed85bd294756d458cb34b01971fa85" ResourceName="Tile/Tile/body_4" />
-      <Asset Guid="eb17f714ae0672d408e56b634fcc438f" ResourceName="Scenes/BattleStorm/BattleStorm" />
       <Asset Guid="eb948056f01be664aa89948e0e75fe79" ResourceName="DLL/BSK" />
       <Asset Guid="ec25ef320e1f0544491c34590f870c6e" ResourceName="Entities/Player" />
       <Asset Guid="f0c92fa3ab412f547a10f7a4da5b128a" ResourceName="DLL/GameFramework" />
       <Asset Guid="f200af20caf77ac4ea0fe7c029c58df7" ResourceName="UI/UIForms/Menu/MenuForm" />
-      <Asset Guid="f2e9c118df11c83468539f3634d2a984" ResourceName="Tile/Tile/chest_81" />
       <Asset Guid="f6a58bd9266333e4392b0ba4707a1a10" ResourceName="Scenes/Launch" />
-      <Asset Guid="f76120db1002cce41ae55c9b0727bc56" ResourceName="Scenes/Menu" />
-      <Asset Guid="fa670347cd0aeb54ca3f3373de5cc628" ResourceName="Tile/Tile/chest_79" />
       <Asset Guid="fae0099399c36d94580366660bd9198a" ResourceName="DLL/Assembly-CSharp" />
       <Asset Guid="fbcdfc6d6ed1a80468bdd08283ed0dfa" ResourceName="Entities/RoleController" />
       <Asset Guid="fcf2d4504e9679a4aa6094c92c8565cc" ResourceName="DLL/System" />
-      <Asset Guid="ff79bc94524a8bd41b8c45b5a7f743db" ResourceName="Tile/Tile/chest_70" />
     </Assets>
   </ResourceCollection>
 </UnityGameFramework>

@@ -73,7 +73,7 @@ namespace Game.Client
             }
             else
             {
-                ChangeState<ProcedureCheckResources>(procedureOwner);
+                ChangeState<ProcedureVerifyResources>(procedureOwner);
             }
         }
 

@@ -93,7 +93,6 @@ MonoBehaviour:
     - UnityEngine.AnimationModule.dll
     - UnityEngine.CoreModule.dll
     - mscorlib.dll
-    - YooAsset.dll
     - game.core.dll
     - ReGoap.dll
     - BSK.Game.Core.dll

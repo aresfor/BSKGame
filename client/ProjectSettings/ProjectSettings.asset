@@ -651,7 +651,7 @@ PlayerSettings:
   scriptingDefineSymbols:
     Android: ENABLE_LOG;UNITY_UOS_SECURITY
     Standalone: ENABLE_LOG;FLOWCANVAS;NODECANVAS;ENABLE_HYBRIDCLR;UNITY_UOS_SECURITY
-    WebGL: ENABLE_LOG;ENABLE_HYBRIDCLR;FLOWCANVAS;NODECANVAS;UNITY_UOS_SECURITY
+    WebGL: ENABLE_LOG;ENABLE_HYBRIDCLR;FLOWCANVAS;NODECANVAS;UNITY_UOS_SECURITY;WEIXINMINIGAME
     Windows Store Apps: ENABLE_LOG
     iPhone: ENABLE_LOG;UNITY_UOS_SECURITY
   additionalCompilerArguments: {}
@@ -663,7 +663,7 @@ PlayerSettings:
     WebGL: 1
   il2cppCodeGeneration:
     Standalone: 0
-    WebGL: 1
+    WebGL: 0
   managedStrippingLevel:
     EmbeddedLinux: 1
     GameCoreScarlett: 1

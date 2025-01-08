@@ -10,6 +10,7 @@ using GameFramework.ObjectPool;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Game.Core;
 
 namespace GameFramework.Resource
 {
@@ -33,10 +34,10 @@ namespace GameFramework.Resource
             private readonly Dictionary<string, object> m_SceneToAssetMap;
             private readonly LoadBytesCallbacks m_LoadBytesCallbacks;
             private readonly byte[] m_CachedHashBytes;
-            private IObjectPool<AssetObject> m_AssetPool;
-            public IObjectPool<AssetObject> AssetPool=>m_AssetPool;
-            private IObjectPool<ResourceObject> m_ResourcePool;
-            public IObjectPool<ResourceObject> ResourcePool=>m_ResourcePool;
+            private ObjectPool.IObjectPool<AssetObject> m_AssetPool;
+            public ObjectPool.IObjectPool<AssetObject> AssetPool=>m_AssetPool;
+            private ObjectPool.IObjectPool<ResourceObject> m_ResourcePool;
+            public ObjectPool.IObjectPool<ResourceObject> ResourcePool=>m_ResourcePool;
             
 
             /// <summary>
@@ -269,7 +270,7 @@ namespace GameFramework.Resource
                     throw new GameFrameworkException("You must set object pool manager first.");
                 }
 
-                LoadResourceAgent agent = new LoadResourceAgent(loadResourceAgentHelper, resourceHelper, this, readOnlyPath, readWritePath, decryptResourceCallback ?? DefaultDecryptResourceCallback);
+                LoadResourceAgent agent = new LoadResourceAgent(m_ResourceManager, loadResourceAgentHelper, resourceHelper, this, readOnlyPath, readWritePath, decryptResourceCallback ?? DefaultDecryptResourceCallback);
                 m_TaskPool.AddAgent(agent);
             }
 
@@ -357,6 +358,7 @@ namespace GameFramework.Resource
                 if (!resourceInfo.Ready)
                 {
                     m_ResourceManager.UpdateResource(resourceInfo.ResourceName);
+                    
                 }
             }
 
@@ -873,18 +875,37 @@ namespace GameFramework.Resource
                 }
 
                 AssetInfo assetInfo = m_ResourceManager.GetAssetInfo(assetName);
+                
                 if (assetInfo == null)
                 {
+                    GameFrameworkLog.Error($"assetInfo null, assetName: {assetName}");
+                    foreach (var mAssetInfo in m_ResourceManager.m_AssetInfos)
+                    {
+                        GameFrameworkLog.Warning($"have assetInfo: {mAssetInfo.Value.AssetName}");
+
+                    }
                     return false;
                 }
 
                 resourceInfo = m_ResourceManager.GetResourceInfo(assetInfo.ResourceName);
                 if (resourceInfo == null)
                 {
+                    GameFrameworkLog.Error($"resourceInfo null, assetName: {assetName}");
+                    foreach (var mResourceInfo in m_ResourceManager.m_ResourceInfos)
+                    {
+                        GameFrameworkLog.Warning($"have resourceInfo: {mResourceInfo.Value.ResourceName}");
+
+                    }
                     return false;
                 }
 
                 dependencyAssetNames = assetInfo.GetDependencyAssetNames();
+                if (false == resourceInfo.Ready && m_ResourceManager.m_ResourceMode != ResourceMode.UpdatableWhilePlaying)
+                {
+                    GameFrameworkLog.Error($"resource not ready null, assetName: {assetName}");
+                    
+                }
+
                 return m_ResourceManager.m_ResourceMode == ResourceMode.UpdatableWhilePlaying ? true : resourceInfo.Ready;
             }
 

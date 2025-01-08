@@ -4,6 +4,8 @@ using Newtonsoft.Json;
 namespace Game.Core
 {
 
+    //@TODO: 目前运行时不需要tag树，后续优化tag实现再说
+    [Obsolete]
     public class GameplayTagTree
     {
         [JsonProperty] private Dictionary<string, object> m_TagDic = new Dictionary<string, object>();
@@ -40,24 +42,25 @@ namespace Game.Core
             return true;
         }
 
-        public bool IsTagChildOf(string tag, string checkTag)
-        {
-            var parts = tag.Split(FGameplayTag.Split);
-            var checkParts = checkTag.Split(FGameplayTag.Split);
-
-            if (parts.Length > checkParts.Length)
-                return false;
-
-            for (int i = 0; i < parts.Length; ++i)
-            {
-                if (parts[i] != checkParts[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        //@TODO: 目前运行时不需要tag树，后续优化tag实现再说
+        // public bool IsTagChildOf(string tag, string checkTag)
+        // {
+        //     var parts = tag.Split(FGameplayTag.Split);
+        //     var checkParts = checkTag.Split(FGameplayTag.Split);
+        //
+        //     if (parts.Length > checkParts.Length)
+        //         return false;
+        //
+        //     for (int i = 0; i < parts.Length; ++i)
+        //     {
+        //         if (parts[i] != checkParts[i])
+        //         {
+        //             return false;
+        //         }
+        //     }
+        //
+        //     return true;
+        // }
 
     }
 }

@@ -43,7 +43,7 @@ namespace GameFramework
                 {
                     return path;
                 }
-                GameFrameworkLog.Info($"Path: {path}");
+                //GameFrameworkLog.Info($"Path: {path}");
                 string regularPath = GetRegularPath(path);
                 if (regularPath == null)
                 {

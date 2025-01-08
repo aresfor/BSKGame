@@ -11,6 +11,7 @@ using GameFramework.ObjectPool;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Game.Core;
 
 namespace GameFramework.Resource
 {
@@ -76,6 +77,7 @@ namespace GameFramework.Resource
         private EventHandler<ResourceUpdateFailureEventArgs> m_ResourceUpdateFailureEventHandler;
         private EventHandler<ResourceUpdateAllCompleteEventArgs> m_ResourceUpdateAllCompleteEventHandler;
 
+        private IWXHelper m_WXHelper;
         /// <summary>
         /// 初始化资源管理器的新实例。
         /// </summary>
@@ -933,6 +935,9 @@ namespace GameFramework.Resource
                     m_ResourcePackVersionListSerializer = new ResourcePackVersionListSerializer();
 
                     m_VersionListProcessor = new VersionListProcessor(this);
+                    #if WEIXINMINIGAME
+                    m_VersionListProcessor.SetWXHelper(m_WXHelper);
+                    #endif
                     m_VersionListProcessor.VersionListUpdateSuccess += OnVersionListProcessorUpdateSuccess;
                     m_VersionListProcessor.VersionListUpdateFailure += OnVersionListProcessorUpdateFailure;
 
@@ -1023,6 +1028,18 @@ namespace GameFramework.Resource
             }
         }
 
+        public void SetWXHelper(IWXHelper wxHelper)
+        {
+            if (wxHelper == null)
+            {
+                throw new GameFrameworkException("wx helper is invalid.");
+            }
+
+            m_WXHelper = wxHelper;
+            m_ResourceUpdater?.SetWXHelper(wxHelper);
+        }
+        
+
         /// <summary>
         /// 设置解密资源回调函数。
         /// </summary>
@@ -1055,6 +1072,11 @@ namespace GameFramework.Resource
             }
 
             m_ResourceHelper = resourceHelper;
+
+            if (m_ResourceUpdater != null)
+            {
+                
+            }
         }
 
         /// <summary>

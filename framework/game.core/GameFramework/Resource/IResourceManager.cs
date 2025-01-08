@@ -10,6 +10,7 @@ using GameFramework.FileSystem;
 using GameFramework.ObjectPool;
 using System;
 using System.Collections.Generic;
+using Game.Core;
 
 namespace GameFramework.Resource
 {
@@ -405,6 +406,8 @@ namespace GameFramework.Resource
         /// </summary>
         /// <param name="downloadManager">下载管理器。</param>
         void SetDownloadManager(IDownloadManager downloadManager);
+
+        public void SetWXHelper(IWXHelper wxHelper);
 
         /// <summary>
         /// 设置解密资源回调函数。

@@ -7,6 +7,7 @@
 
 using System;
 using System.IO;
+using Game.Core;
 
 namespace GameFramework.Download
 {
@@ -32,6 +33,7 @@ namespace GameFramework.Download
             public GameFrameworkAction<DownloadAgent, long> DownloadAgentSuccess;
             public GameFrameworkAction<DownloadAgent, string> DownloadAgentFailure;
 
+            private IWXHelper m_WXHelper;
             /// <summary>
             /// 初始化下载代理的新实例。
             /// </summary>
@@ -43,6 +45,7 @@ namespace GameFramework.Download
                     throw new GameFrameworkException("Download agent helper is invalid.");
                 }
 
+                m_WXHelper = null;
                 m_Helper = downloadAgentHelper;
                 m_Task = null;
                 m_FileStream = null;
@@ -57,6 +60,15 @@ namespace GameFramework.Download
                 DownloadAgentUpdate = null;
                 DownloadAgentSuccess = null;
                 DownloadAgentFailure = null;
+            }
+
+            public void SetWXHelper(IWXHelper wxHelper)
+            {
+                if (wxHelper == null)
+                {
+                    throw new GameFrameworkException("wx helper is invalid.");
+                }
+                m_WXHelper = wxHelper;
             }
 
             /// <summary>
@@ -334,8 +346,13 @@ namespace GameFramework.Download
                 {
                     File.Delete(m_Task.DownloadPath);
                 }
-
                 File.Move(Utility.Text.Format("{0}.download", m_Task.DownloadPath), m_Task.DownloadPath);
+
+// #if WEIXINMINIGAME
+//                 m_WXHelper.MoveFile(Utility.Text.Format("{0}.download", m_Task.DownloadPath), m_Task.DownloadPath);           
+// #else
+//                 File.Move(Utility.Text.Format("{0}.download", m_Task.DownloadPath), m_Task.DownloadPath);
+// #endif
 
                 m_Task.Status = DownloadTaskStatus.Done;
 
@@ -371,5 +388,7 @@ namespace GameFramework.Download
                 m_Task.Done = true;
             }
         }
+
+
     }
 }

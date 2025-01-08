@@ -10,6 +10,7 @@ using GameFramework.FileSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Game.Core;
 
 namespace GameFramework.Resource
 {
@@ -55,6 +56,7 @@ namespace GameFramework.Resource
             public GameFrameworkAction<ResourceGroup, bool> ResourceUpdateComplete;
             public GameFrameworkAction ResourceUpdateAllComplete;
 
+            private IWXHelper m_WXHelper; 
             /// <summary>
             /// 初始化资源更新器的新实例。
             /// </summary>
@@ -71,6 +73,7 @@ namespace GameFramework.Resource
                 m_CachedHashBytes = new byte[CachedHashBytesLength];
                 m_CachedBytes = new byte[CachedBytesLength];
                 m_DownloadManager = null;
+                m_WXHelper = null;
                 m_CheckResourcesComplete = false;
                 m_ApplyingResourcePackPath = null;
                 m_ApplyingResourcePackStream = null;
@@ -280,6 +283,15 @@ namespace GameFramework.Resource
                 m_DownloadManager.DownloadFailure += OnDownloadFailure;
             }
 
+            public void SetWXHelper(IWXHelper wxHelper)
+            {
+                if (wxHelper == null)
+                {
+                    throw new GameFrameworkException("wx helper is invalid.");
+                }
+                m_WXHelper = wxHelper;
+            }
+            
             /// <summary>
             /// 增加资源更新。
             /// </summary>
@@ -723,7 +735,22 @@ namespace GameFramework.Resource
                     {
                         throw new GameFrameworkException("Serialize read-write version list failure.");
                     }
-
+#if WEIXINMINIGAME
+                    fileStream.Position = 0L;
+                    var length = fileStream.Length;
+                    //本地list，remotelist在versionlistprocessor
+                    using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                    {
+                        var binData = binaryReader.ReadBytes((int)fileStream.Length);
+                        m_WXHelper.WriteFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(),LocalVersionListFileName), binData, new WriteWXFileCallback(null, null));
+                        fileStream.Position = length;
+                    }
+                    
+                    // m_WXHelper.ReadFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(), RemoteVersionListFileName)
+                    //     , new LoadWXFileCallback((bytes => GameFrameworkLog.Error($"read after write, bytelength: {bytes.Length}, first: {bytes[0]}"))
+                    //         , ()=> GameFrameworkLog.Error("read after write fail")));
+#endif
+                    
                     if (fileStream != null)
                     {
                         fileStream.Dispose();
@@ -750,8 +777,14 @@ namespace GameFramework.Resource
                 {
                     File.Delete(m_ReadWriteVersionListFileName);
                 }
-
+                
                 File.Move(m_ReadWriteVersionListTempFileName, m_ReadWriteVersionListFileName);
+
+// #if WEIXINMINIGAME
+//                 m_WXHelper.MoveFile(m_ReadWriteVersionListTempFileName, m_ReadWriteVersionListFileName);           
+// #else
+//                 File.Move(m_ReadWriteVersionListTempFileName, m_ReadWriteVersionListFileName);
+// #endif
                 m_CurrentGenerateReadWriteVersionListLength = 0;
             }
 
