@@ -290,15 +290,19 @@ namespace GameFramework.Resource
                     }
 
 #if WEIXINMINIGAME
-                    fileStream.Position = 0L;
-                    var length = fileStream.Length;
-                    //本地list，remotelist在versionlistprocessor
-                    using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                    if (m_WXHelper != null)
                     {
-                        var binData = binaryReader.ReadBytes((int)fileStream.Length);
-                        m_WXHelper.WriteFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(),LocalVersionListFileName), binData, new WriteWXFileCallback(null, null));
-                        fileStream.Position = length;
+                        fileStream.Position = 0L;
+                        var length = fileStream.Length;
+                        //本地list，remotelist在versionlistprocessor
+                        using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                        {
+                            var binData = binaryReader.ReadBytes((int)fileStream.Length);
+                            m_WXHelper.WriteFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(),LocalVersionListFileName), binData, new WriteWXFileCallback(null, null));
+                            fileStream.Position = length;
+                        }
                     }
+                    
                     
                     // m_WXHelper.ReadFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(), RemoteVersionListFileName)
                     //     , new LoadWXFileCallback((bytes => GameFrameworkLog.Error($"read after write, bytelength: {bytes.Length}, first: {bytes[0]}"))

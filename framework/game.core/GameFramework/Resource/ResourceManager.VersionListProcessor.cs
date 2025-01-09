@@ -219,16 +219,20 @@ namespace GameFramework.Resource
                         fileStream.Write(m_ResourceManager.m_CachedStream.GetBuffer(), 0, uncompressedLength);
                         
 #if WEIXINMINIGAME
-                        fileStream.Position = 0L;
-                        //remotelist,本地list在resourceverifier
-                        using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                        if (m_WXHelper != null)
                         {
-                            byte[] binData = binaryReader.ReadBytes(uncompressedLength);
-                            //GameFrameworkLog.Error($"filestream: {fileStream.Length}, ucompLength: {uncompressedLength}, firstChar: {binData[0]}");
-                            m_WXHelper.WriteFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(), RemoteVersionListFileName), binData, new WriteWXFileCallback(null, null));
+                            fileStream.Position = 0L;
+                            //remotelist,本地list在resourceverifier
+                            using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                            {
+                                byte[] binData = binaryReader.ReadBytes(uncompressedLength);
+                                //GameFrameworkLog.Error($"filestream: {fileStream.Length}, ucompLength: {uncompressedLength}, firstChar: {binData[0]}");
+                                m_WXHelper.WriteFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(), RemoteVersionListFileName), binData, new WriteWXFileCallback(null, null));
 
-                            fileStream.Position = uncompressedLength;
+                                fileStream.Position = uncompressedLength;
+                            }
                         }
+                        
                         // m_WXHelper.ReadFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(), RemoteVersionListFileName)
                         //     , new LoadWXFileCallback((bytes => GameFrameworkLog.Error($"read after write, bytelength: {bytes.Length}, first: {bytes[0]}"))
                         //     , ()=> GameFrameworkLog.Error("read after write fail")));

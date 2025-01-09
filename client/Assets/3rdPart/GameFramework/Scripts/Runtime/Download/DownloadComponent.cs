@@ -166,7 +166,9 @@ namespace UnityGameFramework.Runtime
             m_DownloadManager.Timeout = m_Timeout;
             
             //wx
+#if !UNITY_EDITOR
             m_DownloadManager.SetWXHelper(new WXHelper());
+#endif
         }
 
         private void Start()

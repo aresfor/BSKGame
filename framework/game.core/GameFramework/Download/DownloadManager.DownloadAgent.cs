@@ -64,10 +64,10 @@ namespace GameFramework.Download
 
             public void SetWXHelper(IWXHelper wxHelper)
             {
-                if (wxHelper == null)
-                {
-                    throw new GameFrameworkException("wx helper is invalid.");
-                }
+                // if (wxHelper == null)
+                // {
+                //     throw new GameFrameworkException("wx helper is invalid.");
+                // }
                 m_WXHelper = wxHelper;
             }
 

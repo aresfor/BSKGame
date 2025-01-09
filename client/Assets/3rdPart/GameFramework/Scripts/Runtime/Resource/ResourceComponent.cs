@@ -634,9 +634,10 @@ namespace UnityGameFramework.Runtime
             m_ResourceManager.ResourceUpdateAllComplete += OnResourceUpdateAllComplete;
             
             //wx
+#if !UNITY_EDITOR
             m_WXHelper = new WXHelper();
             m_ResourceManager.SetWXHelper(m_WXHelper);
-            
+#endif
             m_ResourceManager.SetReadOnlyPath(Application.streamingAssetsPath);
             if (m_ReadWritePathType == ReadWritePathType.TemporaryCache)
             {
@@ -682,8 +683,9 @@ namespace UnityGameFramework.Runtime
                 Log.Error("Can not create resource helper.");
                 return;
             }
-
+#if !UNITY_EDITOR
             m_ResourceHelper.SetWXHelper(m_WXHelper);
+#endif
             m_ResourceHelper.name = "Resource Helper";
             Transform transform = m_ResourceHelper.transform;
             transform.SetParent(this.transform);

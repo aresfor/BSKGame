@@ -285,10 +285,10 @@ namespace GameFramework.Resource
 
             public void SetWXHelper(IWXHelper wxHelper)
             {
-                if (wxHelper == null)
-                {
-                    throw new GameFrameworkException("wx helper is invalid.");
-                }
+                // if (wxHelper == null)
+                // {
+                //     throw new GameFrameworkException("wx helper is invalid.");
+                // }
                 m_WXHelper = wxHelper;
             }
             
@@ -736,15 +736,19 @@ namespace GameFramework.Resource
                         throw new GameFrameworkException("Serialize read-write version list failure.");
                     }
 #if WEIXINMINIGAME
-                    fileStream.Position = 0L;
-                    var length = fileStream.Length;
-                    //本地list，remotelist在versionlistprocessor
-                    using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                    if (m_WXHelper != null)
                     {
-                        var binData = binaryReader.ReadBytes((int)fileStream.Length);
-                        m_WXHelper.WriteFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(),LocalVersionListFileName), binData, new WriteWXFileCallback(null, null));
-                        fileStream.Position = length;
+                        fileStream.Position = 0L;
+                        var length = fileStream.Length;
+                        //本地list，remotelist在versionlistprocessor
+                        using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                        {
+                            var binData = binaryReader.ReadBytes((int)fileStream.Length);
+                            m_WXHelper.WriteFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(),LocalVersionListFileName), binData, new WriteWXFileCallback(null, null));
+                            fileStream.Position = length;
+                        }
                     }
+                    
                     
                     // m_WXHelper.ReadFile(Path.Combine(m_WXHelper.GetWXUserDataPrefix(), RemoteVersionListFileName)
                     //     , new LoadWXFileCallback((bytes => GameFrameworkLog.Error($"read after write, bytelength: {bytes.Length}, first: {bytes[0]}"))
