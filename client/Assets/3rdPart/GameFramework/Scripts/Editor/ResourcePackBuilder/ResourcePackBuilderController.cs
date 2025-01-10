@@ -508,7 +508,7 @@ namespace UnityGameFramework.Editor.ResourceTools
                 }
 
                 string backupDiffPath = Path.Combine(OutputPath, Utility.Text.Format("{0}-{1}-{2}", DefaultResourcePackName, sourceVersion ?? GetNoneVersion(targetVersion), targetVersion));
-                string resourcePackName = Utility.Text.Format("{0}.{1:x8}.{2}", backupDiffPath, hashCode, DefaultExtension);
+                string resourcePackName = Utility.Text.Format("{0}_{1:x8}.{2}", backupDiffPath, hashCode, DefaultExtension);
                 if (File.Exists(resourcePackName))
                 {
                     File.Delete(resourcePackName);
@@ -552,7 +552,7 @@ namespace UnityGameFramework.Editor.ResourceTools
 
         private string GetResourceFullName(string name, string variant, int hashCode)
         {
-            return !string.IsNullOrEmpty(variant) ? Utility.Text.Format("{0}.{1}.{2:x8}.{3}", name, variant, hashCode, DefaultExtension) : Utility.Text.Format("{0}.{1:x8}.{2}", name, hashCode, DefaultExtension);
+            return !string.IsNullOrEmpty(variant) ? Utility.Text.Format("{0}.{1}_{2:x8}.{3}", name, variant, hashCode, DefaultExtension) : Utility.Text.Format("{0}_{1:x8}.{2}", name, hashCode, DefaultExtension);
         }
     }
 }

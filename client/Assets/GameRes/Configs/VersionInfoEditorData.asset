@@ -19,15 +19,15 @@ MonoBehaviour:
     m_Value:
       m_ForceUpdateGame: 0
       m_LatestGameVersion: 0.1
-      m_InternalGameVersion: 63
+      m_InternalGameVersion: 64
       m_ServerPath: https://a.unity.cn/client_api/v1/buckets/0d7910a3-89be-4c14-b1a5-5aaa6a55e597/release_by_badge/Dev/content/
       m_ResourceVersion: 0_1_1
       m_Platform: 128
       m_VersionListLength: 2865
       m_InternalResourceVersion: 1
-      m_VersionListHashCode: 1861861957
-      m_VersionListCompressedLength: 1399
-      m_VersionListCompressedHashCode: -1613332612
+      m_VersionListHashCode: -1255610474
+      m_VersionListCompressedLength: 1413
+      m_VersionListCompressedHashCode: 1577801268
       m_IsShowCanNotChangeProperty: 0
   m_IsGenerateToFullPath: 1
   m_OutPath: 

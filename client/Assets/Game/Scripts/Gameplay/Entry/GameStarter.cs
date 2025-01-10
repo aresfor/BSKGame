@@ -43,7 +43,7 @@ namespace Game.Client
             //Looks like you are rendering without using requestAnimationFrame for the main loop.
             //You should use 0 for the frame rate in emscripten_set_main_loop in order to use requestAnimationFrame
             //, as that can greatly improve your frame rates!
-            Application.targetFrameRate = -1;
+            Application.targetFrameRate = 0;
             #else
             Application.targetFrameRate = 60;
             #endif

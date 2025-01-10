@@ -1156,7 +1156,7 @@ namespace UnityGameFramework.Editor.ResourceTools
             File.WriteAllBytes(updatableVersionListPath, bytes);
             int compressedHashCode = Utility.Verifier.GetCrc32(bytes);
             int dotPosition = RemoteVersionListFileName.LastIndexOf('.');
-            string versionListFullNameWithCrc32 = Utility.Text.Format("{0}.{2:x8}.{1}", RemoteVersionListFileName.Substring(0, dotPosition), RemoteVersionListFileName.Substring(dotPosition + 1), hashCode);
+            string versionListFullNameWithCrc32 = Utility.Text.Format("{0}_{2:x8}.{1}", RemoteVersionListFileName.Substring(0, dotPosition), RemoteVersionListFileName.Substring(dotPosition + 1), hashCode);
             string updatableVersionListPathWithCrc32 = Utility.Path.GetRegularPath(Path.Combine(outputFullPath, versionListFullNameWithCrc32));
             File.Move(updatableVersionListPath, updatableVersionListPathWithCrc32);
 
@@ -1396,7 +1396,7 @@ namespace UnityGameFramework.Editor.ResourceTools
 
             if (OutputFullSelected)
             {
-                string fullNameWithCrc32AndExtension = variant != null ? Utility.Text.Format("{0}.{1}.{2:x8}.{3}", name, variant, hashCode, DefaultExtension) : Utility.Text.Format("{0}.{1:x8}.{2}", name, hashCode, DefaultExtension);
+                string fullNameWithCrc32AndExtension = variant != null ? Utility.Text.Format("{0}.{1}_{2:x8}.{3}", name, variant, hashCode, DefaultExtension) : Utility.Text.Format("{0}_{1:x8}.{2}", name, hashCode, DefaultExtension);
                 string fullPath = Utility.Path.GetRegularPath(Path.Combine(outputFullPath, fullNameWithCrc32AndExtension));
                 string fullDirectoryName = Path.GetDirectoryName(fullPath);
                 if (!Directory.Exists(fullDirectoryName))

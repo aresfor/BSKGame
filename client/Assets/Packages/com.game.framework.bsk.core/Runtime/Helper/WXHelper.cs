@@ -11,6 +11,7 @@ namespace Game.Core
         public string GetWXUserDataPrefix() => WX.env.USER_DATA_PATH;
         public string GetWXPath(string path)=>Path.Combine(GetWXUserDataPrefix(), path);
         public const string Encoding= "base64";
+        public const string UTF8Encoding = "utf-8";
         public const string AccessFileSuccess = "access:ok";
         public void ReadFile(string path, LoadWXFileCallback loadCallback)
         {

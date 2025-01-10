@@ -21,8 +21,8 @@ MonoBehaviour:
     VideoUrl: 
     DST: G:/Repos/BSKGame/wxProject
     StreamCDN: 
-    bundleHashLength: 32
-    bundlePathIdentifier: StreamingAssets;
+    bundleHashLength: 8
+    bundlePathIdentifier: StreamingAssets;.dat;
     bundleExcludeExtensions: json;
     AssetsUrl: 
     MemorySize: 256

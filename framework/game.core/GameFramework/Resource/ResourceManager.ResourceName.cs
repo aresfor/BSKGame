@@ -107,8 +107,8 @@ namespace GameFramework.Resource
                 }
 
                 fullName = m_Variant != null
-                    ? Utility.Text.Format("{0}.{1}.{2:x8}.{3}", m_Name, m_Variant, hashCode, m_Extension)
-                    : Utility.Text.Format("{0}.{1:x8}.{2}", m_Name, hashCode, m_Extension);
+                    ? Utility.Text.Format("{0}.{1}_{2:x8}.{3}", m_Name, m_Variant, hashCode, m_Extension)
+                    : Utility.Text.Format("{0}_{1:x8}.{2}", m_Name, hashCode, m_Extension);
                 s_ResourceFullNamesWithHashCode.Add(this, fullName);
                 return fullName;
             }
